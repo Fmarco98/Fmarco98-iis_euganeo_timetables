@@ -1,7 +1,7 @@
 <?php 
     session_start();
     include("utils/redirect.php");
-    
+
     $dati_ok = true;
 
     //check del postback
