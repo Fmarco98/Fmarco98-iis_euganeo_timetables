@@ -60,17 +60,36 @@
                 </div>
                 <fieldset id="fieldset_dati">
                     <legend>dati</legend>
-                    <label for="nome_input">Nome:</label>
-                    <input type="text" name="nome" id="nome_input" required>
-                    <label for="cognome_input">Cognome:</label>
-                    <input type="text" name="cognome" id="cognome_input" required>
-                    <label for="email_input">Email:</label>
-                    <input type="email" name="email" id="email_input" required>
-                    <p></p>
+                    <?php 
+                        if(!$password_ok || $email_gia_in_uso) {
+                            if($email_gia_in_uso) {
+                                echo '<p class="phperror">email già in uso</p>';
+                            }
+                            echo '<label for="nome_input">Nome:</label>
+                            <input type="text" name="nome" id="nome_input" value="'.$_POST['nome'].'" required>
+                            <label for="cognome_input">Cognome:</label>
+                            <input type="text" name="cognome" id="cognome_input" value="'.$_POST['cognome'].'" required>
+                            <label for="email_input">Email:</label>
+                            <input type="email" name="email" id="email_input" value="'.$_POST['email'].'" required>';
+                        } else {
+                            echo '<label for="nome_input">Nome:</label>
+                            <input type="text" name="nome" id="nome_input" required>
+                            <label for="cognome_input">Cognome:</label>
+                            <input type="text" name="cognome" id="cognome_input" required>
+                            <label for="email_input">Email:</label>
+                            <input type="email" name="email" id="email_input" required>';
+                        }
+                    ?>
+                    
                 </fieldset>
             </div>
             <fieldset class="border-left">
                 <legend>password</legend>
+                <?php
+                    if(!$password_ok) {
+                        echo '<p class="phperror">le password non corrispondono</p>';
+                    }
+                ?>
                 <label for="password_input">Password:</label>
                 <input type="password" name="password" id="password_input" required>
                 <label for="password_input">Conferma password:</label>
