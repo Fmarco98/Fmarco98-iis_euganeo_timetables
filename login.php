@@ -33,7 +33,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css" media="screen"> <!--and (min-width:1000px)-->
-    <link rel="shortcut icon" href="./imgs/logo_iiseuganeo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
     <title>iiS Euganeo timetables | login</title>
 </head>
 <body class="dark-white-bg">
@@ -41,14 +41,14 @@
         <form action="login.php" method="post" class="login center">
             <div>
                 <div class="column-style center" id="imagezone">
-                    <img src="./imgs/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
-                    <img src="./imgs/mokup_logo.png" alt="" id="logoname">
+                    <img src="./imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
+                    <img src="./imgs/logo/mokup_logo.png" alt="iiS Euganeo timetables" id="logoname">
                 </div>
             </div>
             <?php
                 //login errato
                 if(!$dati_ok) {
-                    echo '<p class="phperror">username o password non validi</p>';
+                    echo '<p class="phperror">email o password non validi</p>';
                 }
             ?>
             <fieldset>

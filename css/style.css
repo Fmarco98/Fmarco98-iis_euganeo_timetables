@@ -1,5 +1,7 @@
 :root {
-    --dark-white: rgb(237, 235, 235)
+    --dark-white: rgb(237, 235, 235);
+    --blue: rgb(0, 124, 212);
+    --gray: gray;
 }
 * {
     font-size: inherit;
@@ -10,15 +12,96 @@ html, body {
     margin: 0px;
     padding: 0px;
 }
-
-a:link, a:visited {
-    color: blue;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
+/*------------------ header ------------------*/
+
+header {
+    background-color: var(--blue);
+    color: white;
+    min-height: 17vh;
+    font-size: 100%;
+
+    border-bottom: 1px solid white;
+
+    display: grid;
+    grid-template-columns: auto auto;
+}
+header #utente_zone {
+    position: relative;
+    flex-direction: row-reverse;
+    gap: 5px;
+    margin: 5px;
+}
+header #utente_zone p {
+    margin: 0px;
+}
+header #imagezone {
+    gap: 5px;
+    margin: 5px;
+}
+header #logo {
+    width: 7%;
+}
+header #logoname{
+    width: 25%;
+}
+header #img_utente {
+    width: 20%;
+}
+
+/*------------------- nav --------------------*/
+
+nav {
+    background-color: var(--blue);
+    color: white;
+    font-size: 120%;
+}
+nav ul {
+    margin: 0px;
+    padding: 5px;
+    list-style: none;
+
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 1%
+}
+nav li {
+    padding: 10px;
+}
+nav a {
+    color: inherit !important;
+    text-decoration: none;
+}
+
+/*------------------- main -------------------*/
+main {
+    margin: 1%;
+}
+
+/*------------------ footer ------------------*/
+
+footer {
+    margin-top: auto;
+    background-color: var(--gray);
+    color: white;
+    min-height: 17vh;
+    font-size: 100%;
+
+    border-bottom: 1px solid white;
+
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+/*------------------- form -------------------*/
 form legend {
     display: none;
 }
-
 form input[type="submit"] {
     cursor: pointer;
     border: 0;
@@ -47,11 +130,77 @@ form label {
     position: relative;
     height: 0px;
     margin-top: 5px;
-    top: -10px;
+    top: -8px;
     left: -4px;
     font-weight: 500;
 }
-  
+form a:link, a:visited {
+    color: blue;
+}
+
+
+
+form.login {
+    background-color: white;
+    padding: 50px 30px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px gray;
+
+    font-size: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+form.login input[type="submit"] {
+    margin-left: 40px;
+    margin-right: 40px;
+}
+form.login fieldset {
+    gap: 15px;
+}
+form.login #logoname{
+    width: 60%;
+}
+form.login #imagezone {
+    width: 300px;
+}
+
+
+form.sign-up {
+    background-color: white;
+    padding: 10px 10px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px gray;
+
+    min-height: 70vh;
+    min-width: 70vw;
+
+    display: grid;
+    grid-template-columns: 65% auto;
+
+    font-size: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+form.sign-up fieldset {
+    gap: 20px
+}
+form.sign-up img {
+    display: inline-block;
+}
+form.sign-up input[type="submit"] {
+    margin-left: 120px;
+}
+form.sign-up #imagezone {
+    padding-bottom: 10px;
+}
+form.sign-up #logo {
+    width: 10%;
+}
+form.sign-up #logoname{
+    width: 30%;
+}
+form.sign-up #fieldset_dati {
+    margin-top: 20px;
+}
+
 /*-------------------- classi generiche ------------------*/
 
 .phperror {
@@ -60,17 +209,12 @@ form label {
     border-bottom: 2px red solid;
     padding: 10px;
     text-align: center;
-}/*
-.phperror::before {
-    content: "Errore";
-    position: relative;
-    top: -11px;
-    left: -7px
 }
-*/
+
 .full-display {
     height: 100vh;
     width: 100vw;
+    margin: 0px;
 }
 
 .column-style {
@@ -98,6 +242,9 @@ form label {
 .small-text {
     font-size: 70%;
 }
+.xl-text {
+    font-size: 200%;
+}
 
 .border-left {
     border-left: 3px solid gray !important;
@@ -108,61 +255,4 @@ form label {
 
 .bordertest {
     border: 10px solid red !important;
-}
-
-/*------------------- classi specifiche -------------------*/
-
-form.login {
-    background-color: white;
-    padding: 50px 30px;
-    border-radius: 20px;
-    box-shadow: 0px 0px 20px gray;
-
-    font-size: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-}
-form.login input[type="submit"] {
-    margin-left: 40px;
-    margin-right: 40px;
-}
-form.login #logoname{
-    width: 60%;
-}
-form.login #imagezone {
-    width: 300px;
-}
-
-
-form.sign-up {
-    background-color: white;
-    padding: 20px 20px;
-    border-radius: 20px;
-    box-shadow: 0px 0px 20px gray;
-
-    min-height: 60vh;
-    min-width: 70vw;
-
-    display: grid;
-    grid-template-columns: 65% auto;
-
-    font-size: 100%;
-    font-family: Arial, Helvetica, sans-serif;
-}
-form.sign-up fieldset {
-    gap: 20px
-}
-form.sign-up img {
-    display: inline-block;
-}
-form.sign-up input[type="submit"] {
-    margin-left: 120px;
-}
-form.sign-up #imagezone {
-    padding-bottom: 10px;
-}
-form.sign-up #logo {
-    width: 10%;
-}
-form.sign-up #logoname{
-    width: 30%;
 }

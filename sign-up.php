@@ -44,21 +44,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css" media="screen"> <!--and (min-width:1000px)-->
-    <link rel="shortcut icon" href="./imgs/logo_iiseuganeo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
     <title>iiS Euganeo timetables | Sign up</title>
 </head>
 <body class="dark-white-bg">
-    <?php 
+    <!--<?php 
         echo "psw_ok: ".$password_ok." | email_ok: ".!$email_gia_in_uso." |";
-    ?>
+    ?>-->
     <main class="full-display">
         <form action="" method="post" class="sign-up center">
             <div>
                 <div class="border-bottom row-style" id="imagezone">
-                    <img src="./imgs/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
-                    <img src="./imgs/mokup_logo.png" alt="" id="logoname">
+                    <img src="./imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
+                    <img src="./imgs/logo/mokup_logo.png" alt="iiS Euganeo timetables" id="logoname">
                 </div>
-                <fieldset>
+                <fieldset id="fieldset_dati">
                     <legend>dati</legend>
                     <label for="nome_input">Nome:</label>
                     <input type="text" name="nome" id="nome_input" required>
