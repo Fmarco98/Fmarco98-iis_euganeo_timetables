@@ -1,16 +1,17 @@
 <?php
     session_start();
+    
     include("utils/redirect.php");
+    include("utils/db_manager.php");
 
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
 
-    $mysql = new mysqli('localhost', 'iis_euganeo_timetables', 'iis_euganeo_timetables_password', 'iis_euganeo_timetables');
-    $stmt = $mysql->prepare("SELECT nome, cognome FROM utente WHERE id_utente = ?");
-    $stmt->bind_param('i', $_SESSION['id_utente']);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    db_setup();
+    $result = db_select("SELECT nome, cognome FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
+    db_close();
+
     $row = $result->fetch_assoc();
 
     $nome = $row['nome'];
@@ -30,8 +31,8 @@
 <body class="dark-white-bg">
     <header>
         <div class="row-style" id="imagezone">
-            <img src="./imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
-            <img src="./imgs/logo/mokup_logo.png" alt="iiS Euganeo timetables" id="logoname">
+            <img src="./imgs/logo/logo_iiseuganeo_whitebg.png" alt="iiS Euganeo timetables" id="logo">
+            <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
         </div>
         <div class="row-style" id="utente_zone">
             <img src="./imgs/utente/img_utente.png" alt="img utente" id="img_utente" onclick="f()">
@@ -42,6 +43,7 @@
     </header>
     <nav>
         <ul>
+            <li><a href="./utils/logout.php">logout</a></li>
             <li><a href="">impostazioni</a></li>
             <li><a href="">prenota</a></li>
             <li><span>home</span></li>

@@ -1,20 +1,17 @@
 <?php 
     session_start();
     include("utils/redirect.php");
+    include("utils/db_manager.php");
 
     $dati_ok = true;
 
     //check del postback
     if(isset($_POST['email']) && isset($_POST['password'])) {
-        $mysql = new mysqli('localhost', 'iis_euganeo_timetables', 'iis_euganeo_timetables_password', 'iis_euganeo_timetables');
         
-        //esecuzione query
-        $query = "SELECT id_utente FROM utente WHERE email=? AND password=?";
-        $stmt = $mysql->prepare($query);
-        $stmt->bind_param("ss", $_POST['email'], $_POST['password']);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
+        db_setup();
+        $result = db_select("SELECT id_utente FROM utente WHERE email=? AND password=?", "ss", $_POST['email'], $_POST['password']);
+        db_close();
+
         //validità login
         if($result->num_rows == 1) {
             $row = $result->fetch_assoc();
@@ -42,7 +39,7 @@
             <div>
                 <div class="column-style center" id="imagezone">
                     <img src="./imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
-                    <img src="./imgs/logo/mokup_logo.png" alt="iiS Euganeo timetables" id="logoname">
+                    <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
                 </div>
             </div>
             <?php
@@ -57,6 +54,7 @@
                 <input type="email" name="email" id="email_input" placeholder="example@ex.ex" required>
                 <label for="password_input">password</label>
                 <input type="password" name="password" id="password_input" placeholder="ciao1234" required>
+                <button class="pwd-button"></button>
                 <input type="submit" value="Login">
             </fieldset>
             <hr>
@@ -65,5 +63,7 @@
             </div>
         </form>
     </main>
+
+    <script src="./js/pwd-button.js"></script>
 </body>
 </html>
