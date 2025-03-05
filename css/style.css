@@ -1,7 +1,13 @@
 :root {
     --dark-white: rgb(237, 235, 235);
     --blue: rgb(0, 124, 212);
+    --dark-blue: rgb(0, 94, 161);
     --gray: gray;
+
+    --font-size-large: 4vh;
+    --font-size-normal: 2.3vh;
+    --font-size-small: 1.7vh;
+    --font-family-normal: Arial, Helvetica, sans-serif;
 }
 * {
     font-size: inherit;
@@ -23,64 +29,73 @@ body {
 header {
     background-color: var(--blue);
     color: white;
-    min-height: 17vh;
-    font-size: 100%;
-
+    height: 17vh;
     border-bottom: 1px solid white;
-
+    
     display: grid;
     grid-template-columns: auto auto;
+
+    font-size: var(--font-size-small);
+    font-family: var(--font-family-normal);
 }
 header #utente_zone {
     position: relative;
+    gap: 0.5vw;
+    margin: 1vh 0.5vw;
     flex-direction: row-reverse;
-    gap: 5px;
-    margin: 5px;
 }
 header #utente_zone p {
     margin: 0px;
 }
 header #imagezone {
-    gap: 5px;
-    margin: 5px;
+    gap: 1vw;
+    margin: 1vh 0.5vw;
 }
 header #logo {
-    width: 7%;
+    width: 7vw;
 }
 header #logoname{
-    width: 25%;
+    width: 20vw;
 }
 header #img_utente {
-    width: 20%;
+    width: 3vw;
+    cursor: pointer;
 }
 
 /*------------------- nav --------------------*/
 
 nav {
     background-color: var(--blue);
+    
     color: white;
-    font-size: 120%;
+    font-size: var(--font-size-normal);
+    font-family: var(--font-family-normal);
 }
 nav ul {
     margin: 0px;
-    padding: 5px;
+    padding: 0.5vh 0.25vw;
     list-style: none;
 
     display: flex;
     flex-direction: row-reverse;
-    gap: 1%
+    gap: 0.5vw
 }
-nav li {
+nav a, nav span {
+    display: block;
     padding: 10px;
-}
-nav a {
+
     color: inherit !important;
     text-decoration: none;
+}
+nav span, nav a:hover {
+    transition: 0.2s;
+    background-color: var(--dark-blue);
+    border-bottom: 2px solid white;
 }
 
 /*------------------- main -------------------*/
 main {
-    margin: 1%;
+    margin: 1vh 0.5vw;
 }
 
 /*------------------ footer ------------------*/
@@ -105,9 +120,9 @@ form legend {
 form input[type="submit"] {
     cursor: pointer;
     border: 0;
-    border-radius: 4px;
+    border-radius: 5px;
     font-weight: 600;
-    padding: 10px 0;
+    padding: 1vh 0vw;
     box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
     transition: 0.4s;
 
@@ -124,49 +139,47 @@ form fieldset {
     display: flex;
     flex-direction: column;
     border: none;
-    gap: 5px;
+    gap: 1vh;
 }
 form label {
     position: relative;
     height: 0px;
-    margin-top: 5px;
-    top: -8px;
-    left: -4px;
-    font-weight: 500;
+    margin-top: 1vh;
+    top: -1vh;
+    left: -0.5vw;
 }
 form a:link, a:visited {
     color: blue;
 }
 
 
-
 form.login {
     background-color: white;
-    padding: 50px 30px;
+    padding: 10vh 2vw;
     border-radius: 20px;
     box-shadow: 0px 0px 20px gray;
 
-    font-size: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--font-size-normal);
+    font-family: var(--font-family-normal);
 }
 form.login input[type="submit"] {
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 3vw;
+    margin-right: 3vw;
 }
 form.login fieldset {
-    gap: 15px;
+    gap: 2vh;
 }
 form.login #logoname{
     width: 60%;
 }
 form.login #imagezone {
-    width: 300px;
+    width: 22vw;
 }
 
 
 form.sign-up {
     background-color: white;
-    padding: 10px 10px;
+    padding: 2vh 1vw;
     border-radius: 20px;
     box-shadow: 0px 0px 20px gray;
 
@@ -176,20 +189,20 @@ form.sign-up {
     display: grid;
     grid-template-columns: 65% auto;
 
-    font-size: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: var(--font-size-normal);
+    font-family: var(--font-family-normal);
 }
 form.sign-up fieldset {
-    gap: 20px
+    gap: 3vh
 }
 form.sign-up img {
     display: inline-block;
 }
 form.sign-up input[type="submit"] {
-    margin-left: 120px;
+    margin-left: 10vw;
 }
 form.sign-up #imagezone {
-    padding-bottom: 10px;
+    padding-bottom: 2vh;
 }
 form.sign-up #logo {
     width: 10%;
@@ -198,7 +211,7 @@ form.sign-up #logoname{
     width: 30%;
 }
 form.sign-up #fieldset_dati {
-    margin-top: 20px;
+    margin-top: 3vh;
 }
 
 /*-------------------- classi generiche ------------------*/
@@ -240,19 +253,20 @@ form.sign-up #fieldset_dati {
 }
 
 .small-text {
-    font-size: 70%;
+    font-size: var(--font-size-small);
 }
 .xl-text {
-    font-size: 200%;
+    font-size: var(--font-size-large);
 }
 
 .border-left {
-    border-left: 3px solid gray !important;
+    border-left: 2px solid gray !important;
 }
 .border-bottom {
-    border-bottom: 3px solid gray !important;
+    border-bottom: 2px solid gray !important;
 }
 
-.bordertest {
+
+.bordertest { /*da rimuovere */
     border: 10px solid red !important;
 }
