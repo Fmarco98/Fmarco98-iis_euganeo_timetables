@@ -1,4 +1,4 @@
-/*---------------- variabili ----------------------*/
+/*-------------------- variabili ------------------------*/
 :root {
     --dark-white: rgb(237, 235, 235);
     --blue: rgb(0, 124, 212);
@@ -10,13 +10,14 @@
     --font-size-small: 1.7vh;
     --font-family-normal: Arial, Helvetica, sans-serif;
 }
+
+/*------------------- altro ----------------------*/
+
 * {
     font-size: inherit;
     font-family: inherit;
     color: inherit;
 }
-
-/*--------------------- altro --------------------*/
 
 html, body {
     margin: 0px;
@@ -164,7 +165,6 @@ form a:link, a:visited {
     color: blue;
 }
 
-
 form.login {
     background-color: white;
     padding: 10vh 2vw;
@@ -212,17 +212,11 @@ form.sign-up img {
 }
 form.sign-up input[type="submit"] {
     margin-left: 10vw;
-<<<<<<< HEAD
     margin-right: 10vw;
 }
 form.sign-up #imagezone {
     padding-bottom: 2vh;
     justify-content: center;
-=======
-}
-form.sign-up #imagezone {
-    padding-bottom: 2vh;
->>>>>>> a862f8a1293de2789e429c7e231053667af8bd84
 }
 form.sign-up #logo {
     width: 6vw;
@@ -231,12 +225,8 @@ form.sign-up #logoname{
     width: 20vw;
 }
 form.sign-up #fieldset_dati {
-<<<<<<< HEAD
     margin-top: 2vh;
     padding-bottom: 3vh;
-=======
-    margin-top: 3vh;
->>>>>>> a862f8a1293de2789e429c7e231053667af8bd84
 }
 form.sign-up #fieldset_password {
     margin-top: 1vh;
@@ -295,10 +285,7 @@ form.sign-up #fieldset_password {
     border-bottom: 2px solid gray !important;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> a862f8a1293de2789e429c7e231053667af8bd84
 .bordertest { /*da rimuovere */
     border: 10px solid red !important;
 }

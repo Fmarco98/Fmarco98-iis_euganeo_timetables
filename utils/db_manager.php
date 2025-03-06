@@ -2,7 +2,6 @@
     //Evitare warning inutili
     error_reporting(E_ERROR | E_PARSE);
 
-<<<<<<< HEAD
     //Config del server casa
     //define('DB_SERVER', 'localhost');
     //define('DB_USER', 'iis_euganeo_timetables');
@@ -16,14 +15,6 @@
     define('DB_DB', 'SITO_cmc_euganeo_timetables');
     
 
-=======
-    //Config del server
-    define('DB_SERVER', 'localhost');
-    define('DB_USER', 'iis_euganeo_timetables');
-    define('DB_PASSWORD', 'iis_euganeo_timetables_password');
-    define('DB_DB', 'iis_euganeo_timetables');
-    
->>>>>>> a862f8a1293de2789e429c7e231053667af8bd84
     //Variabili globali
     $mysql = NULL;
 
@@ -95,8 +86,4 @@
             throw new Exception("invalid ending state");
         }
     }
-<<<<<<< HEAD
 ?>
-=======
-?>
->>>>>>> a862f8a1293de2789e429c7e231053667af8bd84

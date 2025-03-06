@@ -53,22 +53,12 @@
     ?>-->
     <main class="full-display">
         <form action="" method="post" class="sign-up center">
-<<<<<<< HEAD
             <div class="border-bottom row-style" id="imagezone">
                 <img src="./imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
                 <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
             </div>
             <fieldset id="fieldset_dati" class="border-bottom">
                 <legend>dati</legend>
-=======
-            <div>
-                <div class="border-bottom row-style" id="imagezone">
-                    <img src="./imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logo">
-                    <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
-                </div>
-                <fieldset id="fieldset_dati">
-                    <legend>dati</legend>
->>>>>>> a862f8a1293de2789e429c7e231053667af8bd84
                     <?php 
                         if(!$password_ok || $email_gia_in_uso) {
                             if($email_gia_in_uso) {
