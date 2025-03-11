@@ -116,14 +116,14 @@ main {
 footer {
     margin-top: auto;
     background-color: var(--gray);
-    color: white;
+    color: black;
     min-height: 17vh;
     font-size: 100%;
 
-    border-bottom: 1px solid white;
-
-    display: grid;
-    grid-template-columns: auto auto;
+    border-top: 1px solid rgb(81, 81, 81);
+}
+footer:has(> .center) {
+    align-items: end !important; 
 }
 
 /*------------------- form -------------------*/

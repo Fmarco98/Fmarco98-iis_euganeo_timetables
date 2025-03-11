@@ -19,8 +19,9 @@
             $_SESSION['id_utente'] = $row['id_utente'];
 
             redirect(0, 'home.php');
+        } else {
+            $dati_ok = false;
         }
-        $dati_ok = false;
     } 
 ?>
 
@@ -53,8 +54,10 @@
                 <label for="email_input">email</label>
                 <input type="email" name="email" id="email_input" placeholder="example@ex.ex" required>
                 <label for="password_input">password</label>
-                <input type="password" name="password" id="password_input" placeholder="ciao1234" required>
-                <button class="pwd-button"></button>
+                <div>
+                    <input type="password" name="password" id="password_input" placeholder="ciao1234" required>
+                    <button class="pwd-button"></button>
+                </div>
                 <input type="submit" value="Login">
             </fieldset>
             <hr>

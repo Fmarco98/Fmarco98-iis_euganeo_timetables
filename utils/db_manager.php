@@ -3,16 +3,16 @@
     error_reporting(E_ERROR | E_PARSE);
 
     //Config del server casa
-    //define('DB_SERVER', 'localhost');
-    //define('DB_USER', 'iis_euganeo_timetables');
-    //define('DB_PASSWORD', 'iis_euganeo_timetables_password');
-    //define('DB_DB', 'iis_euganeo_timetables');
+    define('DB_SERVER', 'localhost');
+    define('DB_USER', 'iis_euganeo_timetables');
+    define('DB_PASSWORD', 'iis_euganeo_timetables_password');
+    define('DB_DB', 'iis_euganeo_timetables');
     
     //Config server scuola
-    define('DB_SERVER', 'localhost');
+    /*define('DB_SERVER', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASSWORD', 'root');
-    define('DB_DB', 'SITO_cmc_euganeo_timetables');
+    define('DB_DB', 'SITO_cmc_euganeo_timetables');*/
     
 
     //Variabili globali

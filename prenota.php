@@ -26,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css" media="screen"> <!--and (min-width:1000px)-->
     <link rel="shortcut icon" href="./imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
-    <title>iiS Euganeo timetables | home</title>
+    <title>iiS Euganeo timetables | prenota</title>
 </head>
 <body class="dark-white-bg">
     <header>
@@ -45,22 +45,12 @@
         <ul>
             <li><a href="./utils/logout.php">logout</a></li>
             <li><a href="./impostazioni_utente.php">impostazioni</a></li>
-            <li><a href="./prenota.php">prenota</a></li>
-            <li><span>home</span></li>
+            <li><span>prenota</span></li>
+            <li><a href="./home.php">home</a></li>
         </ul>
     </nav>
     <main>
-        <?php 
-            echo '<h1 class="xl-text">Buongiorno '.$cognome.' '.$nome.'</h1>';
-        ?>
-        <section>
-            <table id="prenotazioni_attive">
-
-            </table>   
-            <table id="prenotazioni_in_attesa">
-
-            </table>   
-        </section>
+        <h1>prenota page</h1>
     </main>
     <footer>
         <p class="center">Creato da: Cascello Marco, Colturato Davide e Mattiolo Luca</p>
