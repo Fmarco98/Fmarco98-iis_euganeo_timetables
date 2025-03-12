@@ -3,20 +3,20 @@
     
     include("utils/redirect.php");
     include("utils/db_manager.php");
+    include("utils/session_errors.php");
 
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
 
     db_setup();
-    $result = db_select("SELECT nome, cognome FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
+    $result = db_do_query("SELECT nome, cognome FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
     db_close();
 
     $row = $result->fetch_assoc();
 
     $nome = $row['nome'];
     $cognome = $row['cognome'];
-
 ?>
 
 <!DOCTYPE html>
@@ -43,7 +43,7 @@
     </header>
     <nav>
         <ul>
-            <li><a href="./utils/logout.php">logout</a></li>
+            <li><a href="./utils/targets/logout.php">logout</a></li>
             <li><a href="./impostazioni_utente.php">impostazioni</a></li>
             <li><a href="./prenota.php">prenota</a></li>
             <li><span>home</span></li>

@@ -1,7 +1,9 @@
 <?php 
     session_start();
+
     include("utils/redirect.php");
     include("utils/db_manager.php");
+    include("utils/session_errors.php");
 
     $dati_ok = true;
 
@@ -9,7 +11,7 @@
     if(isset($_POST['email']) && isset($_POST['password'])) {
         
         db_setup();
-        $result = db_select("SELECT id_utente FROM utente WHERE email=? AND password=?", "ss", $_POST['email'], $_POST['password']);
+        $result = db_do_query("SELECT id_utente FROM utente WHERE email=? AND password=?", "ss", $_POST['email'], $_POST['password']);
         db_close();
 
         //validità login
@@ -23,6 +25,8 @@
             $dati_ok = false;
         }
     } 
+
+    $_SESSION['error'] = NONE;
 ?>
 
 <!DOCTYPE html>

@@ -32,7 +32,7 @@
         $GLOBALS['mysql'] = NULL;
     }
     
-    function db_select($query, ...$params) {
+    function db_do_query($query, ...$params) {
         /*
         Effettua operazione di select:
         sintassi: db_select("select * from..", "<param_type>", <...params>)
@@ -46,19 +46,6 @@
         $result = $stmt->get_result();
 
         return $result;
-    }
-
-    function db_insert($query, ...$params) {
-        /*
-        Effettua operazione di insert:
-        sintassi: db_insert("insert into..", "<param_type>", <...params>)
-        */
-
-        $mysql = $GLOBALS['mysql'];
-
-        $stmt = $mysql->prepare($query);
-        call_user_func_array(array($stmt, 'bind_param'), $params);
-        $stmt->execute();
     }
 
     function db_start_transaction() {

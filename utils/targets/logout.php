@@ -1,10 +1,10 @@
 <?php
     session_start();
     
-    include("redirect.php");
+    include("../redirect.php");
     
     $_SESSION['id_utente'] = NULL;
     session_destroy();
     
-    redirect(0, '../login.php');
+    redirect(0, '../../login.php');
 ?>

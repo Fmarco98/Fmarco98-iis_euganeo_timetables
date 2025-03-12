@@ -4,7 +4,8 @@
     //imports
     include("utils/redirect.php");
     include("utils/db_manager.php");
-    
+    include("utils/session_errors.php");
+
     $password_ok = true;
     $email_gia_in_uso = false;
 
@@ -14,11 +15,11 @@
             db_setup();
             db_start_transaction();
 
-            $result = db_select("SELECT ? IN (SELECT email FROM utente) AS a", 's', $_POST['email']);
+            $result = db_do_query("SELECT ? IN (SELECT email FROM utente) AS a", 's', $_POST['email']);
             $row = $result->fetch_assoc();
             
             if(!$row['a']) {
-                db_insert("INSERT INTO utente(email, password, nome, cognome, ruolo) VALUES (?, ?, ?, ?, 'D')", 'ssss', $_POST['email'], $_POST['password'], $_POST['nome'], $_POST['cognome']);
+                db_do_query("INSERT INTO utente(email, password, nome, cognome, ruolo) VALUES (?, ?, ?, ?, 'D')", 'ssss', $_POST['email'], $_POST['password'], $_POST['nome'], $_POST['cognome']);
                 db_end_transaction('y');
                 db_close();
 
@@ -33,8 +34,6 @@
         } else {
             $password_ok = false;
         }
-
-        
     }
 ?>
 
