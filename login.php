@@ -11,7 +11,7 @@
     if(isset($_POST['email']) && isset($_POST['password'])) {
         
         db_setup();
-        $result = db_do_query("SELECT id_utente FROM utente WHERE email=? AND password=?", "ss", $_POST['email'], $_POST['password']);
+        $result = db_do_query("SELECT id_utente FROM utente WHERE email=? AND password=?", "ss", $_POST['email'], MD5($_POST['password']));
         db_close();
 
         //validità login

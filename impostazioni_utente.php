@@ -74,9 +74,21 @@
         </form>
         <hr>
         <h2>Modifica password</h2>
-        <form action="" method="post">
+        <form action="./utils/targets/modifica_password_utente.php" method="post">
             <fieldset>
                 <legend>modifica password</legend>
+                
+                <?php
+                    if($_SESSION['error'] === MODIFY_PWD_ERRATA) {
+                        echo '<p class="phperror">vecchia password errata</p>';
+                        $_SESSION['error'] = NONE;
+                    }
+                    if($_SESSION['error'] === MODIFY_PWD_NON_CONFERMA) {
+                        echo '<p class="phperror">nuova password non coincide</p>';
+                        $_SESSION['error'] = NONE;
+                    }
+                ?>
+
                 <label for="old_password_input">Vecchia password: </label>
                 <div class="border-bottom">
                     <input type="password" name="old_password" id="old_password_input" required>
