@@ -10,13 +10,14 @@
     }
 
     db_setup();
-    $result = db_do_query("SELECT nome, cognome FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
+    $result = db_do_query("SELECT nome, cognome, ruolo FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
     db_close();
 
     $row = $result->fetch_assoc();
 
     $nome = $row['nome'];
     $cognome = $row['cognome'];
+    $ruolo = $row['ruolo'];
 ?>
 
 <!DOCTYPE html>
@@ -29,42 +30,35 @@
     <title>iiS Euganeo timetables | home</title>
 </head>
 <body class="dark-white-bg">
-    <header>
-        <div class="row-style" id="imagezone">
-            <img src="./imgs/logo/logo_iiseuganeo_whitebg.png" alt="iiS Euganeo timetables" id="logo">
-            <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
-        </div>
-        <div class="row-style" id="utente_zone">
-            <img src="./imgs/utente/img_utente.png" alt="img utente" id="img_utente" onclick="f()">
-            <?php 
-                echo "<p>".$cognome." ".$nome."</p>";
-            ?>
-        </div>
-    </header>
+    <?php 
+        include("utils/prefabs/header.php");
+        getHeader('./');
+    ?>
     <nav>
         <ul>
             <li><a href="./utils/targets/logout.php">logout</a></li>
             <li><a href="./impostazioni_utente.php">impostazioni</a></li>
-            <li><a href="./prenota.php">prenota</a></li>
+            <?php 
+                if($ruolo === 'D') {
+                    echo '<li><a href="./prenota.php">prenota</a></li>';
+                }
+            ?>
             <li><span>home</span></li>
         </ul>
     </nav>
     <main>
         <?php 
             echo '<h1 class="xl-text">Buongiorno '.$cognome.' '.$nome.'</h1>';
+
+            if($ruolo === 'D') {
+                include("utils/prefabs/user_home.php");
+            } elseif($ruolo === 'A') {
+                include("utils/prefabs/admin_home.php");
+            } else {
+                die('500: ruolo non definito');
+            }
         ?>
-        <section>
-            <table id="prenotazioni_attive">
-
-            </table>   
-            <table id="prenotazioni_in_attesa">
-
-            </table>   
-        </section>
     </main>
-    <footer>
-        <p class="center">Creato da: Cascello Marco, Colturato Davide e Mattiolo Luca</p>
-    </footer>
-    <script src="./js/user.js"></script>
+    <?php include("utils/prefabs/footer.php") ?>
 </body>
 </html>

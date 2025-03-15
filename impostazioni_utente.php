@@ -10,7 +10,7 @@
     }
 
     db_setup();
-    $result = db_do_query("SELECT nome, cognome, email FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
+    $result = db_do_query("SELECT nome, cognome, email, ruolo FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
     db_close();
 
     $row = $result->fetch_assoc();
@@ -18,6 +18,7 @@
     $nome = $row['nome'];
     $cognome = $row['cognome'];
     $email = $row['email'];
+    $ruolo = $row['ruolo'];
 ?>
 
 <!DOCTYPE html>
@@ -30,23 +31,19 @@
     <title>iiS Euganeo timetables | impostazioni account</title>
 </head>
 <body class="dark-white-bg">
-    <header>
-        <div class="row-style" id="imagezone">
-            <img src="./imgs/logo/logo_iiseuganeo_whitebg.png" alt="iiS Euganeo timetables" id="logo">
-            <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
-        </div>
-        <div class="row-style" id="utente_zone">
-            <img src="./imgs/utente/img_utente.png" alt="img utente" id="img_utente" onclick="f()">
-            <?php 
-                echo "<p>".$cognome." ".$nome."</p>";
-            ?>
-        </div>
-    </header>
+    <?php 
+        include("utils/prefabs/header.php");
+        getHeader('./')
+    ?>
     <nav>
         <ul>
             <li><a href="./utils/targets/logout.php">logout</a></li>
             <li><span>impostazioni</span></li>
-            <li><a href="./prenota.php">prenota</a></li>
+            <?php 
+                if($ruolo === 'D') {
+                    echo '<li><a href="./prenota.php">prenota</a></li>';
+                }
+            ?>
             <li><a href="./home.php">home</a></li>
         </ul>
     </nav>
@@ -109,10 +106,8 @@
             </fieldset>
         </form>
     </main>
-    <footer>
-        <p class="center">Creato da: Cascello Marco, Colturato Davide e Mattiolo Luca</p>
-    </footer>
-    <script src="./js/user.js"></script>
+    <?php include("utils/prefabs/footer.php") ?>
+    
     <script src="./js/pwd-button.js"></script>
 </body>
 </html>

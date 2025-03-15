@@ -28,19 +28,11 @@
     <link rel="shortcut icon" href="./imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
     <title>iiS Euganeo timetables | prenota</title>
 </head>
-<body class="dark-white-bg">
-    <header>
-        <div class="row-style" id="imagezone">
-            <img src="./imgs/logo/logo_iiseuganeo_whitebg.png" alt="iiS Euganeo timetables" id="logo">
-            <img src="./imgs/logo/logo_name.png" alt="iiS Euganeo timetables" id="logoname">
-        </div>
-        <div class="row-style" id="utente_zone">
-            <img src="./imgs/utente/img_utente.png" alt="img utente" id="img_utente" onclick="f()">
-            <?php 
-                echo "<p>".$cognome." ".$nome."</p>";
-            ?>
-        </div>
-    </header>
+<body class="dark-white-bg">    
+    <?php 
+        include("utils/prefabs/header.php");
+        getHeader('./');
+    ?>
     <nav>
         <ul>
             <li><a href="./utils/targets/logout.php">logout</a></li>
@@ -52,9 +44,6 @@
     <main>
         <h1>prenota page</h1>
     </main>
-    <footer>
-        <p class="center">Creato da: Cascello Marco, Colturato Davide e Mattiolo Luca</p>
-    </footer>
-    <script src="./js/user.js"></script>
+    <?php include("utils/prefabs/footer.php") ?>
 </body>
 </html>
