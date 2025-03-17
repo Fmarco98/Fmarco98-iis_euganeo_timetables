@@ -34,8 +34,8 @@
     
     function db_do_query($query, ...$params) {
         /*
-        Effettua operazione di select:
-        sintassi: db_select("select * from..", "<param_type>", <...params>)
+        Effettua una query con sanitizzazione degli input.
+        sintassi: db_do_query("select * from..", "<param_type>", <...params>)
         */
 
         $mysql = $GLOBALS['mysql'];
@@ -44,6 +44,19 @@
         call_user_func_array(array($stmt, 'bind_param'), $params);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        return $result;
+    }
+
+    function db_do_simple_query($query) {
+        /*
+        Effettua una query
+        sintassi: db_do_simple_query("select * from..")
+        */
+
+        $mysql = $GLOBALS['mysql'];
+
+        $result = $mysql->query($query);
 
         return $result;
     }

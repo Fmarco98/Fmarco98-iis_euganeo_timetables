@@ -1,7 +1,7 @@
 <?php
     session_start();
     
-    include("../redirect.php");
+    include("../utils.php");
     include("../db_manager.php");
     include("../session_errors.php");
 

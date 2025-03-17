@@ -2,7 +2,7 @@
     session_start();
     
     //imports
-    include("utils/redirect.php");
+    include("utils/utils.php");
     include("utils/db_manager.php");
     include("utils/session_errors.php");
 

@@ -2,7 +2,7 @@
     session_start();
 
     include("../db_managet.php");
-    include("../redirect.php");
+    include("../utils.php");
 
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
@@ -16,7 +16,7 @@
              JOIN fascia_oraria h ON h.id_fascia_oraria = p.fk_fascia_oraria
              JOIN aula a ON a.id_aula = p.fk_aula
              JOIN plesso pl ON pl.id_plesso = a.fk_plesso
-             WHERE DATEDIFF(now(), p.data) < 0 AND p.conferma = 1 AND p.fk_utente = ?';
+             WHERE DATEDIFF(now(), p.data) <= 0 AND p.conferma = 1 AND p.fk_utente = ?';
 
     $query_prenotazioni_attese = 
             'SELECT a.piano, a.n_aula, a.nome as aula_nome, pl.nome as plesso_nome, p.data, h.ora_inizio, h.ora_fine, p.descrizione, p.id_prenotazione 
@@ -24,22 +24,12 @@
              JOIN fascia_oraria h ON h.id_fascia_oraria = p.fk_fascia_oraria
              JOIN aula a ON a.id_aula = p.fk_aula
              JOIN plesso pl ON pl.id_plesso = a.fk_plesso
-             WHERE DATEDIFF(now(), p.data) < 0 AND p.conferma = 0 AND p.fk_utente = ?';
+             WHERE DATEDIFF(now(), p.data) <= 0 AND p.conferma = 0 AND p.fk_utente = ?';
 
     $prenotazini_attive = db_do_query($query_prenotazioni_attive, 'i', $_SESSION['id_utente']);
     $prenotazini_attese = db_do_query($query_prenotazioni_attese, 'i', $_SESSION['id_utente']);
 
     db_close();
-
-    function normalize($piano, $aula) {
-        $s = $piano;
-        if(strlen(strval($aula)) < 2) {
-            $s .= '0'.$aula;
-        } else {
-            $s .= $aula;
-        }
-        return $s;
-    }
 ?>
 
 <section class="grid-2column">
@@ -63,7 +53,7 @@
                         foreach($prenotazini_attive as $row) {
                             echo 
                             '<tr>
-                                <td>'.normalize($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
+                                <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
                                 <td>'.$row['plesso_nome'].'</td>
                                 <td>'.$row['data'].'</td>
                                 <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>
@@ -110,7 +100,7 @@
                         foreach($prenotazini_attese as $row) {
                             echo 
                             '<tr>
-                                <td>'.normalize($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
+                                <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
                                 <td>'.$row['plesso_nome'].'</td>
                                 <td>'.$row['data'].'</td>
                                 <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>

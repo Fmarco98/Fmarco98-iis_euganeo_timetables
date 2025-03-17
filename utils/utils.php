@@ -9,4 +9,14 @@
 
 		header("Refresh: ".$time."; url=".$page_path);
 	}
+
+	function normalize_aula($piano, $aula) {
+        $s = $piano;
+        if(strlen(strval($aula)) < 2) {
+            $s .= '0'.$aula;
+        } else {
+            $s .= $aula;
+        }
+        return $s;
+    }
 ?>

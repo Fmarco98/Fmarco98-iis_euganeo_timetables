@@ -1,7 +1,7 @@
 <?php
     session_start();
     
-    include("../redirect.php");
+    include("../utils.php");
     
     $_SESSION['id_utente'] = NULL;
     session_destroy();
