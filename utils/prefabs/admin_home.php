@@ -24,58 +24,56 @@
     db_close();
 ?>
 
-<section>
-    <h2>Prenotazioni da confermare</h2>
-    <hr>
-    <table id="prenotazioni_attive">
-        <thead>
-            <tr>
-                <th>professore</th>
-                <th>aula</th>
-                <th>plesso</th>
-                <th>data</th>
-                <th>fascia oraria</th>
-                <th>descrizione</th>
-                <th>azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                if ($prenotazini->num_rows > 0) {
-                    foreach($prenotazini as $row) {
-                        echo 
-                        '<tr>
-                            <td>'.$row['docente_cognome'].' '.$row['docente_nome'].'</td>
-                            <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
-                            <td>'.$row['plesso_nome'].'</td>
-                            <td>'.$row['data'].'</td>
-                            <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>
-                            <td>'.$row['descrizione'].'</td>
-                            <td>
-                                <form action="./utils/targets/elimina_prenotazione.php" method="post">
-                                    <fieldset>
-                                        <legend>Rifiuta</legend>
-                                        <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
-                                        <input type="submit" value="rifiuta">
-                                    </fieldset>
-                                </form>
-                                <form action="./utils/targets/conferma_prenotazione.php" method="post">
-                                    <fieldset>
-                                        <legend>Accetta</legend>
-                                        <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
-                                        <input type="submit" value="accetta">
-                                    </fieldset>
-                                </form>
-                            </td>
-                        </tr>';
-                    }
-                } else {
-                    echo
+<h2>Prenotazioni da confermare</h2>
+<hr>
+<table id="prenotazioni_attive">
+    <thead>
+        <tr>
+            <th>professore</th>
+            <th>aula</th>
+            <th>plesso</th>
+            <th>data</th>
+            <th>fascia oraria</th>
+            <th>descrizione</th>
+            <th>azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+            if ($prenotazini->num_rows > 0) {
+                foreach($prenotazini as $row) {
+                    echo 
                     '<tr>
-                        <td colspan="6">Non ci sono prenotazioni da confermare</td>
+                        <td>'.$row['docente_cognome'].' '.$row['docente_nome'].'</td>
+                        <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
+                        <td>'.$row['plesso_nome'].'</td>
+                        <td>'.$row['data'].'</td>
+                        <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>
+                        <td>'.$row['descrizione'].'</td>
+                        <td>
+                            <form action="./utils/targets/elimina_prenotazione.php" method="post">
+                                <fieldset>
+                                    <legend>Rifiuta</legend>
+                                    <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
+                                    <input type="submit" value="rifiuta">
+                                </fieldset>
+                            </form>
+                            <form action="./utils/targets/conferma_prenotazione.php" method="post">
+                                <fieldset>
+                                    <legend>Accetta</legend>
+                                    <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
+                                    <input type="submit" value="accetta">
+                                </fieldset>
+                            </form>
+                        </td>
                     </tr>';
                 }
-            ?>
-        </tbody>
-    </table>   
-</section>
+            } else {
+                echo
+                '<tr>
+                    <td colspan="6">Non ci sono prenotazioni da confermare</td>
+                </tr>';
+            }
+        ?>
+    </tbody>
+</table>

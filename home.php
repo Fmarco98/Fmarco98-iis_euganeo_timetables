@@ -41,13 +41,20 @@
             <?php 
                 if($ruolo === 'D') {
                     echo '<li><a href="./prenota.php">prenota</a></li>';
+                } elseif($ruolo === 'A') {
+                    echo '<li><a href="./admin/gestione_utenti.php">gestisci utenti</a></li>';
                 }
             ?>
             <li><span>home</span></li>
         </ul>
     </nav>
     <main>
-        <?php 
+        <?php
+            if($_SESSION['error'] === NO_PERMISSION) {
+                echo '<p class="phperror">non hai il permesso</p>';
+                $_SESSION['error'] = NONE;
+            }
+        
             echo '<h1 class="xl-text">Buongiorno '.$cognome.' '.$nome.'</h1>';
 
             if($ruolo === 'D') {

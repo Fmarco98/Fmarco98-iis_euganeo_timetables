@@ -42,6 +42,8 @@
             <?php 
                 if($ruolo === 'D') {
                     echo '<li><a href="./prenota.php">prenota</a></li>';
+                } elseif($ruolo === 'A') {
+                    echo '<li><a href="./admin/gestione_utenti.php">gestisci utenti</a></li>';
                 }
             ?>
             <li><a href="./home.php">home</a></li>
