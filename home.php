@@ -53,6 +53,9 @@
             if($_SESSION['error'] === NO_PERMISSION) {
                 echo '<p class="phperror">non hai il permesso</p>';
                 $_SESSION['error'] = NONE;
+            } elseif($_SESSION['error'] === ERROR) {
+                echo '<p class="phperror">errore</p>';
+                $_SESSION['error'] = NONE;
             }
         
             echo '<h1 class="xl-text">Buongiorno '.$cognome.' '.$nome.'</h1>';
