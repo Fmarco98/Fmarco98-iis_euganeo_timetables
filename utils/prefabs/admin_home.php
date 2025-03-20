@@ -41,15 +41,14 @@
     <tbody>
         <?php
             if ($prenotazini->num_rows > 0) {
-                foreach($prenotazini as $row) {
-                    echo 
-                    '<tr>
-                        <td>'.$row['docente_cognome'].' '.$row['docente_nome'].'</td>
-                        <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
-                        <td>'.$row['plesso_nome'].'</td>
-                        <td>'.$row['data'].'</td>
-                        <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>
-                        <td>'.$row['descrizione'].'</td>
+                foreach($prenotazini as $row) { ?> 
+                    <tr>
+                        <td><?php echo $row['docente_cognome'].' '.$row['docente_nome'] ?></td>
+                        <td><?php echo normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')' ?></td>
+                        <td><?php echo $row['plesso_nome'] ?></td>
+                        <td><?php echo $row['data'] ?></td>
+                        <td><?php echo $row['ora_inizio'].' - '.$row['ora_fine'] ?></td>
+                        <td><?php echo $row['descrizione'] ?></td>
                         <td>
                             <form action="./utils/targets/elimina_prenotazione.php" method="post">
                                 <fieldset>
@@ -66,14 +65,12 @@
                                 </fieldset>
                             </form>
                         </td>
-                    </tr>';
-                }
-            } else {
-                echo
-                '<tr>
+                    </tr>
+                <?php }
+            } else { ?>
+                <tr>
                     <td colspan="6">Non ci sono prenotazioni da confermare</td>
-                </tr>';
-            }
-        ?>
+                </tr>
+        <?php } ?>
     </tbody>
 </table>

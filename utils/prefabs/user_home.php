@@ -50,14 +50,13 @@
             <tbody>
                 <?php
                     if ($prenotazini_attive->num_rows > 0) {
-                        foreach($prenotazini_attive as $row) {
-                            echo 
-                            '<tr>
-                                <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
-                                <td>'.$row['plesso_nome'].'</td>
-                                <td>'.$row['data'].'</td>
-                                <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>
-                                <td>'.$row['descrizione'].'</td>
+                        foreach($prenotazini_attive as $row) { ?>
+                            <tr>
+                                <td><?php echo normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')' ?></td>
+                                <td><?php echo $row['plesso_nome'] ?></td>
+                                <td><?php echo $row['data'] ?></td>
+                                <td><?php echo $row['ora_inizio'].' - '.$row['ora_fine'] ?></td>
+                                <td><?php echo $row['descrizione'] ?></td>
                                 <td>
                                     <form action="./utils/targets/elimina_prenotazione.php" method="post">
                                         <fieldset>
@@ -67,15 +66,13 @@
                                         </fieldset>
                                     </form>
                                 </td>
-                            </tr>';
-                        }
-                    } else {
-                        echo
-                        '<tr>
+                            </tr>
+                        <?php }
+                    } else { ?>
+                        <tr>
                             <td colspan="6">Non ci sono prenotazioni attive</td>
-                        </tr>';
-                    }
-                ?>
+                        </tr>
+                <?php } ?>
             </tbody>
         </table>   
     </div>
@@ -97,29 +94,29 @@
             <tbody>
                 <?php 
                     if($prenotazini_attese->num_rows > 0) {
-                        foreach($prenotazini_attese as $row) {
-                            echo 
-                            '<tr>
-                                <td>'.normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')</td>
-                                <td>'.$row['plesso_nome'].'</td>
-                                <td>'.$row['data'].'</td>
-                                <td>'.$row['ora_inizio'].' - '.$row['ora_fine'].'</td>
-                                <td>'.$row['descrizione'].'</td>
+                        foreach($prenotazini_attese as $row) { ?>
+                            <tr>
+                                <td><?php echo normalize_aula($row['piano'], $row['n_aula']).' ('.$row['aula_nome'].')' ?></td>
+                                <td><?php echo $row['plesso_nome'] ?></td>
+                                <td><?php echo $row['data'] ?></td>
+                                <td><?php echo $row['ora_inizio'].' - '.$row['ora_fine'] ?></td>
+                                <td><?php echo $row['descrizione'] ?></td>
                                 <td>
                                     <form action="./utils/targets/elimina_prenotazione.php" method="post">
-                                        <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
-                                        <input type="submit" value="elimina">
+                                        <fieldset>
+                                            <legend>Elimina</legend>
+                                            <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
+                                            <input type="submit" value="elimina">
+                                        </fieldset>
                                     </form>
                                 </td>
-                            </tr>';
-                        }
-                    } else {
-                        echo
-                        '<tr>
-                            <td colspan="6">Non ci sono prenotazioni in attesa</td>
-                        </tr>';
-                    }
-                ?>
+                            </tr>
+                        <?php }
+                    } else { ?>
+                        <tr>
+                            <td colspan="6">Non ci sono prenotazioni attive</td>
+                        </tr>
+                <?php } ?>
             </tbody>
         </table>   
     </div>
