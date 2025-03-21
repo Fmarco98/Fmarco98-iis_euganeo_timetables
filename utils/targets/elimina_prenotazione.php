@@ -22,9 +22,9 @@
         } else {
             echo 'non hai il permesso';
             db_close();
-            redirect(3, '../../home.php');
+            redirect(10, '../../home.php');
         }
+    } else {
+        redirect(0, '../../home.php');
     }
-
-    redirect(0, '../../home.php');
 ?>

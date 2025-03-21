@@ -21,7 +21,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it-IT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,7 +42,8 @@
                 if($ruolo === 'D') {
                     echo '<li><a href="./prenota.php">prenota</a></li>';
                 } elseif($ruolo === 'A') {
-                    echo '<li><a href="./admin/gestione_utenti.php">gestisci utenti</a></li>';
+                    echo '<li><a href="./admin/gestione_utenti.php">utenti</a></li>';
+                    echo '<li><a href="./admin/gestione_fascie_orarie.php">fascie orarie</a></li>';
                 }
             ?>
             <li><span>home</span></li>
@@ -58,7 +59,7 @@
                 $_SESSION['error'] = NONE;
             }
         
-            echo '<h1 class="xl-text">Buongiorno '.$cognome.' '.$nome.'</h1>';
+            echo '<h1>Buongiorno '.$cognome.' '.$nome.'</h1>';
 
             if($ruolo === 'D') {
                 include("utils/prefabs/user_home.php");
@@ -69,6 +70,9 @@
             }
         ?>
     </main>
-    <?php include("utils/prefabs/footer.php") ?>
+    <?php 
+        include("utils/prefabs/footer.php");
+        getFooter('./');
+    ?>
 </body>
 </html>

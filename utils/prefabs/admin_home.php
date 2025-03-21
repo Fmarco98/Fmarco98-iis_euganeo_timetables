@@ -53,14 +53,14 @@
                             <form action="./utils/targets/elimina_prenotazione.php" method="post">
                                 <fieldset>
                                     <legend>Rifiuta</legend>
-                                    <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
+                                    <input type="hidden" name="id_prenotazione" value="<?php echo $row['id_prenotazione'] ?>">
                                     <input type="submit" value="rifiuta">
                                 </fieldset>
                             </form>
-                            <form action="./utils/targets/conferma_prenotazione.php" method="post">
+                            <form action="./utils/targets/admin/conferma_prenotazione.php" method="post">
                                 <fieldset>
                                     <legend>Accetta</legend>
-                                    <input type="hidden" name="id_prenotazione" value="'.$row['id_prenotazione'].'">
+                                    <input type="hidden" name="id_prenotazione" value="<?php echo $row['id_prenotazione'] ?>">
                                     <input type="submit" value="accetta">
                                 </fieldset>
                             </form>

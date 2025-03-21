@@ -34,12 +34,12 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it-IT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./../css/style.css" media="screen"> <!--and (min-width:1000px)-->
-    <link rel="shortcut icon" href="./imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./../imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
     <title>iiS Euganeo timetables | gestione utenti</title>
 </head>
 <body class="dark-white-bg">
@@ -51,7 +51,8 @@
         <ul>
             <li><a href="./../utils/targets/logout.php">logout</a></li>
             <li><a href="./../impostazioni_utente.php">impostazioni</a></li>
-            <li><span>gestisci utenti</span></li>
+            <li><span>utenti</span></li>
+            <li><a href="./gestione_fascie_orarie.php">fascie orarie</a></li>
             <li><a href="./../home.php">home</a></li>
         </ul>
     </nav>
@@ -105,6 +106,9 @@
             </tbody>
         </table>
     </main>
-    <?php include("utils/prefabs/footer.php") ?>
+    <?php 
+        include("../utils/prefabs/footer.php"); 
+        getFooter('../');
+    ?>
 </body>
 </html>

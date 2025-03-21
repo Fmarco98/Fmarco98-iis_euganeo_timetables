@@ -2,7 +2,7 @@
 :root {
     --dark-white: rgb(237, 235, 235);
     --blue: rgb(0, 124, 212);
-    --dark-blue: rgb(0, 94, 161);
+    --dark-blue: rgb(4, 80, 180);
     --gray: gray;
 
     --font-size-large: 4vh;
@@ -31,18 +31,22 @@ body {
 }
 
 button.pwd-button.active::before {
-    content: "+";
+    content: "🔒";
 }
 button.pwd-button::before {
-    content: "x";
+    content: "🔓";
 }
 
 table {
-    border-collapse: collapse;
-    border: 1px solid #000000;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    border: 6px solid #000000;
     width: 90%;
     margin-right: 5%;
     margin-left: 5%;
+    border-radius: 10px;
+    border-style: ridge;
 }
 thead {
     border-bottom: 1px black solid !important;
@@ -50,11 +54,31 @@ thead {
 tbody {
     overflow-y: scroll;
 }
+th {
+    background-color: var(--blue);
+    color: white;
+}
 tr {
     text-align: center;
 }
 tr:nth-child(even) {
     background-color: #cccccc;
+}
+
+h1 {
+    text-decoration: overline;
+    text-decoration-color: rgb(236, 203, 11);
+    font-style: oblique;
+    font-size: var(--font-size-large);
+}
+
+h2 {
+    font-family: 'Brush Script MT', cursive;
+    font-size: var(--font-size-normal);
+}
+
+main {
+    margin: 1vh 0.5vw;
 }
 
 /*------------------ header ------------------*/
@@ -126,14 +150,13 @@ nav span, nav a:hover {
     border-bottom: 2px solid white;
 }
 
-/*------------------- main -------------------*/
-main {
-    margin: 1vh 0.5vw;
-}
-
 /*------------------ footer ------------------*/
 
 footer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+
     margin-top: auto;
     background-color: var(--gray);
     color: black;
@@ -145,6 +168,27 @@ footer {
 footer:has(> .center) {
     align-items: end !important; 
 }
+footer img {
+    height: 10vh;
+}
+footer p {
+    margin: 0px;
+    padding-right: 1vw;
+    height: 0px;
+    position: relative;
+    top: -3vh;
+}
+footer div#container {
+    display: flex;
+    display: ;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    min-height: 17vh;
+
+    margin: 1vh 0.5vw;
+}
+
 
 /*------------------- form -------------------*/
 form legend {
@@ -296,6 +340,11 @@ form.login input[type="submit"]:hover, form.sign-up input[type="submit"]:hover {
     flex-wrap: nowrap;
 }
 
+*:has(> .right) {
+    text-align: right;
+    margin-top: 2v;
+}
+
 .dark-white-bg {
     background-color: var(--dark-white);
 }
@@ -317,4 +366,20 @@ form.login input[type="submit"]:hover, form.sign-up input[type="submit"]:hover {
 
 .bordertest { /*da rimuovere */
     border: 10px solid red !important;
+}
+
+.ora-inizio {
+    position: absolute;
+    top: 5px;   /* Posiziona l'ora di inizio in alto */
+    left: 5px;  /* Posiziona l'ora di inizio a sinistra */
+    margin: 0;
+    font-size: 15px;
+}
+
+.ora-fine {
+    position: absolute;
+    bottom: 5px;  /* Posiziona l'ora di fine in basso */
+    right: 5px;   /* Posiziona l'ora di fine a destra */
+    margin: 0;
+    font-size: 15px;
 }
