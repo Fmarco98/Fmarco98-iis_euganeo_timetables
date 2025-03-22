@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 20, 2025 alle 18:56
+-- Creato il: Mar 22, 2025 alle 21:07
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -60,8 +60,8 @@ CREATE TABLE `fascia_oraria` (
 --
 
 INSERT INTO `fascia_oraria` (`id_fascia_oraria`, `ora_inizio`, `ora_fine`) VALUES
-(1, '07:55:00', '08:55:00'),
-(2, '07:50:00', '08:45:00');
+(2, '07:50:00', '08:45:00'),
+(1, '07:55:00', '08:55:00');
 
 -- --------------------------------------------------------
 
@@ -201,7 +201,8 @@ ALTER TABLE `aula`
 -- Indici per le tabelle `fascia_oraria`
 --
 ALTER TABLE `fascia_oraria`
-  ADD PRIMARY KEY (`id_fascia_oraria`);
+  ADD PRIMARY KEY (`id_fascia_oraria`),
+  ADD UNIQUE KEY `ora_inizio` (`ora_inizio`,`ora_fine`);
 
 --
 -- Indici per le tabelle `fascia_oraria_giorno`

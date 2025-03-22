@@ -3,6 +3,7 @@
 
     include("../../utils.php");
     include("../../db_manager.php");
+    include("../../session_errors.php");
 
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, '../../../login.php');
