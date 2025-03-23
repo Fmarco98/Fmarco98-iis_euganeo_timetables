@@ -275,7 +275,7 @@
     </main>
     
     <?php 
-        include("../utils/prefabs/footer.php"); 
+        include("utils/prefabs/footer.php"); 
         getFooter('./');
     ?>
 </body>

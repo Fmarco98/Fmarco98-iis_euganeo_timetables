@@ -1,5 +1,4 @@
-<?php 
-    function getFooter($folder_prefix) { ?>
+<?php function getFooter($folder_prefix) { ?>
         <footer>
             <div id="container">  
                 <img src="<?php echo $folder_prefix ?>imgs/logo/logo_iiseuganeo.png" alt="iiS Euganeo timetables" id="logoname">
