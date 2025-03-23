@@ -25,7 +25,8 @@
 
     $query_fh = 
         'SELECT id_fascia_oraria, ora_inizio, ora_fine
-         FROM fascia_oraria';
+         FROM fascia_oraria
+         ORDER BY id_fascia_oraria';
     
     $query_g = 
         'SELECT id_giorno, nome
@@ -36,7 +37,8 @@
         'SELECT fhg.id_fascia_oraria_giorno, fh.ora_inizio, fh.ora_fine, g.nome
          FROM fascia_oraria_giorno fhg
          JOIN fascia_oraria fh ON fhg.fk_fascia_oraria = fh.id_fascia_oraria
-         JOIN giorno g ON g.id_giorno = fhg.fk_giorno';
+         JOIN giorno g ON g.id_giorno = fhg.fk_giorno
+         ORDER BY g.id_giorno, fh.ora_inizio';
     
     $fascie_orarie = db_do_simple_query($query_fh);
     $fascie_orarie_giorno = db_do_simple_query($query_fhg);
@@ -69,9 +71,6 @@
         </ul>
     </nav>
     <main>
-        <h2>fascie orarie</h2>
-        <hr>
-
         <section class="grid-2column">
             <div>
                 <h2>fascie orarie - giorni</h2>
@@ -79,6 +78,9 @@
                 <?php 
                     if($_SESSION['error'] === ADMIN_FHG_NOT_EXIST) {
                         echo '<p class="phperror">Fascia oraria e giorno devono essere selezionati</p>';
+                        $_SESSION['error'] = NONE;
+                    } elseif ($_SESSION['error'] === ADMIN_FHG_ALREADY_EXIST) {
+                        echo '<p class="phperror">Fascia oraria-girono già esistente</p>';
                         $_SESSION['error'] = NONE;
                     }
                 ?>
@@ -98,7 +100,7 @@
                                 <td><?php echo $f['ora_inizio'].' - '.$f['ora_fine'] ?></td>
                                 <td><?php echo $f['nome'] ?></td>
                                 <td>
-                                    <form action="../utils/targets/admin/" method="post">
+                                    <form action="../utils/targets/admin/fascie_orarie_girono_rimuovi.php" method="post">
                                         <fieldset>
                                             <legend>elimina fascia oraria</legend>
                                             <input type="hidden" name="id_fascia_oraria_giorno" value="<?php echo $f['id_fascia_oraria_giorno'] ?>">
@@ -115,19 +117,19 @@
                         <?php } ?>
                         <tr>
                             <td colspan="3">
-                                <form action="../utils/targets/admin/" method="post">
+                                <form action="../utils/targets/admin/fascie_orarie_girono_aggiungi.php" method="post">
                                     <fieldset>
                                         <legend>inserisci fascia oraria giorno</legend>
                                         <select name="id_fascia_oraria" id="fascia_oraria_input" required>
                                             <option value="-1">Seleziona orario</option>
                                             <?php foreach($fascie_orarie as $r) { ?>
-                                                <option value="<?php echo $r['di_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
+                                                <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
                                             <?php } ?>
                                         </select>
                                         <select name="id_giorno" id="giorno_input" required>
                                             <option value="-1">Seleziona girono </option>
                                             <?php foreach($gironi as $r) { ?>
-                                                <option value="<?php echo $r['di_giorno'] ?>"><?php echo $r['nome'] ?></option>
+                                                <option value="<?php echo $r['id_giorno'] ?>"><?php echo $r['nome'] ?></option>
                                             <?php } ?>
                                         </select> 
                                         <input type="submit" value="Inserisci">
