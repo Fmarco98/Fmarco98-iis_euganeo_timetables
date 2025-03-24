@@ -5,6 +5,7 @@
     include("../../db_manager.php");
     include("../../session_errors.php");
 
+    //controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, '../../../login.php');
     }
@@ -14,7 +15,9 @@
 
         $permesso = db_do_query("SELECT ruolo FROM utente WHERE id_utente=?", 'i', $_SESSION['id_utente'])->fetch_assoc();
         
+        //controllo permesso di modifica
         if($permesso['ruolo'] === 'A') {
+            //controllo validità del valore
             if($_POST['ora_inizio'] < $_POST['ora_fine']) {
                 $query =
                 'SELECT COUNT(id_fascia_oraria) = 0 as a 
@@ -24,6 +27,7 @@
                 db_start_transaction();
                 $r = db_do_query($query, 'ss', $_POST['ora_inizio'], $_POST['ora_fine'])->fetch_assoc();
 
+                //controllo se già presente
                 if($r['a']) {
                     db_do_query("INSERT INTO fascia_oraria(ora_inizio, ora_fine) VALUE (?, ?)", 'ss', $_POST['ora_inizio'], $_POST['ora_fine']);
                     
@@ -46,7 +50,7 @@
             $_SESSION['error'] = NO_PERMISSION;
             redirect(0, '../../../home.php');
         }
-    } else {
-        redirect(0, '../../../home.php');
     }
+
+    redirect(0, '../../../home.php');
 ?>

@@ -5,6 +5,7 @@
     include("../utils/db_manager.php");
     include("../utils/session_errors.php");
 
+    //controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, '../login.php');
     }
@@ -14,10 +15,11 @@
     $result = db_do_query("SELECT nome, cognome, ruolo FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
     $row = $result->fetch_assoc();
     
-    $nome = $row['nome'];
-    $cognome = $row['cognome'];
+    $nome = ucfirst($row['nome']);
+    $cognome = ucfirst($row['cognome']);
     $ruolo = $row['ruolo'];
 
+    //controllo permesso di visualizzazione
     if($ruolo !== 'A') {
         $_SESSION['error'] = NO_PERMISSION;
         redirect(0, '../home.php');

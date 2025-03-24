@@ -15,8 +15,8 @@
 
     $row = $result->fetch_assoc();
 
-    $nome = $row['nome'];
-    $cognome = $row['cognome'];
+    $nome = ucfirst($row['nome']);
+    $cognome = ucfirst($row['cognome']);
     $email = $row['email'];
     $ruolo = $row['ruolo'];
 ?>

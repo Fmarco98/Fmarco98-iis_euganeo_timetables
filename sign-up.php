@@ -19,11 +19,11 @@
             $row = $result->fetch_assoc();
             
             if(!$row['a']) {
-                db_do_query("INSERT INTO utente(email, password, nome, cognome, ruolo) VALUES (?, ?, ?, ?, 'D')", 'ssss', $_POST['email'], MD5($_POST['password']), $_POST['nome'], $_POST['cognome']);
+                db_do_query("INSERT INTO utente(email, password, nome, cognome, ruolo) VALUES (?, ?, ?, ?, 'D')", 'ssss', $_POST['email'], MD5($_POST['password']), strtolower($_POST['nome']), strtolower($_POST['cognome']));
                 db_end_transaction('y');
                 db_close();
 
-                redirect(0, 'login.php');  //login effettuato
+                redirect(0, 'login.php');  //sign-up effettuato
             } else {
                 db_end_transaction('n');
                 db_close();
