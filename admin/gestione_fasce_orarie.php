@@ -69,6 +69,7 @@
             <li><a href="./../impostazioni_utente.php">impostazioni</a></li>
             <li><a href="./gestione_utenti.php">utenti</a></li>
             <li><span>fasce orarie</span></li>
+            <li><a href="./gestione_aule.php">aule</a></li>
             <li><a href="./../home.php">home</a></li>
         </ul>
     </nav>
@@ -104,7 +105,7 @@
                                 <td>
                                     <form action="../utils/targets/admin/fascie_orarie_girono_rimuovi.php" method="post">
                                         <fieldset>
-                                            <legend>elimina fascia oraria</legend>
+                                            <legend>elimina fascia oraria giorno</legend>
                                             <input type="hidden" name="id_fascia_oraria_giorno" value="<?php echo $f['id_fascia_oraria_giorno'] ?>">
                                             <input type="submit" value="elimina">
                                         </fieldset>
@@ -192,6 +193,7 @@
                             <td colspan="3">
                                 <form action="../utils/targets/admin/fascie_orarie_aggiungi.php" method="post">
                                     <fieldset>
+                                        <legend>inserisci fascia oraria</legend>
                                         <label for="ora_inizio_input">Ora inizio</label>
                                         <input type="time" name="ora_inizio" id="ora_inizio_input" required>
                                         <label for="ora_inizio_input">Ora fine</label>

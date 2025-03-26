@@ -127,8 +127,8 @@ CREATE TABLE `plesso` (
 
 INSERT INTO `plesso` (`id_plesso`, `nome`, `n_piani`) VALUES
 (1, 'IIS Euganeo', 3),
-(2, 'Fermi', 1),
-(3, 'Duca', 1);
+(2, 'Fermi', 2),
+(3, 'Duca', 2);
 
 -- --------------------------------------------------------
 
