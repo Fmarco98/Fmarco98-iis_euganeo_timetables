@@ -7,12 +7,16 @@
     define('DB_USER', 'iis_euganeo_timetables');
     define('DB_PASSWORD', 'iis_euganeo_timetables_password');
     define('DB_DB', 'iis_euganeo_timetables');
+    define('DB_PORT', 3306);
     
     //Config server scuola
-    /*define('DB_SERVER', 'localhost');
+    /*
+    define('DB_SERVER', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASSWORD', 'root');
-    define('DB_DB', 'SITO_cmc_euganeo_timetables');*/
+    define('DB_DB', 'SITO_cmc_euganeo_timetables');
+    define('DB_PORT', 3306);
+    */
     
 
     //Variabili globali
@@ -22,7 +26,11 @@
     function db_setup() {
         //Inizia sessione con il db
 
-        $GLOBALS['mysql'] = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DB);
+        $GLOBALS['mysql'] = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DB, DB_PORT);
+
+        if($GLOBALS['mysql']->connect_error) {
+            die('Errore di connessione al DB: <br>'. $GLOBALS['mysql']->connect_error);
+        }
     }
 
     function db_close() {

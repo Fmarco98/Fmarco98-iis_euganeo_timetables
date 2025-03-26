@@ -10,18 +10,16 @@
         redirect(0, '../../login.php');
     }
 
-    $id_utente = $_SESSION['id_utente'];
-
     db_setup();
 
     // upadate del nome
     if(isset($_POST['nome']) && $_POST['nome'] !== '') {
-        db_do_query("UPDATE utente SET nome=? WHERE id_utente=?", "si", $_POST['nome'], $id_utente);
+        db_do_query("UPDATE utente SET nome=? WHERE id_utente=?", "si", $_POST['nome'], $_SESSION['id_utente']);
     }
 
     // update del cognome
     if(isset($_POST['cognome']) && $_POST['cognome'] !== '') {
-        db_do_query("UPDATE utente SET cognome=? WHERE id_utente=?", "si", $_POST['cognome'], $id_utente);
+        db_do_query("UPDATE utente SET cognome=? WHERE id_utente=?", "si", $_POST['cognome'], $_SESSION['id_utente']);
     }
 
     // update dell'email
@@ -32,7 +30,7 @@
         $row = $result->fetch_assoc();
             
         if(!$row['a']) {
-            db_do_query("UPDATE utente SET email=? WHERE id_utente=?", "si", $_POST['email'], $id_utente);
+            db_do_query("UPDATE utente SET email=? WHERE id_utente=?", "si", $_POST['email'], $_SESSION['id_utente']);
             db_end_transaction('y');
             
         } else {

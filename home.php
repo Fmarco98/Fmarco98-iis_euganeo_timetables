@@ -43,7 +43,7 @@
                     echo '<li><a href="./prenota.php">prenota</a></li>';
                 } elseif($ruolo === 'A') {
                     echo '<li><a href="./admin/gestione_utenti.php">utenti</a></li>';
-                    echo '<li><a href="./admin/gestione_fascie_orarie.php">fascie orarie</a></li>';
+                    echo '<li><a href="./admin/gestione_fasce_orarie.php">fasce orarie</a></li>';
                 }
             ?>
             <li><span>home</span></li>

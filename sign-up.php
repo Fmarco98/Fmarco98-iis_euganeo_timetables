@@ -47,9 +47,6 @@
     <title>iiS Euganeo timetables | Sign up</title>
 </head>
 <body class="dark-white-bg">
-    <!--<?php 
-        echo "psw_ok: ".$password_ok." | email_ok: ".!$email_gia_in_uso." |";
-    ?>-->
     <main class="full-display">
         <form action="" method="post" class="sign-up center">
             <div class="border-bottom row-style" id="imagezone">
@@ -62,23 +59,21 @@
                         if(!$password_ok || $email_gia_in_uso) {
                             if($email_gia_in_uso) {
                                 echo '<p class="phperror">email già in uso</p>';
-                            }
-                            echo '<label for="nome_input">Nome:</label>
-                            <input type="text" name="nome" id="nome_input" value="'.$_POST['nome'].'" required>
+                            } ?>
+                            <label for="nome_input">Nome:</label>
+                            <input type="text" name="nome" id="nome_input" value="<?php echo $_POST['nome']?>" required>
                             <label for="cognome_input">Cognome:</label>
-                            <input type="text" name="cognome" id="cognome_input" value="'.$_POST['cognome'].'" required>
+                            <input type="text" name="cognome" id="cognome_input" value="<?php echo $_POST['cognome']?>" required>
                             <label for="email_input">Email:</label>
-                            <input type="email" name="email" id="email_input" value="'.$_POST['email'].'" required>';
-                        } else {
-                            echo '<label for="nome_input">Nome:</label>
+                            <input type="email" name="email" id="email_input" value="<?php echo $_POST['email']?>" required>
+                        <?php } else { ?>
+                            <label for="nome_input">Nome:</label>
                             <input type="text" name="nome" id="nome_input" required>
                             <label for="cognome_input">Cognome:</label>
                             <input type="text" name="cognome" id="cognome_input" required>
                             <label for="email_input">Email:</label>
-                            <input type="email" name="email" id="email_input" required>';
-                        }
-                    ?>
-                    
+                            <input type="email" name="email" id="email_input" required>
+                        <?php } ?>
             </fieldset>
             <fieldset id="fieldset_password">
                 <legend>password</legend>

@@ -103,7 +103,7 @@ CREATE TABLE `giorno` (
 
 INSERT INTO `giorno` (`id_giorno`, `nome`) VALUES
 (4, 'Giovedì'),
-(1, 'Luniedì'),
+(1, 'Lunedì'),
 (2, 'Martedì'),
 (3, 'Mercoledì'),
 (6, 'Sabato'),

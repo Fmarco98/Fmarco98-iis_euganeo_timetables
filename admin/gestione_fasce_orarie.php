@@ -68,7 +68,7 @@
             <li><a href="./../utils/targets/logout.php">logout</a></li>
             <li><a href="./../impostazioni_utente.php">impostazioni</a></li>
             <li><a href="./gestione_utenti.php">utenti</a></li>
-            <li><span>fascie orarie</span></li>
+            <li><span>fasce orarie</span></li>
             <li><a href="./../home.php">home</a></li>
         </ul>
     </nav>
@@ -89,7 +89,7 @@
                 <table id="fhg">
                     <thead>
                         <tr>
-                            <th>Fascia ora</th>
+                            <th>Fascia oraria</th>
                             <th>Giorni</th>
                             <th>Azioni</th>
                         </tr>
@@ -122,14 +122,16 @@
                                 <form action="../utils/targets/admin/fascie_orarie_girono_aggiungi.php" method="post">
                                     <fieldset>
                                         <legend>inserisci fascia oraria giorno</legend>
+                                        <label for="fascia_oraria_input">Orario</label>
                                         <select name="id_fascia_oraria" id="fascia_oraria_input" required>
                                             <option value="-1">Seleziona orario</option>
                                             <?php foreach($fascie_orarie as $r) { ?>
                                                 <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
                                             <?php } ?>
                                         </select>
+                                        <label for="fascia_oraria_input">Giorno</label>
                                         <select name="id_giorno" id="giorno_input" required>
-                                            <option value="-1">Seleziona girono </option>
+                                            <option value="-1">Seleziona giorno </option>
                                             <?php foreach($gironi as $r) { ?>
                                                 <option value="<?php echo $r['id_giorno'] ?>"><?php echo $r['nome'] ?></option>
                                             <?php } ?>

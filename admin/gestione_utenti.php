@@ -54,7 +54,7 @@
             <li><a href="./../utils/targets/logout.php">logout</a></li>
             <li><a href="./../impostazioni_utente.php">impostazioni</a></li>
             <li><span>utenti</span></li>
-            <li><a href="./gestione_fascie_orarie.php">fascie orarie</a></li>
+            <li><a href="./gestione_fasce_orarie.php">fasce orarie</a></li>
             <li><a href="./../home.php">home</a></li>
         </ul>
     </nav>
