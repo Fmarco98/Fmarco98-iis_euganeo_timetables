@@ -85,12 +85,12 @@
                 <label for="password_input">Password:</label>
                 <div>
                     <input type="password" name="password" id="password_input" required>
-                    <button class="pwd-button"></button>
+                    <button type="button" class="pwd-button"></button>
                 </div>
                 <label for="password_input">Conferma password:</label>
                 <div>
                     <input type="password" name="password_conferma" id="password_conferma_input" required>
-                    <button class="pwd-button"></button>
+                    <button type="button" class="pwd-button"></button>
                 </div>
                 <input type="submit" value="Registrati" style="margin-top: auto">
             </fieldset>

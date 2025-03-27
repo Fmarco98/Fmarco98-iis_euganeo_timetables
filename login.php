@@ -60,7 +60,7 @@
                 <label for="password_input">password</label>
                 <div>
                     <input type="password" name="password" id="password_input" placeholder="ciao1234" required>
-                    <button class="pwd-button"></button>
+                    <button type="button" class="pwd-button"></button>
                 </div>
                 <input type="submit" value="Login">
             </fieldset>

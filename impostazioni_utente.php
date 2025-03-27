@@ -93,17 +93,17 @@
                 <label for="old_password_input">Vecchia password: </label>
                 <div class="border-bottom">
                     <input type="password" name="old_password" id="old_password_input" required>
-                    <button class="pwd-button"></button>
+                    <button type="button" class="pwd-button"></button>
                 </div>
                 <label for="new_password_input">Nuova password: </label>
                 <div>
                     <input type="password" name="new_password" id="new_password_input" required>
-                    <button class="pwd-button"></button>
+                    <button type="button" class="pwd-button"></button>
                 </div>
                 <label for="new_password_c_input">Nuova password conferma: </label>
                 <div>
                     <input type="password" name="new_password_conferma" id="new_password_c_input" required>
-                    <button class="pwd-button"></button>
+                    <button type="button" class="pwd-button"></button>
                 </div>
 
                 <input type="submit" value="Applica">
