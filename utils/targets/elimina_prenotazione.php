@@ -24,7 +24,7 @@
 
         } else {
             db_close();
-            $_SESSION['error'] = NO_PERMISSION
+            $_SESSION['error'] = NO_PERMISSION;
             redirect(0, '../../home.php');
         }
 

@@ -30,4 +30,16 @@
         }
         return $s;
     }
+
+    // Funzione per ottenere la settimana  'Y-m-d'
+    function get_settimana($format, $data) {
+        $timestamp = strtotime($data);
+        $giornoSettimana = date('N', $timestamp); // 1 (Lunedì) - 7 (Domenica)
+        $inizioSettimana = strtotime('-' . ($giornoSettimana - 1) . ' days', $timestamp);
+        $settimana = [];
+        for ($i = 0; $i < 7; $i++) {
+            $settimana[] = date($format, strtotime('+' . $i . ' days', $inizioSettimana));
+        }
+        return $settimana;
+    }
 ?>

@@ -8,13 +8,11 @@
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
-
+    
     db_setup();
     $result = db_do_query("SELECT nome, cognome FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
-    db_close();
-
     $row = $result->fetch_assoc();
-
+    
     $nome = ucfirst($row['nome']);
     $cognome = ucfirst($row['cognome']);
 ?>
@@ -40,28 +38,39 @@
 
         th, td {
             width: 14%;
-            height: 80px;
             text-align: center;
             border: 1px solid #ddd;
             position: relative;
             color: black;
         }
-
+        
         th {
             background-color: light-blue;
             font-weight: bold;
             border-color: blue
         }
-
+        
         tr{
-           color : black;
-           border-color: black;
+            color : black;
+            border-color: black;
         }
-
+        
         td{
             background-color:#ADD8E6;
-            border-color: black
+            border-color: black;
+        }
         
+        td form {
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: auto;
+        }
+        
+        td input[type="submit"]{
+            width: 100%;
+            height: auto;
+            height: 12vh;
+            opacity: 0;
         }
 
         .time-slot {
@@ -103,180 +112,162 @@
         </ul>
     </nav>
     <main>
-        <h2>Tabella Prenotazioni - Scuola</h2>
+        <h2>Prenotazioni</h2>
         <hr>
-        <table>
-            <thead>
-                <tr>
-                    <th>Lunedì</th>
-                    <th>Martedì</th>
-                    <th>Mercoledì</th>
-                    <th>Giovedì</th>
-                    <th>Venerdì</th>
-                    <th>Sabato</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Fasce Orarie -->
-                <tr>
-                    <td>
-                        <p class="ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                   
-                </tr>
-                <!-- Altri orari simili -->
-                <tr>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                    <td>
-                        <p class= "ora-inizio">7.55</p>
-                        <form action="pren">
-                            <input type="hidden" name="fasdadsa">
-                            <input type="submit" value="Prenota">
-                        </form>
-                        <p class="ora-fine">8.55</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <form action="prenota.php" method="post">
+            <fieldset>
+                <legend>filtro aula</legend>
+                <label for="plesso_input">Plesso</label>
+                <select name="id_plesso" id="plesso_input">
+                    <option value="-1">Seleziona plesso</option>
+                    <?php
+                        $query = 
+                            'SELECT id_plesso, nome
+                            FROM plesso';
+
+                        $plessi = db_do_simple_query($query);
+                        
+                        foreach($plessi as $r) { ?>
+                        <option value="<?php echo $r['id_plesso'] ?>"><?php echo $r['nome'] ?></option>
+                    <?php }?>
+                </select>
+                
+                <?php if(isset($_POST['id_plesso']) && $_POST['id_plesso'] != -1) { ?>
+                    <label for="aula_input">Aula</label>
+                    <select name="id_aula" id="aula_input">
+                        <option value="-1">Seleziona aula</option>
+                        <?php
+                        $query = 
+                            'SELECT id_aula, piano, nome, n_aula
+                             FROM aula
+                             WHERE fk_plesso = ?';
+
+                        $aule = db_do_query($query, 'i', $_POST['id_plesso']);
+                        
+                        foreach($aule as $r) { ?>
+                            <option value="<?php echo $r['id_aula'] ?>"><?php echo $r['nome'] ?></option>
+                        <?php }?>
+                    </select>
+                    
+                    <label for="data_input">Data</label>
+                    <input type="date" name="data" id="data_input" required>
+                <?php } ?>
+
+                <input type="submit" value="Seleziona">
+            </fieldset>
+        </form>
+        <hr>
+        
+        <?php if(isset($_POST['id_plesso']) && isset($_POST['id_aula']) && isset($_POST['data']) && $_POST['id_plesso'] != -1 && $_POST['id_aula'] != -1) { ?>
+            <table>
+                <thead>
+                    <tr>
+                        <?php 
+                            $data_giorni = get_settimana('d/m/Y', $_POST['data']);
+
+                            $giorni_query = 
+                                'SELECT id_giorno, nome
+                                 FROM giorno
+                                 ORDER BY id_giorno';
+
+                            $giorni = db_do_simple_query($giorni_query);
+
+                            $index = 0;
+                            foreach($giorni as $r) { ?>
+                                <th>
+                                    <h3><?php echo $data_giorni[$index] ?></h3>
+                                    <h4><?php echo $r['nome'] ?></h4>
+                                </th>
+                        <?php
+                                $index++;
+                            } 
+                        ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $fh_list = [];
+                        foreach($giorni as $r) {
+                            $query = 
+                            'SELECT fh.id_fascia_oraria, fh.ora_inizio, fh.ora_fine
+                             FROM fascia_oraria_giorno fhg
+                             JOIN fascia_oraria fh ON fh.id_fascia_oraria = fhg.fk_fascia_oraria 
+                             WHERE fk_giorno = ?';
+
+                            $result = db_do_query($query,'i', $r['id_giorno']);
+
+                            $temp = [];
+                            foreach($result as $r) {
+                                $temp[] = array('id_fascia_oraria' => $r['id_fascia_oraria'], 'ora_inizio' => $r['ora_inizio'], 'ora_fine' => $r['ora_fine']);
+                            }
+                            $fh_list[] = $temp;
+                        }
+                    ?>
+                    <?php
+                        $data_giorni = get_settimana('Ymd', $_POST['data']);
+
+                        for($i_h = 0; $i_h < 6; $i_h++) {
+                            echo '<tr>';
+                            for($i_g = 0; $i_g < count($fh_list); $i_g++) { 
+                                if(count($fh_list[$i_g]) > $i_h) {
+                                ?>
+                                <td>
+                                    <form action="pren">
+                                        <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
+                                        <input type="hidden" name="id_fascia_oraria" value="<?php echo $fh_list[$i_g][$i_h]['id_fascia_oraria'] ?>">
+                                        <input type="hidden" name="id_aula" value="<?php echo $_POST['id_aula'] ?>">
+                                        <input type="hidden" name="data" value="<?php echo $data_giorni[$i_g] ?>">
+                                        <input type="submit" value="Prenota">
+                                        <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
+                                    </form>
+                                </td>
+                    <?php
+                                } else {
+                                    echo '<td style="background-color:rgb(215, 215, 215)"></td>';
+                                }
+                            }
+                            echo '</tr>';
+                        }
+                    ?>
+
+                </tbody>
+            </table>        
+        <?php } ?>
+
     </main>
     
     <?php 
         include("utils/prefabs/footer.php"); 
         getFooter('./');
+        db_close();
     ?>
+
+    <script>
+        const select1 = document.getElementById('plesso_input');
+        
+        // Recupera il valore salvato, se esiste
+        const savedValue1 = localStorage.getItem('selectedValue');
+        if (savedValue1) {
+            select1.value = savedValue1;
+        }
+        
+        // Salva il valore quando cambia
+        select1.addEventListener('change', () => {
+            localStorage.setItem('selectedValue', select1.value);
+        });
+        
+        const select2 = document.getElementById('aula_input');
+
+        // Recupera il valore salvato, se esiste
+        const savedValue2 = localStorage.getItem('selectedValue');
+        if (savedValue2) {
+            select2.value = savedValue2;
+        }
+
+        // Salva il valore quando cambia
+        select2.addEventListener('change', () => {
+            localStorage.setItem('selectedValue', select2.value);
+        });
+    </script>                    
 </body>
 </html>
