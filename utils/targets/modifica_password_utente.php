@@ -34,7 +34,7 @@
         }
 
         db_close();
+    } else {
+        redirect(0, '../../home.php');
     }
-    
-    redirect(0, "../../home.php");
 ?>

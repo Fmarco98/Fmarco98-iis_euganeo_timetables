@@ -103,7 +103,7 @@
                                 <td><?php echo $f['ora_inizio'].' - '.$f['ora_fine'] ?></td>
                                 <td><?php echo $f['nome'] ?></td>
                                 <td>
-                                    <form action="../utils/targets/admin/fascie_orarie_girono_rimuovi.php" method="post">
+                                    <form action="../utils/targets/admin/fasce_orarie_girono_rimuovi.php" method="post">
                                         <fieldset>
                                             <legend>elimina fascia oraria giorno</legend>
                                             <input type="hidden" name="id_fascia_oraria_giorno" value="<?php echo $f['id_fascia_oraria_giorno'] ?>">
@@ -120,7 +120,7 @@
                         <?php } ?>
                         <tr>
                             <td colspan="3">
-                                <form action="../utils/targets/admin/fascie_orarie_girono_aggiungi.php" method="post">
+                                <form action="../utils/targets/admin/fasce_orarie_girono_aggiungi.php" method="post">
                                     <fieldset>
                                         <legend>inserisci fascia oraria giorno</legend>
                                         <label for="fascia_oraria_input">Orario</label>
@@ -174,7 +174,7 @@
                                 <td><?php echo $f['ora_inizio'] ?></td>
                                 <td><?php echo $f['ora_fine'] ?></td>
                                 <td>
-                                    <form action="../utils/targets/admin/fascie_orarie_rimuovi.php" method="post">
+                                    <form action="../utils/targets/admin/fasce_orarie_rimuovi.php" method="post">
                                         <fieldset>
                                             <legend>elimina fascia oraria</legend>
                                             <input type="hidden" name="id_fascia_oraria" value="<?php echo $f['id_fascia_oraria'] ?>">
@@ -191,7 +191,7 @@
                         <?php } ?>
                         <tr>
                             <td colspan="3">
-                                <form action="../utils/targets/admin/fascie_orarie_aggiungi.php" method="post">
+                                <form action="../utils/targets/admin/fasce_orarie_aggiungi.php" method="post">
                                     <fieldset>
                                         <legend>inserisci fascia oraria</legend>
                                         <label for="ora_inizio_input">Ora inizio</label>

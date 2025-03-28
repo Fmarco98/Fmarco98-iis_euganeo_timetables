@@ -33,24 +33,24 @@
                     
                     db_end_transaction('y');
                     db_close();
-                    redirect(0, '../../../admin/gestione_fascie_orarie.php');
+                    redirect(0, '../../../admin/gestione_fasce_orarie.php');
                 } else {
                     db_end_transaction('n');
                     db_close();
                     $_SESSION['error'] = ADMIN_FHG_ALREADY_EXIST;
-                    redirect(0, '../../../admin/gestione_fascie_orarie.php');
+                    redirect(0, '../../../admin/gestione_fasce_orarie.php');
                 }
             } else {
                 db_close();
                 $_SESSION['error'] = ADMIN_FHG_NOT_EXIST;
-                redirect(0, '../../../admin/gestione_fascie_orarie.php');
+                redirect(0, '../../../admin/gestione_fasce_orarie.php');
             }
         } else {
             db_close();
             $_SESSION['error'] = NO_PERMISSION;
             redirect(0, '../../../home.php');
         }
+    } else {
+        redirect(0, '../../../home.php');
     }
-    
-    redirect(0, '../../../home.php');
 ?>

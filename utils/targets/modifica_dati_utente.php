@@ -41,8 +41,8 @@
             redirect(0, "../../impostazioni_utente.php");
         }
 
+    } else {
+        db_close();
+        redirect(0, '../../home.php');
     }
-    
-    db_close();
-    redirect(0, "../../home.php");
 ?>
