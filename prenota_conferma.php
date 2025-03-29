@@ -79,8 +79,7 @@
                 <input type="hidden" name="id_fascia_oraria" value="<?php echo $_POST['id_fascia_oraria'] ?>">
                 <input type="hidden" name="data" value="<?php echo $_POST['data'] ?>">
                 <label for="desc_input">Descrizione</label>
-                <textarea name="descrizione" id="desc_input" maxlength="500" rows="5">
-                </textarea>
+                <textarea name="descrizione" id="desc_input" maxlength="500" rows="5"></textarea>
                 <input name="submit" type="submit" value="Conferma">
                 <input name="submit" type="submit" value="Annulla">
             </fieldset>

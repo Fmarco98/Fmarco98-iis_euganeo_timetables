@@ -18,7 +18,7 @@ let pwdEntries = getPwdInputs();
 pwdButtons.forEach(button => {
     //Azione al click dei bottoni password
     button.index = pwdButtons.indexOf(button);
-    button.addEventListener("click", (event) => {
+    button.addEventListener("click", function(event) {
         if(!this.classList.contains("active")) {
             pwdEntries[this.index].type = "text";
             this.classList.add("active");
