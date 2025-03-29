@@ -102,7 +102,7 @@
                                 <td><?php echo $row['ora_inizio'].' - '.$row['ora_fine'] ?></td>
                                 <td><?php echo $row['descrizione'] ?></td>
                                 <td>
-                                    <form action="./utils/targets/admin/elimina_prenotazione.php" method="post">
+                                    <form action="./utils/targets/elimina_prenotazione.php" method="post">
                                         <fieldset>
                                             <legend>Elimina</legend>
                                             <input type="hidden" name="id_prenotazione" value="<?php echo $row['id_prenotazione'] ?>">

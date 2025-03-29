@@ -42,4 +42,9 @@
         }
         return $settimana;
     }
+
+    function format_date($date, $format='d/m/Y') {
+        $timestamp = strtotime($data);
+        return date($format, $timestamp);
+    }
 ?>

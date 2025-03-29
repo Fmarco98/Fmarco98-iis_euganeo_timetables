@@ -9,6 +9,9 @@
     define('MODIFY_PWD_ERRATA', 'modifica_impostazioni_utente:old_password_errata');
     define('MODIFY_PWD_NON_CONFERMA', 'modifica_impostazioni_utente:new_password_non_confermata');
 
+    //prenotazioni
+    define('PRENOTA_ALREADY_EXIST', 'prenota:già_presente');
+
     // ------- gestione tabelle admin --------
     //fasce orarie
     define('ADMIN_FHG_NOT_EXIST', 'admin:orari_giorni:selezione_non_esistente');

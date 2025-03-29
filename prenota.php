@@ -26,7 +26,6 @@
     <link rel="shortcut icon" href="./imgs/logo/logo_iiseuganeo.png" type="image/x-icon">
     <title>iiS Euganeo timetables | prenota</title>
     
-
     <style>
         table {
             width: 90%;
@@ -157,7 +156,12 @@
             </fieldset>
         </form>
         <hr>
-        
+        <?php 
+            if($_SESSION['error'] === PRENOTA_ALREADY_EXIST) {
+                echo '<p class="phperror">Aula già prenotata</p>';
+                $_SESSION['error'] = NONE;
+            }
+        ?>
         <?php if(isset($_POST['id_plesso']) && isset($_POST['id_aula']) && isset($_POST['data']) && $_POST['id_plesso'] != -1 && $_POST['id_aula'] != -1) { ?>
             <table>
                 <thead>
@@ -204,24 +208,63 @@
                         }
                     ?>
                     <?php
-                        $data_giorni = get_settimana('Ymd', $_POST['data']);
+                        $data_giorni = get_settimana('Y-m-d', $_POST['data']);
+
+                        $query_prenotazioni = 
+                            'SELECT p.descrizione, p.data, p.fk_fascia_oraria, u.cognome, u.nome 
+                             FROM prenotazione p
+                             JOIN utente u ON u.id_utente = p.fk_utente
+                             WHERE p.fk_aula = ? AND p.data BETWEEN ? AND ?';
+
+                        $prenotazioni = db_do_query($query_prenotazioni, 'iss', $_POST['id_aula'], $data_giorni[0], $data_giorni[count($data_giorni)-1]);
+
+                        $query_max_h = 
+                            'SELECT MAX(a) max 
+                             FROM (
+                                SELECT fk_giorno, COUNT(fk_fascia_oraria) a
+                                FROM fascia_oraria_giorno
+                                GROUP BY fk_giorno
+                             ) as a';
+
+                        $num_h = db_do_simple_query($query_max_h)->fetch_assoc()['max'];
 
                         for($i_h = 0; $i_h < 6; $i_h++) {
                             echo '<tr>';
                             for($i_g = 0; $i_g < count($fh_list); $i_g++) { 
                                 if(count($fh_list[$i_g]) > $i_h) {
-                                ?>
-                                <td>
-                                    <form action="pren">
-                                        <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
-                                        <input type="hidden" name="id_fascia_oraria" value="<?php echo $fh_list[$i_g][$i_h]['id_fascia_oraria'] ?>">
-                                        <input type="hidden" name="id_aula" value="<?php echo $_POST['id_aula'] ?>">
-                                        <input type="hidden" name="data" value="<?php echo $data_giorni[$i_g] ?>">
-                                        <input type="submit" value="Prenota">
-                                        <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
-                                    </form>
-                                </td>
-                    <?php
+                                    $cognome_prof = '';
+                                    $nome_prof = '';
+                                    $desc = '';
+
+                                    foreach($prenotazioni as $r) {
+                                        if($r['data'] == $data_giorni[$i_g] && $r['fk_fascia_oraria'] == $fh_list[$i_g][$i_h]['id_fascia_oraria']) {
+                                            $cognome_prof = $r['cognome'];
+                                            $nome_prof = $r['nome'];
+                                            $desc = $r['descrizione'];
+
+                                            break;
+                                        }
+                                    }
+
+                                    if(!$nome_prof) { ?>
+                                        <td>
+                                            <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
+                                            <form action="prenota_conferma.php" method="post">
+                                                <input type="hidden" name="id_fascia_oraria" value="<?php echo $fh_list[$i_g][$i_h]['id_fascia_oraria'] ?>">
+                                                <input type="hidden" name="id_aula" value="<?php echo $_POST['id_aula'] ?>">
+                                                <input type="hidden" name="data" value="<?php echo $data_giorni[$i_g] ?>">
+                                                <input type="submit" value="Prenota">
+                                            </form>
+                                            <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
+                                        </td>
+                              <?php } else { ?>
+                                        <td style="background-color:rgb(205, 161, 27); color: white;">
+                                            <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
+                                            <h3><?php echo ucfirst($cognome_prof).' '.ucfirst($nome_prof) ?></h3>
+                                            <h4><?php echo ucfirst($desc) ?></h4>
+                                            <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
+                                        </td>
+                              <?php }
                                 } else {
                                     echo '<td style="background-color:rgb(215, 215, 215)"></td>';
                                 }
@@ -241,33 +284,28 @@
         getFooter('./');
         db_close();
     ?>
-
     <script>
-        const select1 = document.getElementById('plesso_input');
+        let select1 = document.getElementById('plesso_input');
+        let select2 = document.getElementById('aula_input');
         
         // Recupera il valore salvato, se esiste
-        const savedValue1 = localStorage.getItem('selectedValue');
+        let savedValue1 = localStorage.getItem('selectedValue1');
+        let savedValue2 = localStorage.getItem('selectedValue2');
         if (savedValue1) {
             select1.value = savedValue1;
         }
-        
-        // Salva il valore quando cambia
-        select1.addEventListener('change', () => {
-            localStorage.setItem('selectedValue', select1.value);
-        });
-        
-        const select2 = document.getElementById('aula_input');
-
-        // Recupera il valore salvato, se esiste
-        const savedValue2 = localStorage.getItem('selectedValue');
         if (savedValue2) {
             select2.value = savedValue2;
         }
 
         // Salva il valore quando cambia
-        select2.addEventListener('change', () => {
-            localStorage.setItem('selectedValue', select2.value);
+        select1.addEventListener('change', () => {
+            localStorage.setItem('selectedValue1', select1.value);
         });
-    </script>                    
+        
+        select2.addEventListener('change', () => {
+            localStorage.setItem('selectedValue2', select2.value);
+        });
+    </script>               
 </body>
 </html>

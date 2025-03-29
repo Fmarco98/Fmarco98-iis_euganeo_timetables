@@ -36,7 +36,7 @@
     function db_close() {
         //Chiude sessione con il db
 
-        mysqli_close($GLOBALS['mysql']);
+        $GLOBALS['mysql']->close();
         $GLOBALS['mysql'] = NULL;
     }
     
