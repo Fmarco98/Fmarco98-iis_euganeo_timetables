@@ -5,6 +5,7 @@
     include("utils/db_manager.php");
     include("utils/session_errors.php");
 
+    //controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
@@ -52,6 +53,7 @@
     </nav>
     <main>
         <?php
+            //controllo errori
             if($_SESSION['error'] === NO_PERMISSION) {
                 echo '<p class="phperror">non hai il permesso</p>';
                 $_SESSION['error'] = NONE;
@@ -62,6 +64,7 @@
         
             echo '<h1>Buongiorno '.$cognome.' '.$nome.'</h1>';
 
+            //caricamento della home
             if($ruolo === 'D') {
                 include("utils/prefabs/user_home.php");
             } elseif($ruolo === 'A') {

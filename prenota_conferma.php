@@ -5,6 +5,7 @@
     include("utils/db_manager.php");
     include("utils/session_errors.php");
 
+    //controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
@@ -16,8 +17,9 @@
     $nome = ucfirst($row['nome']);
     $cognome = ucfirst($row['cognome']);
 
+    // controllo presenza dati
     if(!(isset($_POST['id_aula']) && isset($_POST['data']) && isset($_POST['id_fascia_oraria']))) {
-        redirect(0, 'prenota.php');
+        redirect(0, 'prenota.php'); 
     }
 
     $query_aula = 

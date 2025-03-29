@@ -79,6 +79,7 @@
                 <h2>fascie orarie - giorni</h2>
                 <hr>
                 <?php 
+                    //errori
                     if($_SESSION['error'] === ADMIN_FHG_NOT_EXIST) {
                         echo '<p class="phperror">Fascia oraria e giorno devono essere selezionati</p>';
                         $_SESSION['error'] = NONE;

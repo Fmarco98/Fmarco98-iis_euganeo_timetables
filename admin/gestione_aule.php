@@ -158,6 +158,7 @@
                 <h2>Aule riservate</h2>
                 <hr>
                 <?php 
+                    //errori
                     if($_SESSION['error'] === ADMIN_AULA_R_INVADIL_VALUE) {
                         echo '<p class="phperror">Aula e fascia oraria devono essere selezionate</p>';
                         $_SESSION['error'] = NONE;

@@ -21,6 +21,7 @@
             if($_POST['n_aula'] > 0 && $_POST['piano'] >= 0 && $_POST['plesso'] != -1) {
                 db_start_transaction();
 
+                //controllo presenza
                 $query = 
                     'SELECT COUNT(id_aula) = 0 as a
                      FROM aula

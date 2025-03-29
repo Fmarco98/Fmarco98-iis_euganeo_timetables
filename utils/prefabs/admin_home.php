@@ -4,6 +4,7 @@
     include("../db_managet.php");
     include("../utils.php");
 
+    //controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }

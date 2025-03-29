@@ -3,6 +3,7 @@
     
     include("../utils.php");
     
+    //svuoto sessione
     $_SESSION['id_utente'] = NULL;
     session_destroy();
     

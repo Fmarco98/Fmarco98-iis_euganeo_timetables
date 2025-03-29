@@ -10,13 +10,16 @@
         redirect(0, '../../login.php');
     }
 
+    //controllo se non annullato
     if(isset($_POST['submit']) && strtolower($_POST['submit']) === 'annulla') {
         redirect(0, '../../prenota.php');
     } else {
+        //se confermato
         if(isset($_POST['id_aula']) && isset($_POST['data']) && isset($_POST['id_fascia_oraria']) && isset($_POST['descrizione'])) {
             db_setup();
             db_start_transaction();
-    
+            
+            //controllo se già prenotata
             $query = 
                 'SELECT COUNT(id_prenotazione) = 0 a 
                  FROM prenotazione 
@@ -28,7 +31,8 @@
                 $query = 
                     'INSERT INTO prenotazione(descrizione, conferma, data, fk_utente, fk_fascia_oraria, fk_aula)
                      VALUES (?,?,?,?,?,?)';
-    
+
+                //controllo se la prenotazione è da confermare
                 $query_riservata = 
                     'SELECT COUNT(id_richiesta_conferma) = 0 a
                      FROM richiesta_conferma

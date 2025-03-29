@@ -15,6 +15,7 @@
             db_setup();
             db_start_transaction();
 
+            //controllo se email già presente
             $result = db_do_query("SELECT ? IN (SELECT email FROM utente) AS a", 's', $_POST['email']);
             $row = $result->fetch_assoc();
             
@@ -56,6 +57,7 @@
             <fieldset id="fieldset_dati" class="border-bottom">
                 <legend>dati</legend>
                     <?php 
+                        // Mantengo i dati precedenti in caso di "errore"
                         if(!$password_ok || $email_gia_in_uso) {
                             if($email_gia_in_uso) {
                                 echo '<p class="phperror">email già in uso</p>';

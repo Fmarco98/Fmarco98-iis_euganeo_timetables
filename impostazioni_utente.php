@@ -5,6 +5,7 @@
     include("utils/db_manager.php");
     include("utils/session_errors.php");
 
+    //controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
@@ -58,18 +59,18 @@
             <fieldset>
                 <legend>modifica dati utente</legend>
                 <?php 
+                    //errori
                     if($_SESSION['error'] === MODIFY_EMAIL_IN_USO) {
                         echo '<p class="phperror">email già in uso</p>';
                         $_SESSION['error'] = NONE;
                     }
-
-                    echo '<label for="nome_input">Nome: </label>
-                    <input type="text" name="nome" id="nome_input" placeholder="'.$nome.'">
-                    <label for="nome_input">Cognome: </label>
-                    <input type="text" name="cognome" id="cognome_input" placeholder="'.$cognome.'">
-                    <label for="nome_input">Email: </label>
-                    <input type="email" name="email" id="email_input" placeholder="'.$email.'">'
                 ?>
+                <label for="nome_input">Nome: </label>
+                <input type="text" name="nome" id="nome_input" placeholder="<?php echo $nome ?>">
+                <label for="nome_input">Cognome: </label>
+                <input type="text" name="cognome" id="cognome_input" placeholder="<?php echo $cognome ?>">
+                <label for="nome_input">Email: </label>
+                <input type="email" name="email" id="email_input" placeholder="<?php echo $email ?>">'
                 <input type="submit" value="Applica">
             </fieldset>
         </form>
@@ -80,6 +81,7 @@
                 <legend>modifica password</legend>
                 
                 <?php
+                    //errori
                     if($_SESSION['error'] === MODIFY_PWD_ERRATA) {
                         echo '<p class="phperror">vecchia password errata</p>';
                         $_SESSION['error'] = NONE;

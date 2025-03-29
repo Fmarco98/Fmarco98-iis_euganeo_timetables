@@ -5,11 +5,13 @@
     include("utils/db_manager.php");
     include("utils/session_errors.php");
 
+    // controllo login
     if(!isset($_SESSION['id_utente'])) {
         redirect(0, 'login.php');
     }
     
     db_setup();
+
     $result = db_do_query("SELECT nome, cognome FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
     $row = $result->fetch_assoc();
     
@@ -27,6 +29,7 @@
     <title>iiS Euganeo timetables | prenota</title>
     
     <style>
+        /* ---------- stile della tabelle ---------- */
         table {
             width: 90%;
             border-collapse: separate;
@@ -120,15 +123,16 @@
                 <select name="id_plesso" id="plesso_input">
                     <option value="-1">Seleziona plesso</option>
                     <?php
+                        //Valori per la selezione
                         $query = 
                             'SELECT id_plesso, nome
-                            FROM plesso';
+                             FROM plesso';
 
                         $plessi = db_do_simple_query($query);
                         
                         foreach($plessi as $r) { ?>
-                        <option value="<?php echo $r['id_plesso'] ?>"><?php echo $r['nome'] ?></option>
-                    <?php }?>
+                            <option value="<?php echo $r['id_plesso'] ?>"><?php echo $r['nome'] ?></option>
+                  <?php } ?>
                 </select>
                 
                 <?php if(isset($_POST['id_plesso']) && $_POST['id_plesso'] != -1) { ?>
@@ -136,16 +140,17 @@
                     <select name="id_aula" id="aula_input">
                         <option value="-1">Seleziona aula</option>
                         <?php
-                        $query = 
-                            'SELECT id_aula, piano, nome, n_aula
-                             FROM aula
-                             WHERE fk_plesso = ?';
+                            // Valori selezione aule
+                            $query = 
+                                'SELECT id_aula, piano, nome, n_aula
+                                FROM aula
+                                WHERE fk_plesso = ?';
 
-                        $aule = db_do_query($query, 'i', $_POST['id_plesso']);
-                        
-                        foreach($aule as $r) { ?>
-                            <option value="<?php echo $r['id_aula'] ?>"><?php echo normalize_aula($r['piano'], $r['n_aula']).' ('.$r['nome'].')' ?></option>
-                        <?php }?>
+                            $aule = db_do_query($query, 'i', $_POST['id_plesso']);
+                            
+                            foreach($aule as $r) { ?>
+                                <option value="<?php echo $r['id_aula'] ?>"><?php echo normalize_aula($r['piano'], $r['n_aula']).' ('.$r['nome'].')' ?></option>
+                      <?php } ?>
                     </select>
                     
                     <label for="data_input">Data</label>
@@ -157,6 +162,7 @@
         </form>
         <hr>
         <?php 
+            // Segnalazione errori
             if($_SESSION['error'] === PRENOTA_ALREADY_EXIST) {
                 echo '<p class="phperror">Aula già prenotata</p>';
                 $_SESSION['error'] = NONE;
@@ -176,6 +182,7 @@
 
                             $giorni = db_do_simple_query($giorni_query);
 
+                            // Generazione della <thead>
                             $index = 0;
                             foreach($giorni as $r) { ?>
                                 <th>
@@ -190,6 +197,7 @@
                 </thead>
                 <tbody>
                     <?php
+                        //struttura di memorizzazione dati della tabella: list[giorno][ora][valori]
                         $fh_list = [];
                         foreach($giorni as $r) {
                             $query = 
@@ -206,8 +214,7 @@
                             }
                             $fh_list[] = $temp;
                         }
-                    ?>
-                    <?php
+                    
                         $data_giorni = get_settimana('Y-m-d', $_POST['data']);
 
                         $query_prenotazioni = 
@@ -218,6 +225,7 @@
 
                         $prenotazioni = db_do_query($query_prenotazioni, 'iss', $_POST['id_aula'], $data_giorni[0], $data_giorni[count($data_giorni)-1]);
 
+                        // numero massimo di righe da generare
                         $query_max_h = 
                             'SELECT MAX(a) max 
                              FROM (
@@ -228,6 +236,7 @@
 
                         $num_h = db_do_simple_query($query_max_h)->fetch_assoc()['max'];
 
+                        //generazione righe
                         for($i_h = 0; $i_h < 6; $i_h++) {
                             echo '<tr>';
                             for($i_g = 0; $i_g < count($fh_list); $i_g++) { 
@@ -235,7 +244,8 @@
                                     $cognome_prof = '';
                                     $nome_prof = '';
                                     $desc = '';
-
+                                    
+                                    //Controllo se prenotata
                                     foreach($prenotazioni as $r) {
                                         if($r['data'] == $data_giorni[$i_g] && $r['fk_fascia_oraria'] == $fh_list[$i_g][$i_h]['id_fascia_oraria']) {
                                             $cognome_prof = $r['cognome'];
@@ -246,7 +256,7 @@
                                         }
                                     }
 
-                                    if(!$nome_prof) { ?>
+                                    if(!$nome_prof) { //non prenotata?>
                                         <td>
                                             <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                             <form action="prenota_conferma.php" method="post">
@@ -257,7 +267,7 @@
                                             </form>
                                             <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
                                         </td>
-                              <?php } else { ?>
+                              <?php } else { //prenotata?>
                                         <td style="background-color:rgb(205, 161, 27); color: white;">
                                             <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                             <h3><?php echo ucfirst($cognome_prof).' '.ucfirst($nome_prof) ?></h3>
@@ -266,6 +276,7 @@
                                         </td>
                               <?php }
                                 } else {
+                                    // ora mancante
                                     echo '<td style="background-color:rgb(215, 215, 215)"></td>';
                                 }
                             }
@@ -284,6 +295,7 @@
         getFooter('./');
         db_close();
     ?>
+    
     <script>
         let select1 = document.getElementById('plesso_input');
         let select2 = document.getElementById('aula_input');

@@ -1,5 +1,7 @@
 <?php 
-    function getHeader($folder_prefix) { ?>
+    function getHeader($folder_prefix) { 
+        //ottieni la header
+        ?>
         <header>
             <div class="row-style" id="imagezone">
                 <img src="<?php echo $folder_prefix ?>imgs/logo/logo_iiseuganeo_whitebg.png" alt="iiS Euganeo timetables" id="logo">

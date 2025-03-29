@@ -20,7 +20,8 @@
             //controllo validità valori
             if($_POST['aula'] != -1 && $_POST['fascia_oraria'] != -1) {
                 db_start_transaction();
-
+                
+                //controllo presenza
                 $query = 
                     'SELECT COUNT(id_richiesta_conferma) = 0 as a
                      FROM richiesta_conferma

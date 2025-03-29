@@ -31,8 +31,18 @@
         return $s;
     }
 
-    // Funzione per ottenere la settimana  'Y-m-d'
     function get_settimana($format, $data) {
+        /*
+        Ottieni lista delle date della settimana che comprende una determinata data
+
+        Parametri:
+        - 'format' -> formato data
+        - 'data'
+        
+        Ritorna:
+         - lista di date
+        */
+
         $timestamp = strtotime($data);
         $giornoSettimana = date('N', $timestamp); // 1 (Lunedì) - 7 (Domenica)
         $inizioSettimana = strtotime('-' . ($giornoSettimana - 1) . ' days', $timestamp);
@@ -44,6 +54,16 @@
     }
 
     function format_date($data, $format='d/m/Y') {
+        /*
+        Riformatta la data in un formato a scelta
+
+        Parametri:
+         - 'data'
+         - 'format' -> formato data
+        
+        Ritorna:
+         - data riformatta
+        */
         $timestamp = strtotime($data);
         return date($format, $timestamp);
     }
