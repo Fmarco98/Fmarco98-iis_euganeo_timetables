@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 23, 2025 alle 11:40
+-- Creato il: Mar 29, 2025 alle 16:08
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -60,8 +60,18 @@ CREATE TABLE `fascia_oraria` (
 --
 
 INSERT INTO `fascia_oraria` (`id_fascia_oraria`, `ora_inizio`, `ora_fine`) VALUES
-(2, '07:50:00', '08:45:00'),
-(1, '07:55:00', '08:55:00');
+(9, '07:50:00', '08:45:00'),
+(1, '07:55:00', '08:55:00'),
+(10, '08:45:00', '09:35:00'),
+(5, '08:55:00', '09:55:00'),
+(11, '09:35:00', '10:25:00'),
+(6, '09:55:00', '10:55:00'),
+(15, '10:10:00', '11:10:00'),
+(12, '10:40:00', '11:30:00'),
+(7, '11:10:00', '12:10:00'),
+(13, '11:30:00', '12:20:00'),
+(8, '12:10:00', '13:10:00'),
+(14, '12:20:00', '13:15:00');
 
 -- --------------------------------------------------------
 
@@ -81,10 +91,37 @@ CREATE TABLE `fascia_oraria_giorno` (
 
 INSERT INTO `fascia_oraria_giorno` (`id_fascia_oraria_giorno`, `fk_fascia_oraria`, `fk_giorno`) VALUES
 (1, 1, 1),
-(2, 1, 3),
-(3, 2, 2),
-(4, 2, 4),
-(5, 2, 5);
+(18, 1, 3),
+(35, 1, 6),
+(8, 5, 1),
+(19, 5, 3),
+(36, 5, 6),
+(9, 6, 1),
+(20, 6, 3),
+(10, 7, 1),
+(21, 7, 3),
+(38, 7, 6),
+(11, 8, 1),
+(22, 8, 3),
+(12, 9, 2),
+(23, 9, 4),
+(29, 9, 5),
+(13, 10, 2),
+(24, 10, 4),
+(30, 10, 5),
+(14, 11, 2),
+(25, 11, 4),
+(31, 11, 5),
+(15, 12, 2),
+(26, 12, 4),
+(32, 12, 5),
+(16, 13, 2),
+(27, 13, 4),
+(33, 13, 5),
+(17, 14, 2),
+(28, 14, 4),
+(34, 14, 5),
+(37, 15, 6);
 
 -- --------------------------------------------------------
 
@@ -145,6 +182,14 @@ CREATE TABLE `prenotazione` (
   `fk_fascia_oraria` int(11) NOT NULL,
   `fk_aula` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `prenotazione`
+--
+
+INSERT INTO `prenotazione` (`id_prenotazione`, `descrizione`, `conferma`, `data`, `fk_utente`, `fk_fascia_oraria`, `fk_aula`) VALUES
+(3, NULL, 0, '2025-03-13', 3, 5, 1),
+(4, NULL, 1, '2025-03-11', 2, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -265,13 +310,13 @@ ALTER TABLE `aula`
 -- AUTO_INCREMENT per la tabella `fascia_oraria`
 --
 ALTER TABLE `fascia_oraria`
-  MODIFY `id_fascia_oraria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_fascia_oraria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT per la tabella `fascia_oraria_giorno`
 --
 ALTER TABLE `fascia_oraria_giorno`
-  MODIFY `id_fascia_oraria_giorno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_fascia_oraria_giorno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT per la tabella `giorno`
@@ -289,7 +334,7 @@ ALTER TABLE `plesso`
 -- AUTO_INCREMENT per la tabella `prenotazione`
 --
 ALTER TABLE `prenotazione`
-  MODIFY `id_prenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_prenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT per la tabella `richiesta_conferma`
@@ -311,29 +356,29 @@ ALTER TABLE `utente`
 -- Limiti per la tabella `aula`
 --
 ALTER TABLE `aula`
-  ADD CONSTRAINT `aula_ibfk_1` FOREIGN KEY (`fk_plesso`) REFERENCES `plesso` (`id_plesso`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `aula_ibfk_1` FOREIGN KEY (`fk_plesso`) REFERENCES `plesso` (`id_plesso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `fascia_oraria_giorno`
 --
 ALTER TABLE `fascia_oraria_giorno`
-  ADD CONSTRAINT `fascia_oraria_giorno_ibfk_1` FOREIGN KEY (`fk_giorno`) REFERENCES `giorno` (`id_giorno`) ON UPDATE CASCADE ON DELETE CASCADE,
-  ADD CONSTRAINT `fascia_oraria_giorno_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `fascia_oraria_giorno_ibfk_1` FOREIGN KEY (`fk_giorno`) REFERENCES `giorno` (`id_giorno`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fascia_oraria_giorno_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `prenotazione`
 --
 ALTER TABLE `prenotazione`
-  ADD CONSTRAINT `prenotazione_ibfk_1` FOREIGN KEY (`fk_utente`) REFERENCES `utente` (`id_utente`) ON UPDATE CASCADE ON DELETE CASCADE,
-  ADD CONSTRAINT `prenotazione_ibfk_2` FOREIGN KEY (`fk_aula`) REFERENCES `aula` (`id_aula`) ON UPDATE CASCADE ON DELETE CASCADE,
-  ADD CONSTRAINT `prenotazione_ibfk_3` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `prenotazione_ibfk_1` FOREIGN KEY (`fk_utente`) REFERENCES `utente` (`id_utente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `prenotazione_ibfk_2` FOREIGN KEY (`fk_aula`) REFERENCES `aula` (`id_aula`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `prenotazione_ibfk_3` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `richiesta_conferma`
 --
 ALTER TABLE `richiesta_conferma`
-  ADD CONSTRAINT `richiesta_conferma_ibfk_1` FOREIGN KEY (`fk_aula`) REFERENCES `aula` (`id_aula`) ON UPDATE CASCADE ON DELETE CASCADE,
-  ADD CONSTRAINT `richiesta_conferma_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON UPDATE CASCADE ON DELETE CASCADE;
+  ADD CONSTRAINT `richiesta_conferma_ibfk_1` FOREIGN KEY (`fk_aula`) REFERENCES `aula` (`id_aula`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `richiesta_conferma_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
