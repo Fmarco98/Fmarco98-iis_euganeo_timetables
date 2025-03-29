@@ -29,26 +29,29 @@
         'SELECT a.id_aula, a.nome aula_nome, a.piano, a.n_aula, p.nome plesso_nome 
          FROM aula a
          JOIN plesso p ON a.fk_plesso = p.id_plesso
-         ORDER BY p.nome, a.piano, a.n_aula';
+         ORDER BY p.id_plesso, a.piano, a.n_aula';
     
-    /*
-    $query_g = 
-        'SELECT id_giorno, nome
-         FROM giorno
-         ORDER BY id_giorno';
-    */
+    $query_plessi = 
+        'SELECT id_plesso, nome
+         FROM plesso';
 
     $query_aule_riservate = 
         'SELECT rf.id_richiesta_conferma, a.nome aula_nome, a.piano, a.n_aula, fh.ora_inizio, fh.ora_fine, p.nome plesso_nome
          FROM richiesta_conferma rf 
          JOIN aula a ON a.id_aula = rf.fk_aula
          JOIN fascia_oraria fh ON fh.id_fascia_oraria = rf.fk_fascia_oraria
-         JOIN plesso p ON a.fk_plesso = p.id_plesso';
+         JOIN plesso p ON a.fk_plesso = p.id_plesso
+         ORDER BY p.id_plesso, a.piano, a.n_aula';
+    
+    $query_fh = 
+        'SELECT id_fascia_oraria, ora_inizio, ora_fine
+         FROM fascia_oraria
+         ORDER BY id_fascia_oraria';
     
     $aule = db_do_simple_query($query_aule);
     $aule_riservate = db_do_simple_query($query_aule_riservate);
-    
-    //$gironi = db_do_simple_query($query_g);
+    $plessi = db_do_simple_query($query_plessi);
+    $fh = db_do_simple_query($query_fh);
 
     db_close();
 ?>
@@ -82,14 +85,14 @@
             <div>
                 <h2>aule</h2>
                 <hr>
-                <?php /*
-                    if($_SESSION['error'] === ADMIN_FHG_NOT_EXIST) {
-                        echo '<p class="phperror">Fascia oraria e giorno devono essere selezionati</p>';
+                <?php
+                    if($_SESSION['error'] === ADMIN_AULA_INVADIL_VALUE) {
+                        echo '<p class="phperror">Valori non validi</p>';
                         $_SESSION['error'] = NONE;
-                    } elseif ($_SESSION['error'] === ADMIN_FHG_ALREADY_EXIST) {
-                        echo '<p class="phperror">Fascia oraria-girono già esistente</p>';
+                    } elseif ($_SESSION['error'] === ADMIN_AULA_ALREADY_EXIST) {
+                        echo '<p class="phperror">aula già presente</p>';
                         $_SESSION['error'] = NONE;
-                    } */
+                    } 
                 ?>
                 <table id="aule">
                     <thead>
@@ -109,10 +112,10 @@
                                 <td><?php echo $r['aula_nome'] ?></td>
                                 <td><?php echo $r['plesso_nome'] ?></td>
                                 <td>
-                                    <form action="../utils/targets/admin/.php" method="post">
+                                    <form action="../utils/targets/admin/aula_rimuovi.php" method="post">
                                         <fieldset>
                                             <legend>elimina aula</legend>
-                                            <input type="hidden" name="id_aula" value="<?php echo $f['id_aula'] ?>">
+                                            <input type="hidden" name="id_aula" value="<?php echo $r['id_aula'] ?>">
                                             <input type="submit" value="elimina">
                                         </fieldset>
                                     </form>
@@ -126,9 +129,22 @@
                         <?php } ?>
                         <tr>
                             <td colspan="4">
-                                <form action="../utils/targets/admin/.php" method="post">
+                                <form action="../utils/targets/admin/aula_aggiungi.php" method="post">
                                     <fieldset>
                                         <legend>inserisci aula</legend>
+                                        <label for="n_aula_input">N. aula</label>
+                                        <input type="number" name="n_aula" id="n_aula_input" required>
+                                        <label for="piano_input">Piano</label>
+                                        <input type="number" name="piano" id="piano_input" required>
+                                        <label for="nome_input">Nome</label>
+                                        <input type="text" name="nome" id="nome_input" maxlength="30">
+                                        <label for="plesso_input">Plesso</label>
+                                        <select name="plesso" id="plesso_input">
+                                            <option value="-1">Seleziona plesso</option>
+                                            <?php foreach($plessi as $r) { ?>
+                                                <option value="<?php echo $r['id_plesso'] ?>"><?php echo $r['nome'] ?></option>
+                                            <?php } ?>
+                                        </select>
                                         <input type="submit" value="Inserisci">
                                     </fieldset>
                                 </form>
@@ -141,14 +157,14 @@
             <div>
                 <h2>Aule riservate</h2>
                 <hr>
-                <?php /*
-                    if($_SESSION['error'] === ADMIN_FH_INVALID_VALUE) {
-                        echo '<p class="phperror">L\'ora di inizio deve esserem minore dell\'ora di fine</p>';
+                <?php 
+                    if($_SESSION['error'] === ADMIN_AULA_R_INVADIL_VALUE) {
+                        echo '<p class="phperror">Aula e fascia oraria devono essere selezionate</p>';
                         $_SESSION['error'] = NONE;
-                    } elseif ($_SESSION['error'] === ADMIN_FH_ALREADY_EXIST) {
-                        echo '<p class="phperror">Fascia oraria già esistente</p>';
+                    } elseif ($_SESSION['error'] === ADMIN_AULA_R_ALREADY_EXIST) {
+                        echo '<p class="phperror">Aula già riservata</p>';
                         $_SESSION['error'] = NONE;
-                    } */
+                    } 
                 ?>
                 <table id="aule_riservate">
                     <thead>
@@ -170,7 +186,7 @@
                                 <td><?php echo $r['ora_inizio'] ?></td>
                                 <td><?php echo $r['ora_fine'] ?></td>
                                 <td>
-                                    <form action="../utils/targets/admin/.php" method="post">
+                                    <form action="../utils/targets/admin/aula_riservata_rimuovi.php" method="post">
                                         <fieldset>
                                             <legend>elimina aula riservata</legend>
                                             <input type="hidden" name="id_richiesta_conferma" value="<?php echo $r['id_richiesta_conferma'] ?>">
@@ -187,9 +203,23 @@
                         <?php } ?>
                         <tr>
                             <td colspan="5">
-                                <form action="../utils/targets/admin/.php" method="post">
+                                <form action="../utils/targets/admin/aula_riservata_aggiungi.php" method="post">
                                     <fieldset>
                                         <legend>inserisci aula riservata</legend>
+                                        <label for="aula_input">Aula</label>
+                                        <select name="aula" id="aula_input">
+                                            <option value="-1">Seleziona aula</option>
+                                            <?php foreach($aule as $r) { ?>
+                                                <option value="<?php echo $r['id_aula'] ?>"><?php echo normalize_aula($r['piano'], $r['n_aula']).' ('.$r['aula_nome'].') - '.$r['plesso_nome'] ?></option>
+                                            <?php } ?>
+                                        </select>
+                                        <label for="fh_input">Fascia oraria</label>
+                                        <select name="fascia_oraria" id="fh_input">
+                                            <option value="-1">Seleziona fascia oraria</option>
+                                            <?php foreach($fh as $r) { ?>
+                                                <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
+                                            <?php } ?>
+                                        </select>
                                         <input type="submit" value="Inserisci">
                                     </fieldset>
                                 </form>

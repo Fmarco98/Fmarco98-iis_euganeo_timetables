@@ -145,7 +145,7 @@
                         $aule = db_do_query($query, 'i', $_POST['id_plesso']);
                         
                         foreach($aule as $r) { ?>
-                            <option value="<?php echo $r['id_aula'] ?>"><?php echo $r['nome'] ?></option>
+                            <option value="<?php echo $r['id_aula'] ?>"><?php echo normalize_aula($r['piano'], $r['n_aula']).' ('.$r['nome'].')' ?></option>
                         <?php }?>
                     </select>
                     

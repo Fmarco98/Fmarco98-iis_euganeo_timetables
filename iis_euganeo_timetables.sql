@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `aula` (
   `id_aula` int(11) NOT NULL,
-  `nome` varchar(30) NOT NULL,
+  `nome` varchar(30),
   `piano` int(1) NOT NULL,
   `n_aula` int(2) NOT NULL,
   `fk_plesso` int(11) NOT NULL
@@ -154,18 +154,17 @@ INSERT INTO `giorno` (`id_giorno`, `nome`) VALUES
 
 CREATE TABLE `plesso` (
   `id_plesso` int(11) NOT NULL,
-  `nome` varchar(30) NOT NULL,
-  `n_piani` int(1) NOT NULL DEFAULT 1
+  `nome` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `plesso`
 --
 
-INSERT INTO `plesso` (`id_plesso`, `nome`, `n_piani`) VALUES
-(1, 'IIS Euganeo', 3),
-(2, 'Fermi', 2),
-(3, 'Duca', 2);
+INSERT INTO `plesso` (`id_plesso`, `nome`) VALUES
+(1, 'IIS Euganeo'),
+(2, 'Fermi'),
+(3, 'Duca');
 
 -- --------------------------------------------------------
 
