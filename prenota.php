@@ -237,7 +237,7 @@
                         $num_h = db_do_simple_query($query_max_h)->fetch_assoc()['max'];
 
                         //generazione righe
-                        for($i_h = 0; $i_h < 6; $i_h++) {
+                        for($i_h = 0; $i_h < $num_h; $i_h++) {
                             echo '<tr>';
                             for($i_g = 0; $i_g < count($fh_list); $i_g++) { 
                                 if(count($fh_list[$i_g]) > $i_h) {
