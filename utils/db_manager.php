@@ -28,7 +28,7 @@
 
         $GLOBALS['mysql'] = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_DB, DB_PORT);
 
-        if($GLOBALS['mysql']->connect_error) {
+        if($GLOBALS['mysql']->connect_errno) {
             die('Errore di connessione al DB: <br>'. $GLOBALS['mysql']->connect_error);
         }
     }
