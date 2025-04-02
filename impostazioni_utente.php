@@ -70,7 +70,7 @@
                 <label for="nome_input">Cognome: </label>
                 <input type="text" name="cognome" id="cognome_input" placeholder="<?php echo $cognome ?>">
                 <label for="nome_input">Email: </label>
-                <input type="email" name="email" id="email_input" placeholder="<?php echo $email ?>">'
+                <input type="email" name="email" id="email_input" placeholder="<?php echo $email ?>">
                 <input type="submit" value="Applica">
             </fieldset>
         </form>
