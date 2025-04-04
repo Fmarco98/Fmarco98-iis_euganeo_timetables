@@ -97,6 +97,17 @@
             font-size: 30px
         }
 
+        .no {
+            background-color:rgb(215, 215, 215);
+        }
+        .attesa {
+            background-color:rgb(205, 161, 27); 
+            color: white;
+        }
+        .prenotata {
+            background-color:rgb(73, 126, 12); 
+            color: white;
+        }
     </style>
 </head>
 
@@ -154,7 +165,7 @@
                     </select>
                     
                     <label for="data_input">Data</label>
-                    <input type="date" name="data" id="data_input" required>
+                    <input type="date" name="data" id="data_input" required onfocus="this.showPicker()">
                 <?php } ?>
 
                 <input type="submit" value="Seleziona">
@@ -268,7 +279,7 @@
                                             <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
                                         </td>
                               <?php } else { //prenotata?>
-                                        <td style="background-color:rgb(205, 161, 27); color: white;">
+                                        <td class="prenotata">
                                             <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                             <h3><?php echo ucfirst($cognome_prof).' '.ucfirst($nome_prof) ?></h3>
                                             <h4><?php echo ucfirst($desc) ?></h4>
@@ -277,7 +288,7 @@
                               <?php }
                                 } else {
                                     // ora mancante
-                                    echo '<td style="background-color:rgb(215, 215, 215)"></td>';
+                                    echo '<td class="no"></td>';
                                 }
                             }
                             echo '</tr>';
