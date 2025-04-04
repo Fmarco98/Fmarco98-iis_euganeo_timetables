@@ -1,5 +1,5 @@
 <?php
-    function redirect($time, $page_path) {
+    function redirect($time, $page_path, $msg='Redirecting...') {
 		/*
 		Reindirizzamento su un'altra pagina
 		Prametri:
@@ -8,6 +8,7 @@
 		*/
 
 		header("Refresh: ".$time."; url=".$page_path);
+        die($msg);
 	}
 
 	function normalize_aula($piano, $aula) {

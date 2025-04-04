@@ -120,7 +120,7 @@
             <fieldset>
                 <legend>filtro aula</legend>
                 <label for="plesso_input">Plesso</label>
-                <select name="id_plesso" id="plesso_input">
+                <select name="id_plesso" id="plesso_input"> <!--onchange='this.form.submit()'-->
                     <option value="-1">Seleziona plesso</option>
                     <?php
                         //Valori per la selezione

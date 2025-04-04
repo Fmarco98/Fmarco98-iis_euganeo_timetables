@@ -13,47 +13,46 @@
     //controllo se non annullato
     if(isset($_POST['submit']) && strtolower($_POST['submit']) === 'annulla') {
         redirect(0, '../../prenota.php');
-    } else {
-        //se confermato
-        if(isset($_POST['id_aula']) && isset($_POST['data']) && isset($_POST['id_fascia_oraria']) && isset($_POST['descrizione'])) {
-            db_setup();
-            db_start_transaction();
-            
-            //controllo se già prenotata
-            $query = 
-                'SELECT COUNT(id_prenotazione) = 0 a 
-                 FROM prenotazione 
-                 WHERE data = ? AND fk_fascia_oraria = ? AND fk_aula = ?';
-    
-            $r = db_do_query($query, 'sii', $_POST['data'], $_POST['id_fascia_oraria'], $_POST['id_aula'])->fetch_assoc();
-    
-            if($r['a']) {
-                $query = 
-                    'INSERT INTO prenotazione(descrizione, conferma, data, fk_utente, fk_fascia_oraria, fk_aula)
-                     VALUES (?,?,?,?,?,?)';
+    }
 
-                //controllo se la prenotazione è da confermare
-                $query_riservata = 
-                    'SELECT COUNT(id_richiesta_conferma) = 0 a
-                     FROM richiesta_conferma
-                     WHERE fk_aula = ? AND fk_fascia_oraria = ?';
+    //se confermato
+    if(isset($_POST['id_aula']) && isset($_POST['data']) && isset($_POST['id_fascia_oraria']) && isset($_POST['descrizione'])) {
+        db_setup();
+        db_start_transaction();
+            
+        //controllo se già prenotata
+        $query = 
+            'SELECT COUNT(id_prenotazione) = 0 a 
+             FROM prenotazione 
+             WHERE data = ? AND fk_fascia_oraria = ? AND fk_aula = ?';
     
-                $conferma = db_do_query($query_riservata, 'ii', $_POST['id_aula'], $_POST['id_fascia_oraria'])->fetch_assoc()['a'];
+        $r = db_do_query($query, 'sii', $_POST['data'], $_POST['id_fascia_oraria'], $_POST['id_aula'])->fetch_assoc();
     
-                db_do_query($query, 'sisiii', $_POST['descrizione'], $conferma, $_POST['data'], $_SESSION['id_utente'], $_POST['id_fascia_oraria'], $_POST['id_aula']);
+        if($r['a']) {
+            $query = 
+                'INSERT INTO prenotazione(descrizione, conferma, data, fk_utente, fk_fascia_oraria, fk_aula)
+                 VALUES (?,?,?,?,?,?)';
+
+            //controllo se la prenotazione è da confermare
+            $query_riservata = 
+                'SELECT COUNT(id_richiesta_conferma) = 0 a
+                 FROM richiesta_conferma
+                 WHERE fk_aula = ? AND fk_fascia_oraria = ?';
+
+            $conferma = db_do_query($query_riservata, 'ii', $_POST['id_aula'], $_POST['id_fascia_oraria'])->fetch_assoc()['a'];
     
-                db_end_transaction('y');
-                db_close();
-                redirect(0, '../../home.php');
-            } else {
-                db_end_transaction('n');
-                db_close();
-                $_SESSION['error'] = PRENOTA_ALREADY_EXIST;
-                redirect(0, '../../prenota.php');
-            }
+            db_do_query($query, 'sisiii', $_POST['descrizione'], $conferma, $_POST['data'], $_SESSION['id_utente'], $_POST['id_fascia_oraria'], $_POST['id_aula']);
     
+            db_end_transaction('y');
+            db_close();
+            
         } else {
-            redirect(0, '../../home.php');
+            db_end_transaction('n');
+            db_close();
+            $_SESSION['error'] = PRENOTA_ALREADY_EXIST;
+            redirect(0, '../../prenota.php');
         }
     }
+
+    redirect(0, '../../home.php');
 ?>
