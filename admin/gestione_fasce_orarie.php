@@ -119,32 +119,33 @@
                                     <td colspan="3">Non ci sono fascie orarie</td>
                                 </tr>
                         <?php } ?>
-                        <tr>
-                            <td colspan="3">
-                                <form action="../utils/targets/admin/fasce_orarie_girono_aggiungi.php" method="post">
-                                    <fieldset>
-                                        <legend>inserisci fascia oraria giorno</legend>
-                                        <label for="fascia_oraria_input">Orario</label>
-                                        <select name="id_fascia_oraria" id="fascia_oraria_input" required>
-                                            <option value="-1">Seleziona orario</option>
-                                            <?php foreach($fascie_orarie as $r) { ?>
-                                                <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <label for="fascia_oraria_input">Giorno</label>
-                                        <select name="id_giorno" id="giorno_input" required>
-                                            <option value="-1">Seleziona giorno </option>
-                                            <?php foreach($gironi as $r) { ?>
-                                                <option value="<?php echo $r['id_giorno'] ?>"><?php echo $r['nome'] ?></option>
-                                            <?php } ?>
-                                        </select> 
-                                        <input type="submit" value="Inserisci">
-                                    </fieldset>
-                                </form>
-                            </td>
-                        </tr>
                     </tbody>
-                </table>   
+                </table>
+
+                <button onclick="popUpShow('add_fhg')">Aggiungi fascia oraria - giorno</button>
+                <div class="pop-up" id="add_fhg" style="display: none">
+                    <button onclick="popUpHide('add_fhg')">Chiudi</button>
+                    <form action="../utils/targets/admin/fasce_orarie_girono_aggiungi.php" method="post">
+                        <fieldset>
+                            <legend>inserisci fascia oraria giorno</legend>
+                            <label for="fascia_oraria_input">Orario</label>
+                            <select name="id_fascia_oraria" id="fascia_oraria_input" required>
+                                <option value="-1">Seleziona orario</option>
+                                <?php foreach($fascie_orarie as $r) { ?>
+                                    <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <label for="fascia_oraria_input">Giorno</label>
+                            <select name="id_giorno" id="giorno_input" required>
+                                <option value="-1">Seleziona giorno </option>
+                                <?php foreach($gironi as $r) { ?>
+                                    <option value="<?php echo $r['id_giorno'] ?>"><?php echo $r['nome'] ?></option>
+                                <?php } ?>
+                            </select> 
+                            <input type="submit" value="Inserisci">
+                        </fieldset>
+                    </form>
+                </div>    
             </div>
             
             <div>
@@ -190,22 +191,23 @@
                                     <td colspan="3">Non ci sono fascie orarie</td>
                                 </tr>
                         <?php } ?>
-                        <tr>
-                            <td colspan="3">
-                                <form action="../utils/targets/admin/fasce_orarie_aggiungi.php" method="post">
-                                    <fieldset>
-                                        <legend>inserisci fascia oraria</legend>
-                                        <label for="ora_inizio_input">Ora inizio</label>
-                                        <input type="time" name="ora_inizio" id="ora_inizio_input" required>
-                                        <label for="ora_inizio_input">Ora fine</label>
-                                        <input type="time" name="ora_fine" id="ora_fine_input" required>
-                                        <input type="submit" value="Inserisci">
-                                    </fieldset>
-                                </form>
-                            </td>
-                        </tr>
                     </tbody>
-                </table>   
+                </table>
+
+                <button onclick="popUpShow('add_fh')">Aggiungi fascia oraria</button>
+                <div class="pop-up" id="add_fh" style="display: none">
+                    <button onclick="popUpHide('add_fh')">Chiudi</button>
+                    <form action="../utils/targets/admin/fasce_orarie_aggiungi.php" method="post">
+                        <fieldset>
+                            <legend>inserisci fascia oraria</legend>
+                            <label for="ora_inizio_input">Ora inizio</label>
+                            <input type="time" name="ora_inizio" id="ora_inizio_input" required>
+                            <label for="ora_inizio_input">Ora fine</label>
+                            <input type="time" name="ora_fine" id="ora_fine_input" required>
+                            <input type="submit" value="Inserisci">
+                        </fieldset>
+                    </form>
+                </div>   
             </div>
         </section>
     </main>
@@ -213,5 +215,7 @@
         include("../utils/prefabs/footer.php"); 
         getFooter('../');
     ?>
+
+    <script src="../js/popUps.js"></script>
 </body>
 </html>

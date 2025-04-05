@@ -129,27 +129,29 @@
                         <?php } ?>
                     </tbody>
                 </table>
-                <button onclick="document.getElementById('form_add_aula').style.display = 'block'">Aggiungi aula</button>
-                <form action="../utils/targets/admin/aula_aggiungi.php" method="post" id="form_add_aula" style="display:none">
-                    <button type="button" onclick="document.getElementById('form_add_aula').style.display = 'none'">Chiudi</button>
-                    <fieldset>
-                        <legend>inserisci aula</legend>
-                        <label for="n_aula_input">N. aula</label>
-                        <input type="number" name="n_aula" id="n_aula_input" required>
-                        <label for="piano_input">Piano</label>
-                        <input type="number" name="piano" id="piano_input" required>
-                        <label for="nome_input">Nome</label>
-                        <input type="text" name="nome" id="nome_input" maxlength="30">
-                        <label for="plesso_input">Plesso</label>
-                        <select name="plesso" id="plesso_input">
-                            <option value="-1">Seleziona plesso</option>
-                            <?php foreach($plessi as $r) { ?>
-                                <option value="<?php echo $r['id_plesso'] ?>"><?php echo $r['nome'] ?></option>
-                            <?php } ?>
-                        </select>
-                        <input type="submit" value="Inserisci">
-                    </fieldset>
-                </form>
+                <button onclick="popUpShow('add_aula')">Aggiungi aula</button>
+                <div class="pop-up" id="add_aula" style="display: none">
+                    <button onclick="popUpHide('add_aula')">Chiudi</button>
+                    <form action="../utils/targets/admin/aula_aggiungi.php" method="post">
+                        <fieldset>
+                            <legend>inserisci aula</legend>
+                            <label for="n_aula_input">N. aula</label>
+                            <input type="number" name="n_aula" id="n_aula_input" required>
+                            <label for="piano_input">Piano</label>
+                            <input type="number" name="piano" id="piano_input" required>
+                            <label for="nome_input">Nome</label>
+                            <input type="text" name="nome" id="nome_input" maxlength="30">
+                            <label for="plesso_input">Plesso</label>
+                            <select name="plesso" id="plesso_input">
+                                <option value="-1">Seleziona plesso</option>
+                                <?php foreach($plessi as $r) { ?>
+                                    <option value="<?php echo $r['id_plesso'] ?>"><?php echo $r['nome'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="submit" value="Inserisci">
+                        </fieldset>
+                    </form>
+                </div>
             </div>
             
             <div>
@@ -200,32 +202,32 @@
                                     <td colspan="5">Non ci sono aule riservate</td>
                                 </tr>
                         <?php } ?>
-                        <tr>
-                            <td colspan="5">
-                                <form action="../utils/targets/admin/aula_riservata_aggiungi.php" method="post">
-                                    <fieldset>
-                                        <legend>inserisci aula riservata</legend>
-                                        <label for="aula_input">Aula</label>
-                                        <select name="aula" id="aula_input">
-                                            <option value="-1">Seleziona aula</option>
-                                            <?php foreach($aule as $r) { ?>
-                                                <option value="<?php echo $r['id_aula'] ?>"><?php echo normalize_aula($r['piano'], $r['n_aula']).' ('.$r['aula_nome'].') - '.$r['plesso_nome'] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <label for="fh_input">Fascia oraria</label>
-                                        <select name="fascia_oraria" id="fh_input">
-                                            <option value="-1">Seleziona fascia oraria</option>
-                                            <?php foreach($fh as $r) { ?>
-                                                <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <input type="submit" value="Inserisci">
-                                    </fieldset>
-                                </form>
-                            </td>
-                        </tr>
                     </tbody>
-                </table>   
+                </table> 
+                <button onclick="popUpShow('add_aula_riservata')">Aggiungi aula riservata</button>
+                <div class="pop-up" id="add_aula_riservata" style="display: none">
+                    <button onclick="popUpHide('add_aula_riservata')">Chiudi</button>
+                    <form action="../utils/targets/admin/aula_riservata_aggiungi.php" method="post">
+                        <fieldset>
+                            <legend>inserisci aula riservata</legend>
+                            <label for="aula_input">Aula</label>
+                            <select name="aula" id="aula_input">
+                                <option value="-1">Seleziona aula</option>
+                                <?php foreach($aule as $r) { ?>
+                                    <option value="<?php echo $r['id_aula'] ?>"><?php echo normalize_aula($r['piano'], $r['n_aula']).' ('.$r['aula_nome'].') - '.$r['plesso_nome'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <label for="fh_input">Fascia oraria</label>
+                            <select name="fascia_oraria" id="fh_input">
+                                <option value="-1">Seleziona fascia oraria</option>
+                                <?php foreach($fh as $r) { ?>
+                                    <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <input type="submit" value="Inserisci">
+                        </fieldset>
+                    </form>
+                </div> 
             </div>
         </section>
     </main>
@@ -233,5 +235,7 @@
         include("../utils/prefabs/footer.php"); 
         getFooter('../');
     ?>
+
+    <script src="../js/popUps.js"></script>
 </body>
 </html>
