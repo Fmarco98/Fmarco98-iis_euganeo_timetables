@@ -29,10 +29,6 @@
         $r = db_do_query($query, 'sii', $_POST['data'], $_POST['id_fascia_oraria'], $_POST['id_aula'])->fetch_assoc();
     
         if($r['a']) {
-            $query = 
-                'INSERT INTO prenotazione(descrizione, conferma, data, fk_utente, fk_fascia_oraria, fk_aula)
-                 VALUES (?,?,?,?,?,?)';
-
             //controllo se la prenotazione è da confermare
             $query_riservata = 
                 'SELECT COUNT(id_richiesta_conferma) = 0 a
@@ -40,8 +36,20 @@
                  WHERE fk_aula = ? AND fk_fascia_oraria = ?';
 
             $conferma = db_do_query($query_riservata, 'ii', $_POST['id_aula'], $_POST['id_fascia_oraria'])->fetch_assoc()['a'];
-    
-            db_do_query($query, 'sisiii', $_POST['descrizione'], $conferma, $_POST['data'], $_SESSION['id_utente'], $_POST['id_fascia_oraria'], $_POST['id_aula']);
+            
+            if($conferma) {
+                //prenotazione su aula non riservata
+                $query = 
+                    'INSERT INTO prenotazione(descrizione, data_approvazione, data, fk_utente, fk_fascia_oraria, fk_aula)
+                     VALUES (?, now() ,?,?,?,?)';
+            } else {
+                //prenotazione su aula riservata
+                $query = 
+                    'INSERT INTO prenotazione(descrizione, data_approvazione, data, fk_utente, fk_fascia_oraria, fk_aula)
+                     VALUES (?, NULL ,?,?,?,?)';
+            }
+
+            db_do_query($query, 'ssiii', $_POST['descrizione'], $_POST['data'], $_SESSION['id_utente'], $_POST['id_fascia_oraria'], $_POST['id_aula']);
     
             db_end_transaction('y');
             db_close();

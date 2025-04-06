@@ -18,7 +18,7 @@
          JOIN aula a ON a.id_aula = p.fk_aula
          JOIN plesso pl ON pl.id_plesso = a.fk_plesso
          JOIN utente u ON u.id_utente = p.fk_utente
-         WHERE DATEDIFF(now(), p.data) <= 0 AND p.conferma = 0';
+         WHERE DATEDIFF(now(), p.data) <= 0 AND p.data_approvazione IS NULL AND p.data_eliminazione IS NULL';
 
     $prenotazini = db_do_simple_query($query);
 

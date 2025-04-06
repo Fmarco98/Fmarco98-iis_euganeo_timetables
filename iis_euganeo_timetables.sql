@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mar 29, 2025 alle 16:08
+-- Creato il: Apr 06, 2025 alle 19:23
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `aula` (
   `id_aula` int(11) NOT NULL,
-  `nome` varchar(30),
+  `nome` varchar(30) DEFAULT NULL,
   `piano` int(1) NOT NULL,
   `n_aula` int(2) NOT NULL,
   `fk_plesso` int(11) NOT NULL
@@ -40,8 +40,11 @@ CREATE TABLE `aula` (
 --
 
 INSERT INTO `aula` (`id_aula`, `nome`, `piano`, `n_aula`, `fk_plesso`) VALUES
-(1, 'A-test1', 0, 1, 1),
-(2, 'A-test2', 1, 1, 2);
+(5, '', 0, 1, 1),
+(6, '', 0, 2, 1),
+(7, 'LTR1', 1, 17, 1),
+(8, '', 0, 1, 2),
+(9, '', 0, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -76,52 +79,13 @@ INSERT INTO `fascia_oraria` (`id_fascia_oraria`, `ora_inizio`, `ora_fine`) VALUE
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `fascia_oraria_giorno`
+-- Struttura stand-in per le viste `fascia_oraria_giorno`
+-- (Vedi sotto per la vista effettiva)
 --
-
 CREATE TABLE `fascia_oraria_giorno` (
-  `id_fascia_oraria_giorno` int(11) NOT NULL,
-  `fk_fascia_oraria` int(11) NOT NULL,
-  `fk_giorno` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dump dei dati per la tabella `fascia_oraria_giorno`
---
-
-INSERT INTO `fascia_oraria_giorno` (`id_fascia_oraria_giorno`, `fk_fascia_oraria`, `fk_giorno`) VALUES
-(1, 1, 1),
-(18, 1, 3),
-(35, 1, 6),
-(8, 5, 1),
-(19, 5, 3),
-(36, 5, 6),
-(9, 6, 1),
-(20, 6, 3),
-(10, 7, 1),
-(21, 7, 3),
-(38, 7, 6),
-(11, 8, 1),
-(22, 8, 3),
-(12, 9, 2),
-(23, 9, 4),
-(29, 9, 5),
-(13, 10, 2),
-(24, 10, 4),
-(30, 10, 5),
-(14, 11, 2),
-(25, 11, 4),
-(31, 11, 5),
-(15, 12, 2),
-(26, 12, 4),
-(32, 12, 5),
-(16, 13, 2),
-(27, 13, 4),
-(33, 13, 5),
-(17, 14, 2),
-(28, 14, 4),
-(34, 14, 5),
-(37, 15, 6);
+`giorno` int(11)
+,`fascia_oraria` int(11)
+);
 
 -- --------------------------------------------------------
 
@@ -131,20 +95,21 @@ INSERT INTO `fascia_oraria_giorno` (`id_fascia_oraria_giorno`, `fk_fascia_oraria
 
 CREATE TABLE `giorno` (
   `id_giorno` int(11) NOT NULL,
-  `nome` varchar(10) NOT NULL
+  `nome` varchar(10) NOT NULL,
+  `fk_tipo_orario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `giorno`
 --
 
-INSERT INTO `giorno` (`id_giorno`, `nome`) VALUES
-(4, 'Giovedì'),
-(1, 'Lunedì'),
-(2, 'Martedì'),
-(3, 'Mercoledì'),
-(6, 'Sabato'),
-(5, 'Venerdì');
+INSERT INTO `giorno` (`id_giorno`, `nome`, `fk_tipo_orario`) VALUES
+(1, 'Lunedì', 1),
+(2, 'Martedì', 2),
+(3, 'Mercoledì', 1),
+(4, 'Giovedì', 2),
+(5, 'Venerdì', 2),
+(6, 'Sabato', 3);
 
 -- --------------------------------------------------------
 
@@ -162,9 +127,9 @@ CREATE TABLE `plesso` (
 --
 
 INSERT INTO `plesso` (`id_plesso`, `nome`) VALUES
-(1, 'IIS Euganeo'),
+(3, 'Duca'),
 (2, 'Fermi'),
-(3, 'Duca');
+(1, 'IIS Euganeo');
 
 -- --------------------------------------------------------
 
@@ -175,20 +140,26 @@ INSERT INTO `plesso` (`id_plesso`, `nome`) VALUES
 CREATE TABLE `prenotazione` (
   `id_prenotazione` int(11) NOT NULL,
   `descrizione` varchar(500) DEFAULT NULL,
-  `conferma` tinyint(1) NOT NULL,
   `data` date NOT NULL,
   `fk_utente` int(11) NOT NULL,
   `fk_fascia_oraria` int(11) NOT NULL,
-  `fk_aula` int(11) NOT NULL
+  `fk_aula` int(11) NOT NULL,
+  `data_richiesta` datetime NOT NULL DEFAULT current_timestamp(),
+  `data_approvazione` datetime DEFAULT NULL,
+  `data_eliminazione` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `prenotazione`
 --
 
-INSERT INTO `prenotazione` (`id_prenotazione`, `descrizione`, `conferma`, `data`, `fk_utente`, `fk_fascia_oraria`, `fk_aula`) VALUES
-(3, NULL, 0, '2025-03-13', 3, 5, 1),
-(4, NULL, 1, '2025-03-11', 2, 1, 2);
+INSERT INTO `prenotazione` (`id_prenotazione`, `descrizione`, `data`, `fk_utente`, `fk_fascia_oraria`, `fk_aula`, `data_richiesta`, `data_approvazione`, `data_eliminazione`) VALUES
+(5, 'no', '2025-04-10', 2, 1, 7, '2025-04-06 18:34:52', NULL, '2025-04-06 18:42:24'),
+(12, 'ciao', '2025-04-07', 2, 5, 7, '2025-04-06 18:34:52', '2025-04-06 18:40:52', NULL),
+(14, '', '2025-04-07', 2, 1, 6, '2025-04-06 18:49:08', '2025-04-06 18:49:08', NULL),
+(15, '', '2025-04-09', 2, 1, 6, '2025-04-06 18:49:56', '2025-04-06 18:49:56', '2025-04-06 18:49:59'),
+(16, '', '2025-04-07', 2, 1, 7, '2025-04-06 18:50:08', NULL, NULL),
+(17, '', '2025-04-09', 2, 1, 7, '2025-04-06 18:57:02', NULL, '2025-04-06 18:57:26');
 
 -- --------------------------------------------------------
 
@@ -201,6 +172,66 @@ CREATE TABLE `richiesta_conferma` (
   `fk_aula` int(11) NOT NULL,
   `fk_fascia_oraria` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `richiesta_conferma`
+--
+
+INSERT INTO `richiesta_conferma` (`id_richiesta_conferma`, `fk_aula`, `fk_fascia_oraria`) VALUES
+(1, 7, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tipo_orario`
+--
+
+CREATE TABLE `tipo_orario` (
+  `id_tipo_orario` int(11) NOT NULL,
+  `nome` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tipo_orario`
+--
+
+INSERT INTO `tipo_orario` (`id_tipo_orario`, `nome`) VALUES
+(2, 'Ore da 50\''),
+(1, 'Ore da 60\''),
+(3, 'Sabato');
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `tipo_orario_fascia_oraria`
+--
+
+CREATE TABLE `tipo_orario_fascia_oraria` (
+  `id_tipo_orario_fascia_oraria` int(11) NOT NULL,
+  `fk_tipo_orario` int(11) NOT NULL,
+  `fk_fascia_oraria` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `tipo_orario_fascia_oraria`
+--
+
+INSERT INTO `tipo_orario_fascia_oraria` (`id_tipo_orario_fascia_oraria`, `fk_tipo_orario`, `fk_fascia_oraria`) VALUES
+(1, 1, 1),
+(2, 1, 5),
+(3, 1, 6),
+(4, 1, 7),
+(5, 1, 8),
+(6, 2, 9),
+(7, 2, 10),
+(8, 2, 11),
+(9, 2, 12),
+(10, 2, 13),
+(11, 2, 14),
+(12, 3, 1),
+(13, 3, 5),
+(15, 3, 7),
+(14, 3, 15);
 
 -- --------------------------------------------------------
 
@@ -229,6 +260,15 @@ INSERT INTO `utente` (`id_utente`, `nome`, `cognome`, `email`, `password`, `ruol
 (4, 'test1', 'test1', 'test1@test', '81dc9bdb52d04dc20036dbd8313ed055', 'D', '1234'),
 (5, 'test2', 'test2', 'test2@test', '81dc9bdb52d04dc20036dbd8313ed055', 'D', '1234');
 
+-- --------------------------------------------------------
+
+--
+-- Struttura per vista `fascia_oraria_giorno`
+--
+DROP TABLE IF EXISTS `fascia_oraria_giorno`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `fascia_oraria_giorno`  AS SELECT `g`.`id_giorno` AS `giorno`, `thfh`.`fk_fascia_oraria` AS `fascia_oraria` FROM ((`giorno` `g` join `tipo_orario` `th` on(`g`.`fk_tipo_orario` = `th`.`id_tipo_orario`)) join `tipo_orario_fascia_oraria` `thfh` on(`th`.`id_tipo_orario` = `thfh`.`fk_tipo_orario`)) ORDER BY `g`.`id_giorno` ASC ;
+
 --
 -- Indici per le tabelle scaricate
 --
@@ -249,19 +289,12 @@ ALTER TABLE `fascia_oraria`
   ADD UNIQUE KEY `ora_inizio` (`ora_inizio`,`ora_fine`);
 
 --
--- Indici per le tabelle `fascia_oraria_giorno`
---
-ALTER TABLE `fascia_oraria_giorno`
-  ADD PRIMARY KEY (`id_fascia_oraria_giorno`),
-  ADD UNIQUE KEY `fk_fascia_oraria` (`fk_fascia_oraria`,`fk_giorno`),
-  ADD KEY `fk_giorno` (`fk_giorno`);
-
---
 -- Indici per le tabelle `giorno`
 --
 ALTER TABLE `giorno`
   ADD PRIMARY KEY (`id_giorno`),
-  ADD UNIQUE KEY `nome` (`nome`);
+  ADD UNIQUE KEY `nome` (`nome`),
+  ADD KEY `fk_tipo_orario` (`fk_tipo_orario`);
 
 --
 -- Indici per le tabelle `plesso`
@@ -289,6 +322,21 @@ ALTER TABLE `richiesta_conferma`
   ADD KEY `fk_fascia_oraria` (`fk_fascia_oraria`);
 
 --
+-- Indici per le tabelle `tipo_orario`
+--
+ALTER TABLE `tipo_orario`
+  ADD PRIMARY KEY (`id_tipo_orario`),
+  ADD UNIQUE KEY `nome` (`nome`);
+
+--
+-- Indici per le tabelle `tipo_orario_fascia_oraria`
+--
+ALTER TABLE `tipo_orario_fascia_oraria`
+  ADD PRIMARY KEY (`id_tipo_orario_fascia_oraria`),
+  ADD UNIQUE KEY `fk_tipo_orario` (`fk_tipo_orario`,`fk_fascia_oraria`),
+  ADD KEY `fk_fascia_oraria` (`fk_fascia_oraria`);
+
+--
 -- Indici per le tabelle `utente`
 --
 ALTER TABLE `utente`
@@ -303,19 +351,13 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `aula`
 --
 ALTER TABLE `aula`
-  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT per la tabella `fascia_oraria`
 --
 ALTER TABLE `fascia_oraria`
   MODIFY `id_fascia_oraria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT per la tabella `fascia_oraria_giorno`
---
-ALTER TABLE `fascia_oraria_giorno`
-  MODIFY `id_fascia_oraria_giorno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT per la tabella `giorno`
@@ -333,13 +375,25 @@ ALTER TABLE `plesso`
 -- AUTO_INCREMENT per la tabella `prenotazione`
 --
 ALTER TABLE `prenotazione`
-  MODIFY `id_prenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_prenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT per la tabella `richiesta_conferma`
 --
 ALTER TABLE `richiesta_conferma`
-  MODIFY `id_richiesta_conferma` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_richiesta_conferma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT per la tabella `tipo_orario`
+--
+ALTER TABLE `tipo_orario`
+  MODIFY `id_tipo_orario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT per la tabella `tipo_orario_fascia_oraria`
+--
+ALTER TABLE `tipo_orario_fascia_oraria`
+  MODIFY `id_tipo_orario_fascia_oraria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT per la tabella `utente`
@@ -358,11 +412,10 @@ ALTER TABLE `aula`
   ADD CONSTRAINT `aula_ibfk_1` FOREIGN KEY (`fk_plesso`) REFERENCES `plesso` (`id_plesso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `fascia_oraria_giorno`
+-- Limiti per la tabella `giorno`
 --
-ALTER TABLE `fascia_oraria_giorno`
-  ADD CONSTRAINT `fascia_oraria_giorno_ibfk_1` FOREIGN KEY (`fk_giorno`) REFERENCES `giorno` (`id_giorno`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fascia_oraria_giorno_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `giorno`
+  ADD CONSTRAINT `giorno_ibfk_1` FOREIGN KEY (`fk_tipo_orario`) REFERENCES `tipo_orario` (`id_tipo_orario`);
 
 --
 -- Limiti per la tabella `prenotazione`
@@ -378,6 +431,13 @@ ALTER TABLE `prenotazione`
 ALTER TABLE `richiesta_conferma`
   ADD CONSTRAINT `richiesta_conferma_ibfk_1` FOREIGN KEY (`fk_aula`) REFERENCES `aula` (`id_aula`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `richiesta_conferma_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `tipo_orario_fascia_oraria`
+--
+ALTER TABLE `tipo_orario_fascia_oraria`
+  ADD CONSTRAINT `tipo_orario_fascia_oraria_ibfk_1` FOREIGN KEY (`fk_tipo_orario`) REFERENCES `tipo_orario` (`id_tipo_orario`),
+  ADD CONSTRAINT `tipo_orario_fascia_oraria_ibfk_2` FOREIGN KEY (`fk_fascia_oraria`) REFERENCES `fascia_oraria` (`id_fascia_oraria`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

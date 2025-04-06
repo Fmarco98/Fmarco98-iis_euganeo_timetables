@@ -17,7 +17,7 @@
              JOIN fascia_oraria h ON h.id_fascia_oraria = p.fk_fascia_oraria
              JOIN aula a ON a.id_aula = p.fk_aula
              JOIN plesso pl ON pl.id_plesso = a.fk_plesso
-             WHERE DATEDIFF(now(), p.data) <= 0 AND p.conferma = 1 AND p.fk_utente = ?';
+             WHERE DATEDIFF(now(), p.data) <= 0 AND p.data_approvazione IS NOT NULL AND p.data_eliminazione IS NULL AND p.fk_utente = ?';
 
     $query_prenotazioni_attese = 
             'SELECT a.piano, a.n_aula, a.nome as aula_nome, pl.nome as plesso_nome, p.data, h.ora_inizio, h.ora_fine, p.descrizione, p.id_prenotazione 
@@ -25,7 +25,7 @@
              JOIN fascia_oraria h ON h.id_fascia_oraria = p.fk_fascia_oraria
              JOIN aula a ON a.id_aula = p.fk_aula
              JOIN plesso pl ON pl.id_plesso = a.fk_plesso
-             WHERE DATEDIFF(now(), p.data) <= 0 AND p.conferma = 0 AND p.fk_utente = ?';
+             WHERE DATEDIFF(now(), p.data) <= 0 AND p.data_approvazione IS NULL AND p.data_eliminazione IS NULL AND p.fk_utente = ?';
 
     $prenotazini_attive = db_do_query($query_prenotazioni_attive, 'i', $_SESSION['id_utente']);
     $prenotazini_attese = db_do_query($query_prenotazioni_attese, 'i', $_SESSION['id_utente']);

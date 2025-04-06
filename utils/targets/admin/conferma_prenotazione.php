@@ -17,7 +17,7 @@
         
         //controllo permesso modifica
         if($permesso['ruolo'] === 'A') {
-            db_do_query("UPDATE prenotazione SET conferma = 1 WHERE id_prenotazione=?", 'i', $_POST['id_prenotazione']);
+            db_do_query("UPDATE prenotazione SET data_approvazione = now() WHERE id_prenotazione=?", 'i', $_POST['id_prenotazione']);
             db_close();
             redirect(0, '../../../home.php');
         } else {

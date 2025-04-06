@@ -214,8 +214,8 @@
                             $query = 
                             'SELECT fh.id_fascia_oraria, fh.ora_inizio, fh.ora_fine
                              FROM fascia_oraria_giorno fhg
-                             JOIN fascia_oraria fh ON fh.id_fascia_oraria = fhg.fk_fascia_oraria 
-                             WHERE fk_giorno = ?';
+                             JOIN fascia_oraria fh ON fh.id_fascia_oraria = fhg.fascia_oraria 
+                             WHERE fhg.giorno = ?';
 
                             $result = db_do_query($query,'i', $r['id_giorno']);
 
@@ -229,10 +229,10 @@
                         $data_giorni = get_settimana('Y-m-d', $_POST['data']);
 
                         $query_prenotazioni = 
-                            'SELECT p.descrizione, p.data, p.fk_fascia_oraria, u.cognome, u.nome 
+                            'SELECT p.descrizione, p.data, p.fk_fascia_oraria, u.cognome, u.nome, p.data_approvazione IS NOT NULL as approvata
                              FROM prenotazione p
                              JOIN utente u ON u.id_utente = p.fk_utente
-                             WHERE p.fk_aula = ? AND p.data BETWEEN ? AND ?';
+                             WHERE p.fk_aula = ? AND p.data BETWEEN ? AND ? AND p.data_eliminazione IS NULL';
 
                         $prenotazioni = db_do_query($query_prenotazioni, 'iss', $_POST['id_aula'], $data_giorni[0], $data_giorni[count($data_giorni)-1]);
 
@@ -240,9 +240,9 @@
                         $query_max_h = 
                             'SELECT MAX(a) max 
                              FROM (
-                                SELECT fk_giorno, COUNT(fk_fascia_oraria) a
+                                SELECT giorno, COUNT(fascia_oraria) a
                                 FROM fascia_oraria_giorno
-                                GROUP BY fk_giorno
+                                GROUP BY giorno
                              ) as a';
 
                         $num_h = db_do_simple_query($query_max_h)->fetch_assoc()['max'];
@@ -255,6 +255,7 @@
                                     $cognome_prof = '';
                                     $nome_prof = '';
                                     $desc = '';
+                                    $approvata_bool = false;
                                     
                                     //Controllo se prenotata
                                     foreach($prenotazioni as $r) {
@@ -262,6 +263,7 @@
                                             $cognome_prof = $r['cognome'];
                                             $nome_prof = $r['nome'];
                                             $desc = $r['descrizione'];
+                                            $approvata_bool = $r['approvata'];
 
                                             break;
                                         }
@@ -278,8 +280,12 @@
                                             </form>
                                             <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
                                         </td>
-                              <?php } else { //prenotata?>
-                                        <td class="prenotata">
+                              <?php } else { //prenotata
+                                        if($approvata_bool) {
+                                            echo '<td class="prenotata">';
+                                        } else {
+                                            echo '<td class="attesa">';
+                                        } ?>
                                             <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                             <h3><?php echo ucfirst($cognome_prof).' '.ucfirst($nome_prof) ?></h3>
                                             <h4><?php echo ucfirst($desc) ?></h4>
