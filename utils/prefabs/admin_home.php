@@ -27,7 +27,7 @@
 
 <h2>Prenotazioni da confermare</h2>
 <hr>
-<table id="prenotazioni_attive">
+<table id="prenotazioni_in_attesa">
     <thead>
         <tr>
             <th>professore</th>
@@ -75,3 +75,9 @@
         <?php } ?>
     </tbody>
 </table>
+
+<br><hr><br>
+
+<?php 
+    include('prenota_table.php');
+?>

@@ -38,9 +38,10 @@
 
     function db_close() {
         //Chiude sessione con il db
-
-        $GLOBALS['mysql']->close();
-        $GLOBALS['mysql'] = NULL;
+        if(!$GLOBALS['mysql']) {
+            $GLOBALS['mysql']->close();
+            $GLOBALS['mysql'] = NULL;
+        }
     }
     
     function db_do_query($query, ...$params) {

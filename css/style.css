@@ -38,6 +38,24 @@ button.pwd-button::before {
     content: "🔓";
 }
 
+h1 {
+    text-decoration: underline;
+    text-decoration-color: rgb(233, 199, 9);
+    font-style: oblique;
+    font-size: var(--font-size-large);
+}
+
+h2 {
+    font-family: 'DM Sans', Sans-serif;
+    font-size: var(--font-size-normal);
+}
+
+main {
+    margin: 1vh 0.5vw;
+}
+
+/*------------------ table -------------------*/
+
 table {
     border-collapse: separate;
     border-spacing: 0;
@@ -66,20 +84,83 @@ tr:nth-child(even) {
     background-color: #cccccc;
 }
 
-h1 {
-    text-decoration: underline;
-    text-decoration-color: rgb(233, 199, 9);
-    font-style: oblique;
-    font-size: var(--font-size-large);
+table.prenota-table {
+    width: 90%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    border: 4px solid #000000;
 }
 
-h2 {
-    font-family: 'DM Sans', Sans-serif;
-    font-size: var(--font-size-normal);
+table.prenota-table th, td {
+    width: 14%;
+    text-align: center;
+    border: 1px solid #ddd;
+    position: relative;
+    color: black;
+}
+        
+table.prenota-table th {
+    background-color: light-blue;
+    font-weight: bold;
+    border-color: blue
+}
+        
+table.prenota-table tr{
+    color : black;
+    border-color: black;
+}
+        
+table.prenota-table td{
+    background-color:#ADD8E6;
+    border-color: black;
+}
+        
+table.prenota-table td form {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+        
+table.prenota-table td input[type="submit"]{
+    width: 100%;
+    height: auto;
+    height: 12vh;
+    opacity: 0;
 }
 
-main {
-    margin: 1vh 0.5vw;
+table.prenota-table .time-slot {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+table.prenota-table .time-slot p {
+    margin: 0;
+}
+
+table.prenota-table .btn-booked {
+    background-color: #d9534f;
+    color: white;
+    cursor: not-allowed;
+}
+
+table.prenota-table h2{
+    font-size: 30px
+}
+
+table.prenota-table .no {
+    background-color:rgb(215, 215, 215);
+}
+table.prenota-table .attesa {
+    background-color:rgb(205, 161, 27); 
+    color: white;
+}
+table.prenota-table .prenotata {
+    background-color:rgb(73, 126, 12); 
+    color: white;
 }
 
 /*------------------ header ------------------*/

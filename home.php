@@ -12,7 +12,6 @@
 
     db_setup();
     $result = db_do_query("SELECT nome, cognome, ruolo FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente']);
-    db_close();
 
     $row = $result->fetch_assoc();
 
@@ -77,6 +76,7 @@
     <?php 
         include("utils/prefabs/footer.php");
         getFooter('./');
+        db_close();
     ?>
 </body>
 </html>

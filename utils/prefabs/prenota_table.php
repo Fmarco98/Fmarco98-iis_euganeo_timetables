@@ -1,4 +1,4 @@
-<form action="prenota.php" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
     <fieldset>
         <legend>filtro aula</legend>
         <label for="plesso_input">Plesso</label>
@@ -70,7 +70,7 @@
 ?>
 
 <?php if(isset($_POST['id_plesso']) && isset($_POST['id_aula']) && isset($_POST['data']) && $_POST['id_plesso'] != -1 && $_POST['id_aula'] != -1) { ?>
-    <table>
+    <table class="prenota-table">
         <thead>
             <tr>
                 <?php 
@@ -251,8 +251,5 @@
             data.value = fdate;
         }
     } catch(err) {}
-        
-    
 
-    
 </script>
