@@ -273,23 +273,31 @@ footer:has(> .center) {
 footer img {
     height: 10vh;
 }
-footer p :right{
-    margin: 0px;
-    padding-right: 1vw;
-    height: 0px;
-    position: relative;
-    top: -3vh;
-}
 footer div.container {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    align-items: center;
 
     min-height: 13vh;
 
     margin: 1vh 0.5vw;
 
     margin-bottom: 0px;
+}
+footer div#content {
+    margin-left: auto; 
+    margin-right: 15vw;
+    font-size: var(--font-size-normal);
+}
+
+footer div#content h3, footer div#content p {
+    margin: 0px;
+}
+
+footer p#credits {
+    margin-left: auto; 
+    font-style: oblique;
 }
 
 /*------------------- form -------------------*/
