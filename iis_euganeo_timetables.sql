@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 06, 2025 alle 19:23
+-- Creato il: Apr 15, 2025 alle 19:36
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -159,7 +159,16 @@ INSERT INTO `prenotazione` (`id_prenotazione`, `descrizione`, `data`, `fk_utente
 (14, '', '2025-04-07', 2, 1, 6, '2025-04-06 18:49:08', '2025-04-06 18:49:08', NULL),
 (15, '', '2025-04-09', 2, 1, 6, '2025-04-06 18:49:56', '2025-04-06 18:49:56', '2025-04-06 18:49:59'),
 (16, '', '2025-04-07', 2, 1, 7, '2025-04-06 18:50:08', NULL, NULL),
-(17, '', '2025-04-09', 2, 1, 7, '2025-04-06 18:57:02', NULL, '2025-04-06 18:57:26');
+(17, '', '2025-04-09', 2, 1, 7, '2025-04-06 18:57:02', NULL, '2025-04-06 18:57:26'),
+(18, '', '2025-04-14', 2, 1, 5, '2025-04-14 19:08:53', '2025-04-14 19:08:53', '2025-04-14 19:09:10'),
+(19, '', '2025-04-28', 2, 1, 7, '2025-04-14 23:11:27', NULL, '2025-04-14 23:11:33'),
+(20, '', '2025-04-16', 2, 5, 7, '2025-04-15 18:58:53', '2025-04-15 18:58:53', '2025-04-15 18:59:46'),
+(21, '', '2025-04-21', 2, 1, 7, '2025-04-15 19:04:21', '2025-04-15 19:10:28', NULL),
+(22, '', '2025-04-21', 2, 5, 7, '2025-04-15 19:06:52', '2025-04-15 19:06:52', '2025-04-15 19:10:33'),
+(23, '', '2025-04-21', 2, 5, 7, '2025-04-15 19:17:28', '2025-04-15 19:17:28', '2025-04-15 19:17:39'),
+(24, '', '2025-04-21', 2, 5, 7, '2025-04-15 19:17:50', '2025-04-15 19:17:50', NULL),
+(25, '', '2025-04-23', 2, 1, 7, '2025-04-15 19:20:25', NULL, NULL),
+(26, '', '2025-04-23', 5, 5, 7, '2025-04-15 19:24:49', '2025-04-15 19:24:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -308,7 +317,6 @@ ALTER TABLE `plesso`
 --
 ALTER TABLE `prenotazione`
   ADD PRIMARY KEY (`id_prenotazione`),
-  ADD UNIQUE KEY `data` (`data`,`fk_fascia_oraria`,`fk_aula`),
   ADD KEY `fk_utente` (`fk_utente`),
   ADD KEY `fk_aula` (`fk_aula`),
   ADD KEY `fk_fascia_oraria` (`fk_fascia_oraria`);
@@ -375,7 +383,7 @@ ALTER TABLE `plesso`
 -- AUTO_INCREMENT per la tabella `prenotazione`
 --
 ALTER TABLE `prenotazione`
-  MODIFY `id_prenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_prenotazione` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT per la tabella `richiesta_conferma`

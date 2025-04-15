@@ -24,7 +24,7 @@
         $query = 
             'SELECT COUNT(id_prenotazione) = 0 a 
              FROM prenotazione 
-             WHERE data = ? AND fk_fascia_oraria = ? AND fk_aula = ?';
+             WHERE data = ? AND fk_fascia_oraria = ? AND fk_aula = ? AND data_eliminazione IS NULL';
     
         $r = db_do_query($query, 'sii', $_POST['data'], $_POST['id_fascia_oraria'], $_POST['id_aula'])->fetch_assoc();
     

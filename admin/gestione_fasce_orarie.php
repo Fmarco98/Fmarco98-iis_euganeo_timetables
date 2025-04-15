@@ -25,6 +25,7 @@
         redirect(0, '../home.php');
     }
 
+    /*
     $query_fh = 
         'SELECT id_fascia_oraria, ora_inizio, ora_fine
          FROM fascia_oraria
@@ -45,7 +46,8 @@
     $fascie_orarie = db_do_simple_query($query_fh);
     $fascie_orarie_giorno = db_do_simple_query($query_fhg);
     $gironi = db_do_simple_query($query_g);
-
+    */
+    
     db_close();
 ?>
 
@@ -74,6 +76,8 @@
         </ul>
     </nav>
     <main>
+        <h1>PAGINA NON FUNZIONANTE</h1>
+        <?php /*
         <section class="grid-2column">
             <div>
                 <h2>fascie orarie - giorni</h2>
@@ -210,6 +214,7 @@
                 </div>   
             </div>
         </section>
+        */ ?>
     </main>
     <?php 
         include("../utils/prefabs/footer.php"); 

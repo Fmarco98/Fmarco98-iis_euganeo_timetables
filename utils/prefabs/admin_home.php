@@ -25,8 +25,9 @@
     db_close();
 ?>
 
-<h2>Prenotazioni da confermare</h2>
+<h2>Gestisci prenotazioni</h2>
 <hr>
+<?php /*
 <table id="prenotazioni_in_attesa">
     <thead>
         <tr>
@@ -70,13 +71,15 @@
                 <?php }
             } else { ?>
                 <tr>
-                    <td colspan="6">Non ci sono prenotazioni da confermare</td>
+                    <td colspan="7">Non ci sono prenotazioni da confermare</td>
                 </tr>
         <?php } ?>
     </tbody>
 </table>
 
 <br><hr><br>
+
+*/ ?>
 
 <?php 
     include('prenota_table.php');

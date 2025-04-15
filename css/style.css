@@ -121,12 +121,23 @@ table.prenota-table td form {
     grid-template-columns: auto;
     grid-template-rows: auto;
 }
-        
-table.prenota-table td input[type="submit"]{
+
+table.prenota-table td input[type="submit"] {
+    cursor: pointer;
+}
+
+table.prenota-table td input[type="submit"], table.prenota-table td div.void {
     width: 100%;
-    height: auto;
     height: 12vh;
     opacity: 0;
+}
+
+table.prenota-table td form.admin input[type="submit"] {
+    color: black;
+    width: auto;
+    height: auto;
+    opacity: 1;
+    margin-bottom: 2vh;
 }
 
 table.prenota-table .time-slot {
@@ -161,6 +172,14 @@ table.prenota-table .attesa {
 table.prenota-table .prenotata {
     background-color:rgb(73, 126, 12); 
     color: white;
+}
+
+table.prenota-table div.list {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
 }
 
 /*------------------ header ------------------*/

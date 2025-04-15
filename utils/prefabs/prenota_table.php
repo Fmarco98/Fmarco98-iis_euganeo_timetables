@@ -1,3 +1,17 @@
+<?php
+    $ruolo = db_do_query("SELECT ruolo FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente'])->fetch_assoc()['ruolo'];
+    
+    echo 'debug: '.$ruolo;
+?>
+
+<?php 
+    // Segnalazione errori
+    if($_SESSION['error'] === PRENOTA_ALREADY_EXIST) {
+        echo '<p class="phperror">Aula già prenotata</p>';
+        $_SESSION['error'] = NONE;
+    }
+?>
+
 <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
     <fieldset>
         <legend>filtro aula</legend>
@@ -61,14 +75,6 @@
 </form>
 <hr>
 
-<?php 
-    // Segnalazione errori
-    if($_SESSION['error'] === PRENOTA_ALREADY_EXIST) {
-        echo '<p class="phperror">Aula già prenotata</p>';
-        $_SESSION['error'] = NONE;
-    }
-?>
-
 <?php if(isset($_POST['id_plesso']) && isset($_POST['id_aula']) && isset($_POST['data']) && $_POST['id_plesso'] != -1 && $_POST['id_aula'] != -1) { ?>
     <table class="prenota-table">
         <thead>
@@ -119,7 +125,7 @@
                 $data_giorni = get_settimana('Y-m-d', $_POST['data']);
 
                 $query_prenotazioni = 
-                    'SELECT p.descrizione, p.data, p.fk_fascia_oraria, u.cognome, u.nome, p.data_approvazione IS NOT NULL as approvata
+                    'SELECT p.id_prenotazione, p.descrizione, p.data, p.fk_fascia_oraria, u.cognome, u.nome, p.data_approvazione IS NOT NULL as approvata, p.fk_utente
                      FROM prenotazione p
                      JOIN utente u ON u.id_utente = p.fk_utente
                      WHERE p.fk_aula = ? AND p.data BETWEEN ? AND ? AND p.data_eliminazione IS NULL';
@@ -142,10 +148,12 @@
                     echo '<tr>';
                     for($i_g = 0; $i_g < count($fh_list); $i_g++) { 
                         if(count($fh_list[$i_g]) > $i_h) {
+                            $id_prenotazione = 0;
                             $cognome_prof = '';
                             $nome_prof = '';
                             $desc = '';
                             $approvata_bool = false;
+                            $fk_utente = 0;
                                     
                             //Controllo se prenotata
                             foreach($prenotazioni as $r) {
@@ -154,6 +162,8 @@
                                     $nome_prof = $r['nome'];
                                     $desc = $r['descrizione'];
                                     $approvata_bool = $r['approvata'];
+                                    $id_prenotazione = $r['id_prenotazione'];
+                                    $fk_utente = $r['fk_utente'];
 
                                     break;
                                 }
@@ -162,12 +172,16 @@
                             if(!$nome_prof) { //non prenotata?>
                                 <td>
                                     <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
-                                    <form action="prenota_conferma.php" method="post">
-                                        <input type="hidden" name="id_fascia_oraria" value="<?php echo $fh_list[$i_g][$i_h]['id_fascia_oraria'] ?>">
-                                        <input type="hidden" name="id_aula" value="<?php echo $_POST['id_aula'] ?>">
-                                        <input type="hidden" name="data" value="<?php echo $data_giorni[$i_g] ?>">
-                                        <input type="submit" value="Prenota">
-                                    </form>
+                                    <?php if($ruolo !== 'A') {?>
+                                        <form action="prenota_conferma.php" method="post">
+                                            <input type="hidden" name="id_fascia_oraria" value="<?php echo $fh_list[$i_g][$i_h]['id_fascia_oraria'] ?>">
+                                            <input type="hidden" name="id_aula" value="<?php echo $_POST['id_aula'] ?>">
+                                            <input type="hidden" name="data" value="<?php echo $data_giorni[$i_g] ?>">
+                                            <input type="submit" value="Prenota">
+                                        </form>
+                                    <?php } else { ?>
+                                        <div class="void"></div>
+                                    <?php } ?>
                                     <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
                                 </td>
                       <?php } else { //prenotata
@@ -179,6 +193,35 @@
                                     <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                     <h3><?php echo ucfirst($cognome_prof).' '.ucfirst($nome_prof) ?></h3>
                                     <h4><?php echo ucfirst($desc) ?></h4>
+                                    <?php if(($approvata_bool || $fk_utente == $_SESSION['id_utente']) && ($ruolo === 'A' || $fk_utente == $_SESSION['id_utente'])) { ?>
+                                        <div class="list">
+                                            <form class="admin" action="./utils/targets/elimina_prenotazione.php" method="post">
+                                                <fieldset>
+                                                    <legend>Elimina</legend>
+                                                    <input type="hidden" name="id_prenotazione" value="<?php echo $id_prenotazione ?>">
+                                                    <input type="submit" value="elimina">
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    <?php } elseif($ruolo === 'A') { ?>
+                                        <div class="list">
+                                            <form class="admin" action="./utils/targets/elimina_prenotazione.php" method="post">
+                                                <fieldset>
+                                                    <legend>Rifiuta</legend>
+                                                    <input type="hidden" name="id_prenotazione" value="<?php echo $id_prenotazione ?>">
+                                                    <input type="submit" value="rifiuta">
+                                                </fieldset>
+                                            </form>
+                                            <form class="admin" action="./utils/targets/admin/conferma_prenotazione.php" method="post">
+                                                <fieldset>
+                                                    <legend>Accetta</legend>
+                                                    <input type="hidden" name="id_prenotazione" value="<?php echo $id_prenotazione ?>">
+                                                    <input type="submit" value="accetta">
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    <?php } ?>
+                                    
                                     <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
                                 </td>
                       <?php }
