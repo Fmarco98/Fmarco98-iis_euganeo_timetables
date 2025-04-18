@@ -237,14 +237,21 @@ nav ul {
     flex-direction: row-reverse;
     gap: 0.5vw
 }
-nav a, nav span {
+nav a, nav button, nav span {
     display: block;
     padding: 10px;
 
     color: inherit !important;
     text-decoration: none;
+
+    
+    border: none;
+    background-color: inherit;
 }
-nav span, nav a:hover {
+nav button, nav span { 
+    cursor: pointer;
+}
+nav span, nav a:hover, nav button:hover {
     transition: 0.2s;
     background-color: var(--dark-blue);
     border-bottom: 2px solid white;
@@ -513,4 +520,57 @@ form.login input[type="submit"]:hover, form.sign-up input[type="submit"]:hover {
 
 .bordertest { /*da rimuovere */
     border: 10px solid red !important;
+}
+
+
+/*.......*/
+
+.popUpDialog {
+    z-index: 100000;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    background-color:rgba(42, 42, 42, 0.55);
+
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+
+    display: none;
+}
+
+.popUpDialog div#content {
+    background-color: var(--dark-white);
+    padding: 3vh 3vw;
+    border-radius: 10px;
+
+}
+
+.popUpDialog div#buttons {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+}
+
+.popUpDialog a, .popUpDialog button {
+    display: block;
+    border: 1px solid black !important; 
+    color: white;
+    padding: 1vh 0.5vw;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.popUpDialog a {
+    background-color: red;
+    text-decoration: none;
+}
+.popUpDialog a:link, .popUpDialog a:visited {
+    color: white;
+}
+
+.popUpDialog button {
+    background-color: var(--dark-blue);
 }

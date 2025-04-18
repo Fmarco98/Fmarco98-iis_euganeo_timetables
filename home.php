@@ -31,12 +31,16 @@
 </head>
 <body class="dark-white-bg">
     <?php 
+        include("utils/prefabs/conferma_logout.php");
+    ?>
+    <?php 
         include("utils/prefabs/header.php");
+        getLogoutDialog('./');
         getHeader('./');
     ?>
     <nav>
         <ul>
-            <li><a href="./utils/targets/logout.php">logout</a></li>
+            <li><button onclick="logoutDialogOpen()">logout</button></li>
             <li><a href="./impostazioni_utente.php">impostazioni</a></li>
             <?php 
                 if($ruolo === 'D') {
@@ -78,5 +82,6 @@
         getFooter('./');
         db_close();
     ?>
+    <script src="js/logout.js"></script>
 </body>
 </html>

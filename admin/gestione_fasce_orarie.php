@@ -62,12 +62,16 @@
 </head>
 <body class="dark-white-bg">
     <?php 
+        include("../utils/prefabs/conferma_logout.php");
+        getLogoutDialog('./../');
+    ?>
+    <?php 
         include("../utils/prefabs/header.php");
         getHeader('./../');
     ?>
     <nav>
         <ul>
-            <li><a href="./../utils/targets/logout.php">logout</a></li>
+            <li><button onclick="logoutDialogOpen()">logout</button></li>
             <li><a href="./../impostazioni_utente.php">impostazioni</a></li>
             <li><a href="./gestione_utenti.php">utenti</a></li>
             <li><span>fasce orarie</span></li>
@@ -222,5 +226,6 @@
     ?>
 
     <script src="../js/popUps.js"></script>
+    <script src="../js/logout.js"></script>
 </body>
 </html>
