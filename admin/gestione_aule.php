@@ -171,6 +171,7 @@
                         $_SESSION['error'] = NONE;
                     } 
                 ?>
+                <h3>IN MODIFICA</h3>
                 <table id="aule_riservate">
                     <thead>
                         <tr>

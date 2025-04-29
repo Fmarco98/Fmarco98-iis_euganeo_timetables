@@ -25,28 +25,25 @@
         redirect(0, '../home.php');
     }
 
-    /*
-    $query_fh = 
-        'SELECT id_fascia_oraria, ora_inizio, ora_fine
-         FROM fascia_oraria
-         ORDER BY id_fascia_oraria';
+    $query_t = 
+        'SELECT id_tipo_orario, nome
+         FROM tipo_orario
+         ORDER BY nome';
     
     $query_g = 
         'SELECT id_giorno, nome
          FROM giorno
          ORDER BY id_giorno';
 
-    $query_fhg = 
-        'SELECT fhg.id_fascia_oraria_giorno, fh.ora_inizio, fh.ora_fine, g.nome
-         FROM fascia_oraria_giorno fhg
-         JOIN fascia_oraria fh ON fhg.fk_fascia_oraria = fh.id_fascia_oraria
-         JOIN giorno g ON g.id_giorno = fhg.fk_giorno
-         ORDER BY g.id_giorno, fh.ora_inizio';
+    $query_gt = 
+        'SELECT g.id_giorno, g.nome nome_g, t.nome nome_t 
+         FROM giorno g 
+         JOIN tipo_orario t ON g.fk_tipo_orario = t.id_tipo_orario';
+
     
-    $fascie_orarie = db_do_simple_query($query_fh);
-    $fascie_orarie_giorno = db_do_simple_query($query_fhg);
+    $tipo = db_do_simple_query($query_t);
     $gironi = db_do_simple_query($query_g);
-    */
+    $giorno_tipo = db_do_simple_query($query_gt);
     
     db_close();
 ?>
@@ -80,42 +77,41 @@
         </ul>
     </nav>
     <main>
-        <h1>PAGINA NON FUNZIONANTE</h1>
-        <?php /*
+        <a href="./gestione_orari.php" style="float:right">gestione orari</a>
         <section class="grid-2column">
             <div>
-                <h2>fascie orarie - giorni</h2>
+                <h2>giorni - tipo</h2>
                 <hr>
                 <?php 
                     //errori
-                    if($_SESSION['error'] === ADMIN_FHG_NOT_EXIST) {
-                        echo '<p class="phperror">Fascia oraria e giorno devono essere selezionati</p>';
+                    if($_SESSION['error'] === ADMIN_GT_NOT_EXIST) {
+                        echo '<p class="phperror">giorno e tipo orario devono essere selezionati</p>';
                         $_SESSION['error'] = NONE;
-                    } elseif ($_SESSION['error'] === ADMIN_FHG_ALREADY_EXIST) {
-                        echo '<p class="phperror">Fascia oraria-girono già esistente</p>';
+                    } elseif ($_SESSION['error'] === ADMIN_GT_ALREADY_EXIST) {
+                        echo '<p class="phperror">girono-tipo orario già esistente</p>';
                         $_SESSION['error'] = NONE;
                     }
                 ?>
                 <table id="fhg">
                     <thead>
                         <tr>
-                            <th>Fascia oraria</th>
                             <th>Giorni</th>
+                            <th>Tipo orario</th>
                             <th>Azioni</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        if($fascie_orarie_giorno -> num_rows > 0) {
-                            foreach($fascie_orarie_giorno as $f) { ?>
+                        if($giorno_tipo -> num_rows > 0) {
+                            foreach($giorno_tipo as $f) { ?>
                             <tr>
-                                <td><?php echo $f['ora_inizio'].' - '.$f['ora_fine'] ?></td>
-                                <td><?php echo $f['nome'] ?></td>
+                                <td><?php echo $f['nome_g'] ?></td>
+                                <td><?php echo $f['nome_t'] ?></td>
                                 <td>
-                                    <form action="../utils/targets/admin/fasce_orarie_girono_rimuovi.php" method="post">
+                                    <form action="../utils/targets/admin/girono_tipo_rimuovi.php" method="post">
                                         <fieldset>
-                                            <legend>elimina fascia oraria giorno</legend>
-                                            <input type="hidden" name="id_fascia_oraria_giorno" value="<?php echo $f['id_fascia_oraria_giorno'] ?>">
+                                            <legend>elimina giorno tipo</legend>
+                                            <input type="hidden" name="id_giorno" value="<?php echo $f['id_giorno'] ?>">
                                             <input type="submit" value="elimina">
                                         </fieldset>
                                     </form>
@@ -130,20 +126,20 @@
                     </tbody>
                 </table>
 
-                <button onclick="popUpShow('add_fhg')">Aggiungi fascia oraria - giorno</button>
-                <div class="pop-up" id="add_fhg" style="display: none">
-                    <button onclick="popUpHide('add_fhg')">Chiudi</button>
-                    <form action="../utils/targets/admin/fasce_orarie_girono_aggiungi.php" method="post">
+                <button onclick="popUpShow('add_gt')">Aggiungi giorno - tipo</button>
+                <div class="pop-up" id="add_gt" style="display: none">
+                    <button onclick="popUpHide('add_gt')">Chiudi</button>
+                    <form action="../utils/targets/admin/girono_tipo_aggiungi.php" method="post">
                         <fieldset>
                             <legend>inserisci fascia oraria giorno</legend>
-                            <label for="fascia_oraria_input">Orario</label>
-                            <select name="id_fascia_oraria" id="fascia_oraria_input" required>
-                                <option value="-1">Seleziona orario</option>
-                                <?php foreach($fascie_orarie as $r) { ?>
-                                    <option value="<?php echo $r['id_fascia_oraria'] ?>"><?php echo $r['ora_inizio'].' - '.$r['ora_fine'] ?></option>
+                            <label for="tipo_orario_input">Orario</label>
+                            <select name="id_tipo_orario" id="tipo_orario_input" required>
+                                <option value="-1">Seleziona tipo orario</option>
+                                <?php foreach($tipo as $r) { ?>
+                                    <option value="<?php echo $r['id_tipo_orario'] ?>"><?php echo $r['nome'] ?></option>
                                 <?php } ?>
                             </select>
-                            <label for="fascia_oraria_input">Giorno</label>
+                            <label for="giorno_input">Giorno</label>
                             <select name="id_giorno" id="giorno_input" required>
                                 <option value="-1">Seleziona giorno </option>
                                 <?php foreach($gironi as $r) { ?>
@@ -155,70 +151,7 @@
                     </form>
                 </div>    
             </div>
-            
-            <div>
-                <h2>fascie orarie</h2>
-                <hr>
-                <?php 
-                    if($_SESSION['error'] === ADMIN_FH_INVALID_VALUE) {
-                        echo '<p class="phperror">L\'ora di inizio deve esserem minore dell\'ora di fine</p>';
-                        $_SESSION['error'] = NONE;
-                    } elseif ($_SESSION['error'] === ADMIN_FH_ALREADY_EXIST) {
-                        echo '<p class="phperror">Fascia oraria già esistente</p>';
-                        $_SESSION['error'] = NONE;
-                    }
-                ?>
-                <table id="fh">
-                    <thead>
-                        <tr>
-                            <th>ora inizio</th>
-                            <th>ora fine</th>
-                            <th>azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                        if($fascie_orarie -> num_rows > 0) {
-                            foreach($fascie_orarie as $f) { ?>
-                            <tr>
-                                <td><?php echo $f['ora_inizio'] ?></td>
-                                <td><?php echo $f['ora_fine'] ?></td>
-                                <td>
-                                    <form action="../utils/targets/admin/fasce_orarie_rimuovi.php" method="post">
-                                        <fieldset>
-                                            <legend>elimina fascia oraria</legend>
-                                            <input type="hidden" name="id_fascia_oraria" value="<?php echo $f['id_fascia_oraria'] ?>">
-                                            <input type="submit" value="elimina">
-                                        </fieldset>
-                                    </form>
-                                </td>
-                            </tr>    
-                        <?php   }
-                            } else { ?>
-                                <tr>
-                                    <td colspan="3">Non ci sono fascie orarie</td>
-                                </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-
-                <button onclick="popUpShow('add_fh')">Aggiungi fascia oraria</button>
-                <div class="pop-up" id="add_fh" style="display: none">
-                    <button onclick="popUpHide('add_fh')">Chiudi</button>
-                    <form action="../utils/targets/admin/fasce_orarie_aggiungi.php" method="post">
-                        <fieldset>
-                            <legend>inserisci fascia oraria</legend>
-                            <label for="ora_inizio_input">Ora inizio</label>
-                            <input type="time" name="ora_inizio" id="ora_inizio_input" required>
-                            <label for="ora_inizio_input">Ora fine</label>
-                            <input type="time" name="ora_fine" id="ora_fine_input" required>
-                            <input type="submit" value="Inserisci">
-                        </fieldset>
-                    </form>
-                </div>   
-            </div>
         </section>
-        */ ?>
     </main>
     <?php 
         include("../utils/prefabs/footer.php"); 

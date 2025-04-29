@@ -14,10 +14,15 @@
 
     // ------- gestione tabelle admin --------
     //fasce orarie
-    define('ADMIN_FHG_NOT_EXIST', 'admin:orari_giorni:selezione_non_esistente');
-    define('ADMIN_FHG_ALREADY_EXIST', 'admin:orari_giorni:già_presente');
+    //define('ADMIN_FHG_NOT_EXIST', 'admin:orari_giorni:selezione_non_esistente');
+    //define('ADMIN_FHG_ALREADY_EXIST', 'admin:orari_giorni:già_presente');
+    
     define('ADMIN_FH_INVALID_VALUE', 'admin:orari:non_valido');
     define('ADMIN_FH_ALREADY_EXIST', 'admin:orari:già_presente');
+    define('ADMIN_FHT_NOT_EXIST', 'admin:orari_tipo:selezione_non_esistente');
+    define('ADMIN_FHT_ALREADY_EXIST', 'admin:orari_tipo:già_presente');
+    define('ADMIN_GT_NOT_EXIST', 'admin:giorni_tipo:selezione_non_esistente');
+    define('ADMIN_GT_ALREADY_EXIST', 'admin:giorni_tipo:già_presente');
     
     //aule
     define('ADMIN_AULA_INVADIL_VALUE', 'admin:aule:valori_non_validi');
