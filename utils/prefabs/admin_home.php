@@ -86,7 +86,7 @@
 </div>
 
 <?php 
-    include('prenota_table.php');
+    include('prenota_table-v2.php');
 ?>
 
 <script>

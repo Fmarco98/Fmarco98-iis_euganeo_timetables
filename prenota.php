@@ -51,7 +51,7 @@
         <h2>Prenotazioni</h2>
         <hr>
         <?php 
-            include('utils/prefabs/prenota_table.php');
+            include('utils/prefabs/prenota_table-v2.php');
         ?>
 
     </main>

@@ -29,6 +29,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: system-ui, sans-serif;
 }
 
 button.pwd-button.active::before {
@@ -83,56 +84,122 @@ tr {
 tr:nth-child(even) {
     background-color: #cccccc;
 }
-
-table.prenota-table {
-    width: 90%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 10px;
-    border: 4px solid #000000;
+    
+/*--------------- tabella prenotazioni ---------------*/
+:root {
+    --numDays: 6;
+    --timeHeight: 1.7vh;
+    --calBgColor: #fff1f8;
+    --eventBorderColor: #f2d3d8;
 }
 
-table.prenota-table th, td {
-    width: 14%;
-    text-align: center;
-    border: 1px solid #ddd;
-    position: relative;
-    color: black;
-}
-        
-table.prenota-table th {
-    background-color: light-blue;
-    font-weight: bold;
-    border-color: blue
-}
-        
-table.prenota-table tr{
-    color : black;
-    border-color: black;
-}
-        
-table.prenota-table td{
-    background-color:#ADD8E6;
-    border-color: black;
-}
-        
-table.prenota-table td form {
+.calendar {
     display: grid;
+    gap: 10px;
+    grid-template-columns: auto 1fr;
+    margin: 2rem;
+    font-size: var(--font-size-normal);
+}
+
+.calendar p {
+    margin: 0px;
+}
+
+.timeline {
+    display: grid;
+    grid-template-rows: 60px repeat(var(--numHours), calc(var(--timeHeight)));
+}
+
+.days {
+    display: grid;
+    grid-column: 2;
+    gap: 5px;
+    grid-template-columns: repeat(var(--numDays), minmax(150px, 1fr));
+}
+
+.events {
+    display: grid;
+    grid-template-rows: repeat(var(--numHours), var(--timeHeight));
+    border-radius: 5px;
+    background: var(--calBgColor);
+}
+
+/* Event */
+
+.title {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.event {
+    border: 1px solid var(--eventBorderColor);
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    background: white;
+}
+
+.space, .date {
+    height: calc(var(--font-size-large)*2 + 10px);
+}
+
+/* Global / Etc */
+
+.attesa {
+    background-color:rgb(205, 161, 27); 
+    color: white;
+}
+
+.prenotata {
+    background-color:rgb(73, 126, 12); 
+    color: white;
+}
+.disponibile {
+    background: rgb(143, 193, 243);
+
     grid-template-columns: auto;
     grid-template-rows: auto;
 }
 
-table.prenota-table td input[type="submit"] {
+.date {
+    display: flex;
+    gap: 1em;
+}
+
+.date-num {
+    font-size: var(--font-size-large);
+    font-weight: 600;
+    display: inline;
+}
+
+.date-day {
+    display: inline;
+    font-size: var(--font-size-large);
+    font-weight: 100;
+}
+
+/* --------- */
+
+.calendar form {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    
+    height: auto;
+    width: auto;
+}
+
+.calendar input[type="submit"] {
     cursor: pointer;
 }
 
-table.prenota-table td input[type="submit"], table.prenota-table td div.void {
-    width: 100%;
-    height: 12vh;
+.calendar input[type="submit"], .calendar div.void {
+    width: auto;
+    height: auto;
     opacity: 0;
 }
 
-table.prenota-table td form.admin input[type="submit"] {
+.calendar form.admin input[type="submit"] {
     color: black;
     width: auto;
     height: auto;
@@ -140,73 +207,40 @@ table.prenota-table td form.admin input[type="submit"] {
     margin-bottom: 2vh;
 }
 
-table.prenota-table .time-slot {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-}
-
-table.prenota-table .time-slot p {
-    margin: 0;
-}
-
-table.prenota-table .btn-booked {
-    background-color: #d9534f;
-    color: white;
-    cursor: not-allowed;
-}
-
-table.prenota-table h2{
-    font-size: 30px
-}
-
-table.prenota-table .no {
-    background-color:rgb(215, 215, 215);
-}
-table.prenota-table .attesa {
-    background-color:rgb(205, 161, 27); 
-    color: white;
-}
-table.prenota-table .prenotata {
-    background-color:rgb(73, 126, 12); 
-    color: white;
-}
-
-table.prenota-table div.list {
+div.list {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
     width: 100%;
     justify-content: space-around;
 }
-table.prenota-table .en {
-    display: table-cell;
+
+.calendar div.en {
+    display: grid;
 }
 
-table.prenota-table .dis {
+.calendar div.dis {
     display: none;
 }
 
-table.prenota-table .libera { 
+.calendar div.libera { 
     background-color: rgb(194, 194, 194);
     background-repeat: no-repeat;
     background-size: 30%;
     background-position: center;
 }
-table.prenota-table .libera:hover { 
+.calendar div.libera:hover { 
     background-image: url("./../imgs/utils/luchetto_chiuso.png");
 }
 
-table.prenota-table .riservata { 
+.calendar div.riservata { 
     background-color: rgb(194, 194, 194);
     background-image: url("./../imgs/utils/luchetto_chiuso.png");
     background-repeat: no-repeat;
     background-size: 30%;
     background-position: center;
 }
-table.prenota-table .riservata:hover { 
+.calendar div.riservata:hover { 
     background-image: url("./../imgs/utils/luchetto_aperto.png");
 }
 

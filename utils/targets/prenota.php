@@ -31,11 +31,11 @@
         if($r['a']) {
             //controllo se la prenotazione è da confermare
             $query_riservata = 
-                'SELECT COUNT(id_richiesta_conferma) = 0 a
+                'SELECT COUNT(id_richiesta_conferma) = 0 a 
                  FROM richiesta_conferma
-                 WHERE fk_aula = ? AND fk_fascia_oraria = ?';
+                 WHERE fk_aula = ? AND fk_fascia_oraria = ? AND data = ?';
 
-            $conferma = db_do_query($query_riservata, 'ii', $_POST['id_aula'], $_POST['id_fascia_oraria'])->fetch_assoc()['a'];
+            $conferma = db_do_query($query_riservata, 'iis', $_POST['id_aula'], $_POST['id_fascia_oraria'], $_POST['data'])->fetch_assoc()['a'];
             
             if($conferma) {
                 //prenotazione su aula non riservata
