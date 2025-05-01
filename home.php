@@ -63,7 +63,10 @@
             } elseif($_SESSION['error'] === ERROR) {
                 echo '<p class="phperror">errore</p>';
                 $_SESSION['error'] = NONE;
-            }
+            } elseif ($_SESSION['error'] === ADMIN_AULA_R_ALREADY_EXIST) {
+                echo '<p class="phperror">Aula già riservata</p>';
+                $_SESSION['error'] = NONE;
+            } 
         
             echo '<h1>Buongiorno '.$cognome.' '.$nome.'</h1>';
 

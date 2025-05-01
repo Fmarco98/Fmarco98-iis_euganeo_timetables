@@ -181,6 +181,34 @@ table.prenota-table div.list {
     width: 100%;
     justify-content: space-around;
 }
+table.prenota-table .en {
+    display: table-cell;
+}
+
+table.prenota-table .dis {
+    display: none;
+}
+
+table.prenota-table .libera { 
+    background-color: rgb(194, 194, 194);
+    background-repeat: no-repeat;
+    background-size: 30%;
+    background-position: center;
+}
+table.prenota-table .libera:hover { 
+    background-image: url("./../imgs/utils/luchetto_chiuso.png");
+}
+
+table.prenota-table .riservata { 
+    background-color: rgb(194, 194, 194);
+    background-image: url("./../imgs/utils/luchetto_chiuso.png");
+    background-repeat: no-repeat;
+    background-size: 30%;
+    background-position: center;
+}
+table.prenota-table .riservata:hover { 
+    background-image: url("./../imgs/utils/luchetto_aperto.png");
+}
 
 /*------------------ header ------------------*/
 

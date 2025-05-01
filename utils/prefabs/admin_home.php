@@ -80,7 +80,34 @@
 <br><hr><br>
 
 */ ?>
+<div>
+    <input id ="blocco_aule_selector" type="checkbox" onclick="changeView()">
+    <label for="blocco_aule_selector">Riserva aule</label>
+</div>
 
 <?php 
     include('prenota_table.php');
 ?>
+
+<script>
+    window.onload = function() {
+        if(document.getElementById("blocco_aule_selector").checked) {
+            changeView();
+        }
+    };
+
+    function changeView() {
+        var enabledRows = Array.from(document.getElementsByClassName('en'));
+        var disabledRows = Array.from(document.getElementsByClassName('dis'));
+
+        for(var i=0; i < enabledRows.length; i++) {
+            enabledRows[i].classList.remove("en");
+            enabledRows[i].classList.add("dis");
+        }
+
+        for(var i=0; i < disabledRows.length; i++) {
+            disabledRows[i].classList.remove("dis");
+            disabledRows[i].classList.add("en");
+        }
+    }
+</script>

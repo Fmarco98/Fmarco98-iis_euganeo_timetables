@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 15, 2025 alle 19:36
+-- Creato il: Mag 01, 2025 alle 12:22
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -96,7 +96,7 @@ CREATE TABLE `fascia_oraria_giorno` (
 CREATE TABLE `giorno` (
   `id_giorno` int(11) NOT NULL,
   `nome` varchar(10) NOT NULL,
-  `fk_tipo_orario` int(11) NOT NULL
+  `fk_tipo_orario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -179,15 +179,16 @@ INSERT INTO `prenotazione` (`id_prenotazione`, `descrizione`, `data`, `fk_utente
 CREATE TABLE `richiesta_conferma` (
   `id_richiesta_conferma` int(11) NOT NULL,
   `fk_aula` int(11) NOT NULL,
-  `fk_fascia_oraria` int(11) NOT NULL
+  `fk_fascia_oraria` int(11) NOT NULL,
+  `data` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `richiesta_conferma`
 --
 
-INSERT INTO `richiesta_conferma` (`id_richiesta_conferma`, `fk_aula`, `fk_fascia_oraria`) VALUES
-(1, 7, 1);
+INSERT INTO `richiesta_conferma` (`id_richiesta_conferma`, `fk_aula`, `fk_fascia_oraria`, `data`) VALUES
+(1, 7, 1, '2025-05-01');
 
 -- --------------------------------------------------------
 
@@ -239,7 +240,7 @@ INSERT INTO `tipo_orario_fascia_oraria` (`id_tipo_orario_fascia_oraria`, `fk_tip
 (11, 2, 14),
 (12, 3, 1),
 (13, 3, 5),
-(15, 3, 7),
+(16, 3, 7),
 (14, 3, 15);
 
 -- --------------------------------------------------------
@@ -326,7 +327,7 @@ ALTER TABLE `prenotazione`
 --
 ALTER TABLE `richiesta_conferma`
   ADD PRIMARY KEY (`id_richiesta_conferma`),
-  ADD UNIQUE KEY `fk_aula` (`fk_aula`,`fk_fascia_oraria`),
+  ADD UNIQUE KEY `fk_aula` (`fk_aula`,`fk_fascia_oraria`, `data`),
   ADD KEY `fk_fascia_oraria` (`fk_fascia_oraria`);
 
 --
@@ -401,7 +402,7 @@ ALTER TABLE `tipo_orario`
 -- AUTO_INCREMENT per la tabella `tipo_orario_fascia_oraria`
 --
 ALTER TABLE `tipo_orario_fascia_oraria`
-  MODIFY `id_tipo_orario_fascia_oraria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_tipo_orario_fascia_oraria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT per la tabella `utente`

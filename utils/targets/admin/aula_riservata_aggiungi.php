@@ -10,45 +10,38 @@
         redirect(0, '../../../login.php');
     }
 
-    if(isset($_POST['aula']) && isset($_POST['fascia_oraria'])) {
+    if(isset($_POST['id_aula']) && isset($_POST['id_fascia_oraria']) && isset($_POST['data'])) {
         db_setup();
 
         $permesso = db_do_query("SELECT ruolo FROM utente WHERE id_utente=?", 'i', $_SESSION['id_utente'])->fetch_assoc();
         
         //controllo permesso di modifica
         if($permesso['ruolo'] === 'A') {
-            //controllo validità valori
-            if($_POST['aula'] != -1 && $_POST['fascia_oraria'] != -1) {
-                db_start_transaction();
+            db_start_transaction();
                 
-                //controllo presenza
-                $query = 
-                    'SELECT COUNT(id_richiesta_conferma) = 0 as a
-                     FROM richiesta_conferma
-                     WHERE fk_aula = ? AND fk_fascia_oraria = ?';
+            //controllo presenza
+            $query = 
+                'SELECT COUNT(id_richiesta_conferma) = 0 as a
+                 FROM richiesta_conferma
+                 WHERE fk_aula = ? AND fk_fascia_oraria = ? AND data =  ?';
 
-                $r = db_do_query($query, 'ii', $_POST['aula'], $_POST['fascia_oraria'])->fetch_assoc();
+            $r = db_do_query($query, 'iis', $_POST['id_aula'], $_POST['id_fascia_oraria'], $_POST['data'])->fetch_assoc();
                 
-                if($r['a']) {
-                    $query = 
-                        'INSERT INTO richiesta_conferma(fk_aula, fk_fascia_oraria) 
-                         VALUES (?, ?)';
+            if($r['a']) {
+                $query = 
+                    'INSERT INTO richiesta_conferma(fk_aula, fk_fascia_oraria, data) 
+                     VALUES (?, ?, ?)';
                     
-                    db_do_query($query, 'ii', $_POST['aula'], $_POST['fascia_oraria']);
+                db_do_query($query, 'iis', $_POST['id_aula'], $_POST['id_fascia_oraria'], $_POST['data']);
                     
-                    db_end_transaction('y');
-                    db_close();
-                    redirect(0, '../../../admin/gestione_aule.php');
-                } else {
-                    db_end_transaction('n');
-                    db_close();
-                    $_SESSION['error'] = ADMIN_AULA_R_ALREADY_EXIST;
-                    redirect(0, '../../../admin/gestione_aule.php');
-                }
-            } else {
+                db_end_transaction('y');
                 db_close();
-                $_SESSION['error'] = ADMIN_AULA_R_INVADIL_VALUE;
-                redirect(0, '../../../admin/gestione_aule.php');
+                redirect(0, '../../../home.php');
+            } else {
+                db_end_transaction('n');
+                db_close();
+                $_SESSION['error'] = ADMIN_AULA_R_ALREADY_EXIST;
+                redirect(0, '../../../home.php');
             }
         } else {
             db_close();

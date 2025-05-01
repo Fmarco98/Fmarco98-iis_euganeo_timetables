@@ -1,7 +1,7 @@
 <?php
     $ruolo = db_do_query("SELECT ruolo FROM utente WHERE id_utente = ?", 'i', $_SESSION['id_utente'])->fetch_assoc()['ruolo'];
     
-    echo 'debug: '.$ruolo;
+    //echo 'debug: '.$ruolo;
 ?>
 
 <?php 
@@ -170,7 +170,7 @@
                             }
 
                             if(!$nome_prof) { //non prenotata?>
-                                <td>
+                                <td class="en">
                                     <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                     <?php if($ruolo !== 'A') {?>
                                         <form action="prenota_conferma.php" method="post">
@@ -186,9 +186,9 @@
                                 </td>
                       <?php } else { //prenotata
                                 if($approvata_bool) {
-                                    echo '<td class="prenotata">';
+                                    echo '<td class="prenotata en">';
                                 } else {
-                                    echo '<td class="attesa">';
+                                    echo '<td class="attesa en">';
                                 } ?>
                                     <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
                                     <h3><?php echo ucfirst($cognome_prof).' '.ucfirst($nome_prof) ?></h3>
@@ -224,7 +224,41 @@
                                     
                                     <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
                                 </td>
-                      <?php }
+                      <?php } 
+                            $query_rc = 
+                                'SELECT id_richiesta_conferma, fk_aula, fk_fascia_oraria, data
+                                 FROM richiesta_conferma
+                                 WHERE fk_aula = ? AND fk_fascia_oraria = ? AND data = ?';
+
+                            $riservate = db_do_query($query_rc, 'iis', $_POST['id_aula'], $fh_list[$i_g][$i_h]['id_fascia_oraria'], $data_giorni[$i_g]);
+                            
+                            if($riservate->num_rows == 0) { ?>
+                                <td class="dis libera">
+                                    <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
+                                    <form action="./utils/targets/admin/aula_riservata_aggiungi.php" method="post">
+                                        <fieldset>
+                                            <legend>rendi aula riservata</legend>
+                                            <input type="hidden" name="id_fascia_oraria" value="<?php echo $fh_list[$i_g][$i_h]['id_fascia_oraria'] ?>">
+                                            <input type="hidden" name="id_aula" value="<?php echo $_POST['id_aula'] ?>">
+                                            <input type="hidden" name="data" value="<?php echo $data_giorni[$i_g] ?>">
+                                            <input type="submit" value="Riserva"> 
+                                        </fieldset>
+                                    </form>
+                                    <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
+                                </td>
+                      <?php } else { ?>
+                                <td class="dis riservata">
+                                    <p class= "ora-inizio"><?php echo $fh_list[$i_g][$i_h]['ora_inizio'] ?></p>
+                                    <form action="./utils/targets/admin/aula_riservata_rimuovi.php" method="post">
+                                        <fieldset>
+                                            <legend>rendi aula libera</legend>
+                                            <input type="hidden" name="id" value="<?php echo $riservate->fetch_assoc()['id_richiesta_conferma'] ?>">
+                                            <input type="submit" value="Libera"> 
+                                        </fieldset>
+                                    </form>
+                                    <p class="ora-fine"><?php echo $fh_list[$i_g][$i_h]['ora_fine'] ?></p>
+                                </td>
+                      <?php } 
                         } else {
                             // ora mancante
                             echo '<td class="no"></td>';
@@ -239,7 +273,6 @@
 <?php } ?>
 
 <script>
-
     function submit_click() {
         document.getElementById('submit').click();
         console.log('click');
