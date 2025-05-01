@@ -3,22 +3,22 @@
     error_reporting(E_ERROR | E_PARSE);
 
     //Config del server casa
-    
+    /*
     define('DB_SERVER', 'localhost');
     define('DB_USER', 'iis_euganeo_timetables');
     define('DB_PASSWORD', 'iis_euganeo_timetables_password');
     define('DB_DB', 'iis_euganeo_timetables');
     define('DB_PORT', 3306);
-    
+    */
     
     //Config server scuola
-    /*
+    
     define('DB_SERVER', '80.20.95.170');
     define('DB_USER', '5BI_CASCIELLO');
     define('DB_PASSWORD', '123456');
     define('DB_DB', '5BI_CASCIELLO');
     define('DB_PORT', 3307);
-    */
+    
 
     
 
