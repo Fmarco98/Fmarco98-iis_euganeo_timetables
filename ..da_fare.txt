@@ -1,6 +1,3 @@
 ADD:
- - gestione aule/prenotazioni su prenota_table per l'admin >>
-    L'admin deve essere in grado di impostare la prenotazione su conferma per un'aula.
 
 UPDATE:
- - prenota table GUI 2.0

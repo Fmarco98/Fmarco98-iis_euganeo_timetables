@@ -6,7 +6,7 @@
                 <div id="content">
                     <div>
                         <h3>Bisogni di aiuto?</h3>
-                        <p>Scarica il <a href="<?php echo $folder_prefix ?>files/manuale.pdf" target="_blank">manuale</a></p>
+                        <p>Scarica il <a href="<?php echo $folder_prefix ?>files/IIS-Euganeo-Timetables_user-guide.pdf" target="_blank">manuale</a></p>
                     </div>
                 </div>
             </div>
